@@ -48,6 +48,7 @@ void StartUSB_RxTask(void *argument)
 
         if (status == osOK)
         {
+            p_reg->gimbal.sentry_state = SENTRY_ENABLED;
             uint8_t *p_byte;
             // 处理数据
             p_byte = &rx_data[1];
@@ -56,6 +57,8 @@ void StartUSB_RxTask(void *argument)
             memcpy(&p_reg->gimbal.recvpacket.yaw,p_byte, 4);
             p_byte = NULL;
         }
+        else
+            p_reg->gimbal.sentry_state = SENTRY_DISABLED;
     }
     /* USER CODE END StartUSB_Rx */
 }
@@ -86,7 +89,7 @@ void gimbal_inPIDTask(void *argument)
         p_reg->TxData.data1 = (int16_t)p_reg->gimbal.pitch_pid.outer.Out;
         p_reg->TxData.data2 = (int16_t)p_reg->gimbal.yaw_pid.outer.Out;
 
-        Motor_Send(CAN_6020_1,&p_reg->TxData,4);
+        CAN_Send(CAN_6020_1,&p_reg->TxData,4);
         // 每次发送完清零
         memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
         osDelay(1);
@@ -102,14 +105,13 @@ void gimbal_exPIDTask(void *argument)
     for(;;)
     {
         p_reg->gimbal.pitch_pid.outer.Target = p_reg->gimbal.recvpacket.pitch;
-        // 软件限位，限定在第一和第四象限
-        if (p_reg->gimbal.pitch_pid.outer.Target >= 270 && p_reg->gimbal.pitch_pid.outer.Target <= 360)
-            p_reg->gimbal.pitch_pid.outer.Target = -90;
-        if (p_reg->gimbal.pitch_pid.outer.Target >= 90)
-            p_reg->gimbal.pitch_pid.outer.Target = 90;
-        if (p_reg->gimbal.pitch_pid.outer.Target <= -90)
-            p_reg->gimbal.pitch_pid.outer.Target = -90;
-
+            // 软件限位，限定在第一和第四象限
+            if (p_reg->gimbal.pitch_pid.outer.Target >= 270 && p_reg->gimbal.pitch_pid.outer.Target <= 360)
+                p_reg->gimbal.pitch_pid.outer.Target = -90;
+            if (p_reg->gimbal.pitch_pid.outer.Target >= 90)
+                p_reg->gimbal.pitch_pid.outer.Target = 90;
+            if (p_reg->gimbal.pitch_pid.outer.Target <= -90)
+                p_reg->gimbal.pitch_pid.outer.Target = -90;
         p_reg->gimbal.pitch_pid.outer.Actual = p_reg->gimbal.curr_angle.pitch;
 
         p_reg->gimbal.yaw_pid.outer.Target = p_reg->gimbal.recvpacket.yaw;
@@ -135,16 +137,7 @@ void StartCAN_TxTask(void *argument)
     /* Infinite loop */
     for(;;)
     {
-        p_reg->MData[0] = (uint8_t)p_reg->TxData.data1;
-        p_reg->MData[1] = (uint8_t)(p_reg->TxData.data1 >> 8);
-        p_reg->MData[2] = (uint8_t)p_reg->TxData.data2;
-        p_reg->MData[3] = (uint8_t)(p_reg->TxData.data2 >> 8);
-        p_reg->MData[4] = (uint8_t)p_reg->TxData.data3;
-        p_reg->MData[5] = (uint8_t)(p_reg->TxData.data3 >> 8);
-        p_reg->MData[6] = (uint8_t)p_reg->TxData.data4;
-        p_reg->MData[7] = (uint8_t)(p_reg->TxData.data4 >> 8);
-        //ID:1~4或5~8
-        CAN_Send(CAN_6020_1 ,p_reg->MData,8);
+        // CAN_Send(CAN_6020_1 ,&p_reg->TxData,8);
 
         osDelay(1);
     }
@@ -229,4 +222,53 @@ void Startbmi088Task(void *argument)
         osDelay(10);
     }
     /* USER CODE END Startbmi088Task */
+}
+
+/***************************************************************************
+ *			哨兵模式:云台扫描正前方上下左右90°的正方形平面,假定没检测到时视觉不发送消息
+ **************************************************************************/
+/* USER CODE END Header_StartSentry_modeTask */
+void StartSentry_modeTask(void *argument)
+{
+    /* USER CODE BEGIN StartSentry_modeTask */
+    /* Infinite loop */
+    for(;;)
+    {
+        if (p_reg->gimbal.sentry_state == SENTRY_DISABLED)
+        {
+            // 云台先朝向右上角
+            p_reg->gimbal.yaw_pid.outer.Target += 45.0f;
+            p_reg->gimbal.pitch_pid.outer.Target += 45.0f;
+            // 初定为ID1 和ID2
+            p_reg->TxData.data1 = (int16_t)p_reg->gimbal.yaw_pid.outer.Target;
+            p_reg->TxData.data2 = (int16_t)p_reg->gimbal.pitch_pid.outer.Target;
+            CAN_Send(CAN_6020_1 ,&p_reg->TxData,8);
+            // 每次发送完清空
+            memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+
+            // 进行扫描
+            for (uint8_t i = 0; i < 90; i++)
+            {
+                for (uint8_t j = 0; j < 90; j++)
+                {
+                    if (p_reg->gimbal.sentry_state == SENTRY_ENABLED)
+                        break;
+
+                    p_reg->gimbal.yaw_pid.outer.Target --;
+                        CAN_Send(CAN_6020_1 ,&p_reg->TxData,8);
+                        // 每次发送完清空
+                        memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+                }
+                p_reg->gimbal.pitch_pid.outer.Target --;
+                p_reg->gimbal.yaw_pid.outer.Target += 90.0f;
+                    CAN_Send(CAN_6020_1 ,&p_reg->TxData,8);
+                    // 每次发送完清空
+                    memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+
+                if (p_reg->gimbal.sentry_state == SENTRY_ENABLED)
+                    break;
+            }
+        }
+    }
+    /* USER CODE END StartSentry_modeTask */
 }

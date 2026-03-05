@@ -138,6 +138,13 @@ const osThreadAttr_t chassis_exPID_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityAboveNormal6,
 };
+/* Definitions for sentry_mode */
+osThreadId_t sentry_modeHandle;
+const osThreadAttr_t sentry_mode_attributes = {
+  .name = "sentry_mode",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal4,
+};
 /* Definitions for USBRxQueue */
 osMessageQueueId_t USBRxQueueHandle;
 const osMessageQueueAttr_t USBRxQueue_attributes = {
@@ -192,6 +199,7 @@ void chassis_CAN_RxTask(void *argument);
 void chassis_calculateTask(void *argument);
 void chassis_inPIDTask(void *argument);
 void chassis_exPIDTask(void *argument);
+void StartSentry_modeTask(void *argument);
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -283,6 +291,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of chassis_exPID */
   chassis_exPIDHandle = osThreadNew(chassis_exPIDTask, NULL, &chassis_exPID_attributes);
+
+  /* creation of sentry_mode */
+  sentry_modeHandle = osThreadNew(StartSentry_modeTask, NULL, &sentry_mode_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -528,6 +539,24 @@ __weak void chassis_exPIDTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END chassis_exPIDTask */
+}
+
+/* USER CODE BEGIN Header_StartSentry_modeTask */
+/**
+* @brief Function implementing the sentry_mode thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartSentry_modeTask */
+__weak void StartSentry_modeTask(void *argument)
+{
+  /* USER CODE BEGIN StartSentry_modeTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartSentry_modeTask */
 }
 
 /* Private application code --------------------------------------------------*/

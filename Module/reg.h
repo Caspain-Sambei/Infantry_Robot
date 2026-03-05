@@ -59,6 +59,8 @@ typedef struct{
         SENDPACKET sendpacket;  // 用于向视觉发送
         SENDPACKET recvpacket;  // 接收视觉的数据
         SENDPACKET curr_angle;
+
+        uint8_t sentry_state;
     }gimbal;
 
     struct
@@ -70,9 +72,7 @@ typedef struct{
 
     CAN_Structure TxData;
     // 作为CAN收发的过程量
-    uint8_t MData[8];
-
-
+    //uint8_t MData[8];
 
     // 遥控器
     RC_Ctl_t rc_Data;

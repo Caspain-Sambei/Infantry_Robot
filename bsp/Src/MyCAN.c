@@ -2,10 +2,37 @@
 // Created by 18796 on 2026/2/23.
 //
 #include "MyCAN.h"
+
+#include <string.h>
+
 #include "reg.h"
 #include "can.h"
 #include "cmsis_os.h"
 #include "bsp_Motor.h"
+
+/**
+ * @brief 注释掉发送完自动memset清空p_reg->TxData数组的功能
+ * @param ID CAN_6020_1，CAN_6020_2，CAN_C620_1，CAN_C620_2
+ * @param Data int16_t大小为4的数组
+ * @param Length 4
+ */
+void CAN_Send(uint16_t ID,CAN_Structure *Data,uint8_t Length)
+{
+    uint8_t arr[8] = {0};
+
+    arr[0] = (uint8_t)(Data->data1 & 0xFF);
+    arr[1] = (uint8_t)(Data->data1 >> 8);
+    arr[2] = (uint8_t)(Data->data2 & 0xFF);
+    arr[3] = (uint8_t)(Data->data2 >> 8);
+    arr[4] = (uint8_t)(Data->data3 & 0xFF);
+    arr[5] = (uint8_t)(Data->data3 >> 8);
+    arr[6] = (uint8_t)(Data->data4 & 0xFF);
+    arr[7] = (uint8_t)(Data->data4 >> 8);
+
+    CAN_bsp_Send(ID,arr,8);
+    // 每次发送完清零
+    //memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+}
 
 /**
  *
@@ -14,7 +41,7 @@
  * @param Length 数组大小
  * @return 发送成功即返回1
  */
-uint8_t CAN_Send(uint16_t ID,uint8_t *Data,uint8_t Length)
+uint8_t CAN_bsp_Send(uint16_t ID,uint8_t *Data,uint8_t Length)
 {
     if (Data == NULL || Length == 0 || Length > 8)
     {

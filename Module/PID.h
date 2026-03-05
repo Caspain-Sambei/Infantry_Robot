@@ -14,8 +14,8 @@
 //     float I_L,I_M;
 //     float OUTMAX,IMAX,DEADZONE;
 //     float D_OUT,LAST_D_OUT,LAST_OUT;
-//     //一阶低通滤波系数
-//     float RC_DF
+//     // 一阶低通滤波系数
+//     float RC_DF;
 //     // 前馈增益
 //     float k1,k2,last_Target;
 // }pid;

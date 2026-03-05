@@ -7,6 +7,7 @@
 #include "cmsis_os.h"
 #include "cmsis_os2.h"
 #include "bsp_rc.h"
+#include "MyCAN.h"
 #include "reg.h"
 
 /********************************************************
@@ -52,7 +53,7 @@ void StartSubsProcessTask(void *argument)
             p_reg->TxData.data3 = (int16_t)forward_back;
             p_reg->TxData.data4 = (int16_t)-forward_back;
 
-            Motor_Send(CAN_1,&p_reg->TxData,4);
+            CAN_Send(CAN_C620_1,&p_reg->TxData,4);
             // 每次发送完清零
             memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
         }
@@ -65,7 +66,7 @@ void StartSubsProcessTask(void *argument)
                 p_reg->TxData.data3 = (int16_t)-left_right;
                 p_reg->TxData.data4 = (int16_t)-left_right;
 
-                Motor_Send(CAN_1,&p_reg->TxData,4);
+                CAN_Send(CAN_C620_1,&p_reg->TxData,4);
                 // 每次发送完清零
                 memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
             }
@@ -76,7 +77,7 @@ void StartSubsProcessTask(void *argument)
                 p_reg->TxData.data3 = (int16_t)left_right;
                 p_reg->TxData.data4 = (int16_t)left_right;
 
-                Motor_Send(CAN_1,&p_reg->TxData,4);
+                CAN_Send(CAN_C620_1,&p_reg->TxData,4);
                 // 每次发送完清零
                 memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
             }
@@ -91,7 +92,7 @@ void StartSubsProcessTask(void *argument)
             p_reg->TxData.data3 = (int16_t)turn;
             p_reg->TxData.data4 = (int16_t)turn;
 
-            Motor_Send(CAN_1,&p_reg->TxData,4);
+            CAN_Send(CAN_C620_1,&p_reg->TxData,4);
             // 每次发送完清零
             memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
         }
@@ -102,7 +103,7 @@ void StartSubsProcessTask(void *argument)
             p_reg->TxData.data3 = (int16_t)turn;
             p_reg->TxData.data4 = (int16_t)turn;
 
-            Motor_Send(CAN_1,&p_reg->TxData,4);
+            CAN_Send(CAN_C620_1,&p_reg->TxData,4);
             // 每次发送完清零
             memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
         }

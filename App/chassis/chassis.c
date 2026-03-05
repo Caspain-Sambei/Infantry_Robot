@@ -1,5 +1,4 @@
 #include <tgmath.h>
-
 #include "bsp_Motor.h"
 #include "reg.h"
 #include "cmsis_os2.h"
