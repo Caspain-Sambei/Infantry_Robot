@@ -231,44 +231,104 @@ void Startbmi088Task(void *argument)
 void StartSentry_modeTask(void *argument)
 {
     /* USER CODE BEGIN StartSentry_modeTask */
+    typedef enum {
+        SENTRY_SCAN_RESET,    // 初始朝向（右上角45°）
+        SENTRY_SCAN_YAW,     // Yaw轴逐度扫描
+        SENTRY_SCAN_PITCH,   // Pitch轴逐度调整
+        SENTRY_SCAN_IDLE     // 空闲
+    } Sentry_Scan_State_t;
+    Sentry_Scan_State_t scan_state = SENTRY_SCAN_RESET;
+
+    uint8_t scan_yaw_cnt = 0;  // Yaw扫描计数（0~90）
+    uint8_t scan_pitch_cnt = 0;// Pitch扫描计数（0~90）
+    const uint32_t SCAN_DELAY = 10; // 扫描步长延时（ms，可调整）
+
+    // 初始角度（右上角45°）
+    const float INIT_YAW = 45.0f;
+    const float INIT_PITCH = 45.0f;
+
     /* Infinite loop */
     for(;;)
     {
-        if (p_reg->gimbal.sentry_state == SENTRY_DISABLED)
+        // 哨兵模式禁用时才执行扫描
+        if (p_reg->gimbal.sentry_state == SENTRY_ENABLED)
         {
-            // 云台先朝向右上角
-            p_reg->gimbal.yaw_pid.outer.Target += 45.0f;
-            p_reg->gimbal.pitch_pid.outer.Target += 45.0f;
-            // 初定为ID1 和ID2
-            p_reg->TxData.data1 = (int16_t)p_reg->gimbal.yaw_pid.outer.Target;
-            p_reg->TxData.data2 = (int16_t)p_reg->gimbal.pitch_pid.outer.Target;
-            CAN_Send(CAN_6020_1 ,&p_reg->TxData,8);
-            // 每次发送完清空
-            memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
-
-            // 进行扫描
-            for (uint8_t i = 0; i < 90; i++)
+            switch(scan_state)
             {
-                for (uint8_t j = 0; j < 90; j++)
-                {
-                    if (p_reg->gimbal.sentry_state == SENTRY_ENABLED)
-                        break;
+                case SENTRY_SCAN_RESET:
+                    p_reg->gimbal.yaw_pid.outer.Target += INIT_YAW;
+                    p_reg->gimbal.pitch_pid.outer.Target += INIT_PITCH;
 
-                    p_reg->gimbal.yaw_pid.outer.Target --;
-                        CAN_Send(CAN_6020_1 ,&p_reg->TxData,8);
-                        // 每次发送完清空
+                    p_reg->TxData.data1 = (int16_t)(p_reg->gimbal.yaw_pid.outer.Target); // 放大10倍提高精度
+                    p_reg->TxData.data2 = (int16_t)(p_reg->gimbal.pitch_pid.outer.Target);
+                        CAN_Send(CAN_6020_1, &p_reg->TxData, 8);
                         memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
-                }
-                p_reg->gimbal.pitch_pid.outer.Target --;
-                p_reg->gimbal.yaw_pid.outer.Target += 90.0f;
-                    CAN_Send(CAN_6020_1 ,&p_reg->TxData,8);
-                    // 每次发送完清空
-                    memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+                    // 切换到Yaw扫描状态
+                    scan_state = SENTRY_SCAN_YAW;
+                    scan_yaw_cnt = 0;
+                    scan_pitch_cnt = 0;
+                    break;
 
-                if (p_reg->gimbal.sentry_state == SENTRY_ENABLED)
+                case SENTRY_SCAN_YAW:
+                    // 步骤2：Yaw轴逐度向左扫描（每次任务循环只减1°）
+                    if (scan_yaw_cnt < 90)
+                    {
+                        // 只修改一次角度，避免重复操作
+                        p_reg->gimbal.yaw_pid.outer.Target -= 1.0f;
+                        // 角度范围保护（-45°~45°）
+                        if (p_reg->gimbal.yaw_pid.outer.Target < -45.0f)
+                            p_reg->gimbal.yaw_pid.outer.Target = -45.0f;
+                        if (p_reg->gimbal.yaw_pid.outer.Target > 45.0f)
+                            p_reg->gimbal.yaw_pid.outer.Target = 45.0f;
+
+                        // 更新CAN数据并发送
+                        p_reg->TxData.data1 = (int16_t)(p_reg->gimbal.yaw_pid.outer.Target);
+                        p_reg->TxData.data2 = (int16_t)(p_reg->gimbal.pitch_pid.outer.Target);
+                            CAN_Send(CAN_6020_1, &p_reg->TxData, 8);
+                            memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+
+                        scan_yaw_cnt++;
+                    }
+                    else
+                    {
+                        scan_state = SENTRY_SCAN_PITCH;
+                        scan_yaw_cnt = 0; // 重置Yaw计数
+                    }
+                    break;
+
+                case SENTRY_SCAN_PITCH:
+                    // 步骤3：Pitch轴逐度向下扫描（每次任务循环只减1°）
+                    if (scan_pitch_cnt < 90)
+                    {
+                        p_reg->gimbal.pitch_pid.outer.Target -= 1.0f;
+                        // Pitch角度保护（防止超过机械限位，示例：-30°~60°）
+                        // 这里用target还是actual？
+                        if (p_reg->gimbal.pitch_pid.outer.Target < -45.0f)
+                            p_reg->gimbal.pitch_pid.outer.Target = -45.0f;
+                        if (p_reg->gimbal.pitch_pid.outer.Target > 45.0f)
+                            p_reg->gimbal.pitch_pid.outer.Target = 45.0f;
+
+                        // 更新CAN数据并发送
+                        p_reg->TxData.data1 = (int16_t)(p_reg->gimbal.yaw_pid.outer.Target);
+                        p_reg->TxData.data2 = (int16_t)(p_reg->gimbal.pitch_pid.outer.Target);
+                            CAN_Send(CAN_6020_1, &p_reg->TxData, 8);
+                            memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+
+                        scan_pitch_cnt++;
+                        // 回到Yaw扫描，继续循环
+                        scan_state = SENTRY_SCAN_YAW;
+                    }
+                    else
+                    {
+                        // 一轮扫描完成，重置状态（重新从初始角度开始）
+                        scan_state = SENTRY_SCAN_RESET;
+                        scan_pitch_cnt = 0;
+                    }
                     break;
             }
         }
+        // 核心：释放CPU，让其他任务运行（RTOS必加）
+        osDelay(SCAN_DELAY);
     }
     /* USER CODE END StartSentry_modeTask */
 }
