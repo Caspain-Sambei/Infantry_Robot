@@ -18,7 +18,13 @@
 /***************************************************************************
  *								USB通信
  **************************************************************************/
-/* USER CODE END Header_StartUSB_TxTask04 */
+/* USER CODE BEGIN Header_StartUSB_TxTask */
+/**
+* @brief Function implementing the USB_TxTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartUSB_TxTask */
 void StartUSB_TxTask(void *argument)
 {
     /* USER CODE BEGIN StartUSB_TxTask04 */
@@ -36,6 +42,13 @@ void StartUSB_TxTask(void *argument)
     /* USER CODE END StartUSB_TxTask04 */
 }
 
+/* USER CODE BEGIN Header_StartUSB_RxTask */
+/**
+* @brief Function implementing the USB_RxTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartUSB_RxTask */
 void StartUSB_RxTask(void *argument)
 {
     /* USER CODE BEGIN StartUSB_Rx */
@@ -67,7 +80,13 @@ void StartUSB_RxTask(void *argument)
 /***************************************************************************
  *					云台PID，最大输出为500，积分限幅为100
  **************************************************************************/
-/* USER CODE END Header_StartPIDTask */
+/* USER CODE BEGIN Header_gimbal_inPIDTask */
+/**
+  * @brief  Function implementing the gimbal_inPID thread.
+  * @param  argument: Not used
+  * @retval None
+  */
+/* USER CODE END Header_gimbal_inPIDTask */
 void gimbal_inPIDTask(void *argument)
 {
     /* init code for USB_DEVICE */
@@ -97,7 +116,13 @@ void gimbal_inPIDTask(void *argument)
     /* USER CODE END StartPIDTask */
 }
 
-/* USER CODE END Header_StartexPIDTask */
+/* USER CODE BEGIN Header_gimbal_exPIDTask */
+/**
+* @brief Function implementing the gimbal_exPID thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_gimbal_exPIDTask */
 void gimbal_exPIDTask(void *argument)
 {
     /* USER CODE BEGIN StartexPIDTask */
@@ -131,6 +156,13 @@ void gimbal_exPIDTask(void *argument)
  **************************************************************************/
 //PID 任务刚读到data1，你还没改完data2/data3/data4，导致 PID 拿到 “半截数据”，云台控制抖 / 失控
 
+/* USER CODE BEGIN Header_StartCAN_TxTask */
+/**
+* @brief Function implementing the CAN_TxTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartCAN_TxTask */
 void StartCAN_TxTask(void *argument)
 {
     /* USER CODE BEGIN StartCAN_Tx */
@@ -144,7 +176,13 @@ void StartCAN_TxTask(void *argument)
     /* USER CODE END StartCAN_Tx */
 }
 
-/* USER CODE END Header_StartCAN_Rx */
+/* USER CODE BEGIN Header_gimbal_CAN_RxTask */
+/**
+* @brief Function implementing the gimbal_CANTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_gimbal_CAN_RxTask */
 void gimbal_CAN_RxTask(void *argument)
 {
     /* USER CODE BEGIN StartCAN_Rx */
@@ -188,6 +226,12 @@ void gimbal_CAN_RxTask(void *argument)
 /***************************************************************************
  *					        BMI088和四元解算
  **************************************************************************/
+/* USER CODE BEGIN Header_Startbmi088Task */
+/**
+* @brief Function implementing the bmi088Task thread.
+* @param argument: Not used
+* @retval None
+*/
 /* USER CODE END Header_Startbmi088Task */
 void Startbmi088Task(void *argument)
 {
@@ -227,6 +271,12 @@ void Startbmi088Task(void *argument)
 /***************************************************************************
  *			哨兵模式:云台扫描正前方上下左右90°的正方形平面,假定没检测到时视觉不发送消息
  **************************************************************************/
+/* USER CODE BEGIN Header_StartSentry_modeTask */
+/**
+* @brief Function implementing the sentry_mode thread.
+* @param argument: Not used
+* @retval None
+*/
 /* USER CODE END Header_StartSentry_modeTask */
 void StartSentry_modeTask(void *argument)
 {

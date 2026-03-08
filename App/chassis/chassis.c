@@ -3,7 +3,13 @@
 #include "reg.h"
 #include "cmsis_os2.h"
 
-/* USER CODE END Header_chassisCAN_Rx */
+/* USER CODE BEGIN Header_chassis_CAN_RxTask */
+/**
+* @brief Function implementing the chassis_CANTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_chassis_CAN_RxTask */
 void chassis_CAN_RxTask(void *argument)
 {
     /* USER CODE BEGIN chassisCAN_Rx */
@@ -45,7 +51,13 @@ void chassis_CAN_RxTask(void *argument)
     /* USER CODE END chassisCAN_Rx */
 }
 
-/* USER CODE END Header_chassis_calculate */
+/* USER CODE BEGIN Header_chassis_calculateTask */
+/**
+* @brief Function implementing the chassis_calcul thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_chassis_calculateTask */
 void chassis_calculateTask(void *argument)
 {
     /* USER CODE BEGIN chassis_calculate */
@@ -76,6 +88,12 @@ void chassis_calculateTask(void *argument)
 /***************************************************************************
  *								底盘的PID
  **************************************************************************/
+/* USER CODE BEGIN Header_chassis_inPIDTask */
+/**
+* @brief Function implementing the chassis_inPID thread.
+* @param argument: Not used
+* @retval None
+*/
 /* USER CODE END Header_chassis_inPIDTask */
 __weak void chassis_inPIDTask(void *argument)
 {
@@ -88,6 +106,12 @@ __weak void chassis_inPIDTask(void *argument)
     /* USER CODE END chassis_inPIDTask */
 }
 
+/* USER CODE BEGIN Header_chassis_exPIDTask */
+/**
+* @brief Function implementing the chassis_exPID thread.
+* @param argument: Not used
+* @retval None
+*/
 /* USER CODE END Header_chassis_exPIDTask */
 __weak void chassis_exPIDTask(void *argument)
 {

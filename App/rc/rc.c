@@ -14,7 +14,13 @@
 * 以轮子逆时针方向为正转
 * 左上为1，右上为2，左下为3，右下为4
  ********************************************************/
-
+/* USER CODE BEGIN Header_StartSbusTransTask */
+/**
+* @brief Function implementing the SbusTransTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartSbusTransTask */
 void StartSbusTransTask(void *argument)
 {
     /* USER CODE BEGIN StartSbusProcessor */
@@ -29,7 +35,14 @@ void StartSbusTransTask(void *argument)
     /* USER CODE END StartSbusProcessor */
 }
 
-/* USER CODE END Header_StartSubsProcess */
+
+/* USER CODE BEGIN Header_StartSubsProcessTask */
+/**
+* @brief Function implementing the SubsProcessTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartSubsProcessTask */
 void StartSubsProcessTask(void *argument)
 {
     /* USER CODE BEGIN StartSubsProcess */
