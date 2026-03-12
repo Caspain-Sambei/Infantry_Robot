@@ -103,13 +103,6 @@ const osThreadAttr_t SbusTransTask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityAboveNormal7,
 };
-/* Definitions for SubsProcessTask */
-osThreadId_t SubsProcessTaskHandle;
-const osThreadAttr_t SubsProcessTask_attributes = {
-  .name = "SubsProcessTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal5,
-};
 /* Definitions for chassis_CANTask */
 osThreadId_t chassis_CANTaskHandle;
 const osThreadAttr_t chassis_CANTask_attributes = {
@@ -170,11 +163,6 @@ osMessageQueueId_t SbusFrameQueueHandle;
 const osMessageQueueAttr_t SbusFrameQueue_attributes = {
   .name = "SbusFrameQueue"
 };
-/* Definitions for Sbus_2ndQueue */
-osMessageQueueId_t Sbus_2ndQueueHandle;
-const osMessageQueueAttr_t Sbus_2ndQueue_attributes = {
-  .name = "Sbus_2ndQueue"
-};
 /* Definitions for CAN_2RxQueue */
 osMessageQueueId_t CAN_2RxQueueHandle;
 const osMessageQueueAttr_t CAN_2RxQueue_attributes = {
@@ -194,7 +182,6 @@ void StartCAN_TxTask(void *argument);
 void gimbal_CAN_RxTask(void *argument);
 void gimbal_exPIDTask(void *argument);
 void StartSbusTransTask(void *argument);
-void StartSubsProcessTask(void *argument);
 void chassis_CAN_RxTask(void *argument);
 void chassis_calculateTask(void *argument);
 void chassis_inPIDTask(void *argument);
@@ -242,9 +229,6 @@ void MX_FREERTOS_Init(void) {
   /* creation of SbusFrameQueue */
   SbusFrameQueueHandle = osMessageQueueNew (16, 18, &SbusFrameQueue_attributes);
 
-  /* creation of Sbus_2ndQueue */
-  Sbus_2ndQueueHandle = osMessageQueueNew (16, 20, &Sbus_2ndQueue_attributes);
-
   /* creation of CAN_2RxQueue */
   CAN_2RxQueueHandle = osMessageQueueNew (16, 9, &CAN_2RxQueue_attributes);
 
@@ -276,9 +260,6 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of SbusTransTask */
   SbusTransTaskHandle = osThreadNew(StartSbusTransTask, NULL, &SbusTransTask_attributes);
-
-  /* creation of SubsProcessTask */
-  SubsProcessTaskHandle = osThreadNew(StartSubsProcessTask, NULL, &SubsProcessTask_attributes);
 
   /* creation of chassis_CANTask */
   chassis_CANTaskHandle = osThreadNew(chassis_CAN_RxTask, NULL, &chassis_CANTask_attributes);
@@ -449,24 +430,6 @@ __weak void StartSbusTransTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END StartSbusTransTask */
-}
-
-/* USER CODE BEGIN Header_StartSubsProcessTask */
-/**
-* @brief Function implementing the SubsProcessTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartSubsProcessTask */
-__weak void StartSubsProcessTask(void *argument)
-{
-  /* USER CODE BEGIN StartSubsProcessTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END StartSubsProcessTask */
 }
 
 /* USER CODE BEGIN Header_chassis_CAN_RxTask */

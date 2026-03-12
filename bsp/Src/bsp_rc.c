@@ -2,14 +2,16 @@
 // Created by 18796 on 2026/2/27.
 //
 #include "bsp_rc.h"
-#include "bsp_uart.h"
+#include <string.h>
+#include "bsp_Motor.h"
 #include "cmsis_os2.h"
+#include "MyCAN.h"
 #include "usart.h"
 #include "reg.h"
+
 /* ----------------------- Internal Data ----------------------------------- */
 volatile unsigned char sbus_rx_buffer[2][RC_FRAME_LENGTH];  //double sbus rx buffer to save data
 static RC_Ctl_t RC_CtrlData;
-
 
 /******************************************************************************
  * @fn      RemoteDataProcess
@@ -44,8 +46,78 @@ void RemoteDataProcess(uint8_t *pData)
 
     RC_CtrlData.key.v = ((int16_t)pData[14]);// | ((int16_t)pData[15] << 8);
 
-    osMessageQueuePut(Sbus_2ndQueueHandle,&RC_CtrlData,0,osWaitForever);
     //your control code ….
+    float left_right = (float)p_reg->rc_Data.rc.ch2 * RC_TO_3508_Current * 0.01f;
+    p_reg->chassis.target_speed = left_right;
+    float forward_back = (float)p_reg->rc_Data.rc.ch3 * RC_TO_3508_Current * 0.01f;
+    // 水平转动先给个相对小值
+    float turn = (float)p_reg->rc_Data.rc.ch0 * RC_TO_3508_Current * 0.01f;
+    //float push = (float)p_reg->rc_Data.rc.ch1 * RC_TO_3508_Current;
+    /****************************************************************
+     *                      水平平动
+     ****************************************************************/
+    if (forward_back != 0.0f)
+    {
+        p_reg->TxData.data1 = (int16_t)forward_back;
+        p_reg->TxData.data2 = (int16_t)-forward_back;
+        p_reg->TxData.data3 = (int16_t)forward_back;
+        p_reg->TxData.data4 = (int16_t)-forward_back;
+
+        CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
+        // 每次发送完清零
+        memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+    }
+    if (left_right != 0.0f)
+    {
+        if (left_right > 0.0f) // 向右
+        {
+            p_reg->TxData.data1 = (int16_t)left_right;
+            p_reg->TxData.data2 = (int16_t)left_right;
+            p_reg->TxData.data3 = (int16_t)-left_right;
+            p_reg->TxData.data4 = (int16_t)-left_right;
+
+            CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
+            // 每次发送完清零
+            memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+        }
+        else
+        {
+            p_reg->TxData.data1 = (int16_t)-left_right;
+            p_reg->TxData.data2 = (int16_t)-left_right;
+            p_reg->TxData.data3 = (int16_t)left_right;
+            p_reg->TxData.data4 = (int16_t)left_right;
+
+            CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
+            // 每次发送完清零
+            memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+        }
+    }
+    /****************************************************************
+     *                      水平转动;设遥杆向右为正
+     ****************************************************************/
+    if (turn > 0.0f)
+    {
+        p_reg->TxData.data1 = (int16_t)turn;
+        p_reg->TxData.data2 = (int16_t)turn;
+        p_reg->TxData.data3 = (int16_t)turn;
+        p_reg->TxData.data4 = (int16_t)turn;
+
+        CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
+        // 每次发送完清零
+        memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+    }
+    else
+    {
+        p_reg->TxData.data1 = (int16_t)turn;
+        p_reg->TxData.data2 = (int16_t)turn;
+        p_reg->TxData.data3 = (int16_t)turn;
+        p_reg->TxData.data4 = (int16_t)turn;
+
+        CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
+        // 每次发送完清零
+        memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+    }
+
 }
 
 //CT = 0: 当前使用Memory 0，下一个将使用Memory1。等于1则相反。

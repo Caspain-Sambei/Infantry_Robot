@@ -95,7 +95,7 @@ void chassis_calculateTask(void *argument)
 * @retval None
 */
 /* USER CODE END Header_chassis_inPIDTask */
-__weak void chassis_inPIDTask(void *argument)
+void chassis_inPIDTask(void *argument)
 {
     /* USER CODE BEGIN chassis_inPIDTask */
     /* Infinite loop */
@@ -104,22 +104,4 @@ __weak void chassis_inPIDTask(void *argument)
         osDelay(1);
     }
     /* USER CODE END chassis_inPIDTask */
-}
-
-/* USER CODE BEGIN Header_chassis_exPIDTask */
-/**
-* @brief Function implementing the chassis_exPID thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_chassis_exPIDTask */
-__weak void chassis_exPIDTask(void *argument)
-{
-    /* USER CODE BEGIN chassis_exPIDTask */
-    /* Infinite loop */
-    for(;;)
-    {
-        osDelay(10);
-    }
-    /* USER CODE END chassis_exPIDTask */
 }

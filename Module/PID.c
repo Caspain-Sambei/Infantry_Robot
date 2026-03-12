@@ -32,11 +32,11 @@ void PID_Update(pid *p,uint8_t mode)
 	// =======================变速积分======================
 	if(p->ki != 0.0f)
 	{
-		if (fabs(p->PreError) < p->I_L)
+		if (fabs(p->PreError) <= p->I_L)
 		{
 			p->SunError += (p->PreError + p->LastError) / 2.0f;
 		}
-		else if (fabs(p->PreError) < p->I_M)
+		else if (fabs(p->PreError) <= p->I_M)
 		{
 			p->SunError += (p->PreError + p->LastError) / 2.0f * (p->I_M - p->PreError) / (p->I_M - p->I_L);
 		}
@@ -53,8 +53,7 @@ void PID_Update(pid *p,uint8_t mode)
 	 **************************************************************************/
 	// =======================不完全微分===================
 	// 在纯微分项后面串联一个一阶低通滤波器，来抑制微分项的噪声放大效应
-	float temp_Out = p->kp * p->PreError
-			+ p->ki * p->SunError;
+	float temp_Out = p->kp * p->PreError + p->ki * p->SunError;
 
 	p->D_OUT = (1 - p->RC_DF) * (temp_Out - p->LAST_OUT)
 				+ p->RC_DF * p->LAST_D_OUT;
@@ -63,7 +62,7 @@ void PID_Update(pid *p,uint8_t mode)
 	 *								前馈计算
 	 **************************************************************************/
 	float FeedForward = p->k1 * p->Target
-						+ p->k2 * (p->Target - p->last_Target);
+						+ (1 - p->k1) * (p->Target - p->last_Target);
 
 	/***************************************************************************
 	 *								增量式PID计算
@@ -85,6 +84,32 @@ void PID_Update(pid *p,uint8_t mode)
 	 **************************************************************************/
 	if(p->Out >= p->OUTMAX){p->Out = p->OUTMAX;}
 	if(p->Out <= -p->OUTMAX){p->Out = -p->OUTMAX;}
+}
+
+/**
+ * @brief PID参数初始化
+ * @param p PID结构体类型指针
+ * @param kp P
+ * @param ki I
+ * @param kd D
+ * @param OUTMAX 输出限幅
+ * @param IMAX 积分限幅
+ * @param DEADZONE 积分死区
+ * @param I_L 变速积分中档范围
+ * @param I_M 变速积分高档范围
+ * @param RC_DF 一阶低通滤波增益
+ * @param k1 前馈增益
+ */
+void PID_Init(pid *p,
+              float kp,float ki,float kd,
+              float OUTMAX,float IMAX,float DEADZONE,
+              float I_L,float I_M,
+              float RC_DF,float k1)
+{
+	p->kp = kp;p->ki = ki;p->kd = kd;
+	p->OUTMAX = OUTMAX;p->IMAX = IMAX;p->DEADZONE = DEADZONE;
+	p->I_L = I_L;p->I_M = I_M;
+	p->RC_DF = RC_DF;p->k1 = k1;
 }
 
 void PID_Clear(pid *p)

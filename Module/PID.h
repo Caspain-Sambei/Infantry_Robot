@@ -18,9 +18,14 @@
 //     float RC_DF;
 //     // 前馈增益
 //     float k1,k2,last_Target;
-// }pid;
+// }PID_Structure;
 
 void PID_Update(pid *p,uint8_t mode);
+void PID_Init(pid *p,
+              float kp,float ki,float kd,
+              float OUTMAX,float IMAX,float DEADZONE,
+              float I_L,float I_M,
+              float RC_DF,float k1);
 void PID_Clear(pid *p);
 
 #endif

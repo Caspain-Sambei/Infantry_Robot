@@ -156,26 +156,6 @@ void gimbal_exPIDTask(void *argument)
  **************************************************************************/
 //PID 任务刚读到data1，你还没改完data2/data3/data4，导致 PID 拿到 “半截数据”，云台控制抖 / 失控
 
-/* USER CODE BEGIN Header_StartCAN_TxTask */
-/**
-* @brief Function implementing the CAN_TxTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartCAN_TxTask */
-void StartCAN_TxTask(void *argument)
-{
-    /* USER CODE BEGIN StartCAN_Tx */
-    /* Infinite loop */
-    for(;;)
-    {
-        // CAN_Send(CAN_6020_1 ,&p_reg->TxData,8);
-
-        osDelay(1);
-    }
-    /* USER CODE END StartCAN_Tx */
-}
-
 /* USER CODE BEGIN Header_gimbal_CAN_RxTask */
 /**
 * @brief Function implementing the gimbal_CANTask thread.
