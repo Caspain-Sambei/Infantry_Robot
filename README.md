@@ -13,6 +13,4 @@
 `HAL_CAN_RxFifo0MsgPendingCallback`里CAN1收到的数据具体存放到yaw还是pitch的Rxdata数组还不确定，因为不确定具体ID。
 此前一直希望bsp层的代码和中层代码能解耦，所以bsp层的函数大多使用队列将数据发送到rtos任务中处理.
 
-`chassis_CAN_RxTask`中获取的是转子转速(经减速箱后的最终输出轴转速)，怎么映射为底盘速度，将转子速度*sin45°？
-
-`哨兵模式`还要优化
+`chassis_CAN_RxTask`中获取的是转子转速(经减速箱后的最终输出轴转速)，映射为底盘速度
