@@ -13,6 +13,6 @@
 
 #define USB_FRAME_LEN    10
 
-void USB_Send(SENDPACKET Data);
+void USB_Send(SENDPACKET *Data);
 
 #endif //GIMBAL_MYUSB_H

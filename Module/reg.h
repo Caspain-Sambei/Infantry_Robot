@@ -66,7 +66,9 @@ typedef struct{
     struct
     {
         PID_Structure pitch_pid,yaw_pid,roll_pid;
-        float target_speed,target_angle,target_omega;
+        PID_Structure Speed_pid;
+        float target_speed,actual_speed;
+        float target_angle,target_omega;
         CAN_Structure Motor_1_RxData,Motor_2_RxData,Motor_3_RxData,Motor_4_RxData;
     }chassis;
 
@@ -85,11 +87,7 @@ extern TYPEDEF reg;
 extern TYPEDEF *p_reg;
 
 extern osMessageQueueId_t USBRxQueueHandle;
-extern osMessageQueueId_t USBTxQueueHandle;
-extern osMessageQueueId_t CAN_1RxQueueHandle;
 extern osMessageQueueId_t CAN_2RxQueueHandle;
-extern osMessageQueueId_t BMI_USBTxQueueHandle;
 extern osMessageQueueId_t SbusFrameQueueHandle;
-extern osMessageQueueId_t Sbus_2ndQueueHandle;
 
 #endif //GIMBAL_REG_H

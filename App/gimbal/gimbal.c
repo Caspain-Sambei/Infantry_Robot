@@ -18,29 +18,6 @@
 /***************************************************************************
  *								USB通信
  **************************************************************************/
-/* USER CODE BEGIN Header_StartUSB_TxTask */
-/**
-* @brief Function implementing the USB_TxTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartUSB_TxTask */
-void StartUSB_TxTask(void *argument)
-{
-    /* USER CODE BEGIN StartUSB_TxTask04 */
-    SENDPACKET tx_data;
-    /* Infinite loop */
-    for(;;)
-    {
-        osStatus_t status = osMessageQueueGet(BMI_USBTxQueueHandle,&tx_data,NULL,osWaitForever);
-
-        if (status == osOK)
-        {
-            USB_Send(tx_data);
-        }
-    }
-    /* USER CODE END StartUSB_TxTask04 */
-}
 
 /* USER CODE BEGIN Header_StartUSB_RxTask */
 /**
@@ -151,59 +128,6 @@ void gimbal_exPIDTask(void *argument)
 }
 
 /***************************************************************************
- *								CAN通信
- *				云台接收来自视觉的数据，所以暂时不用接收电机的返回值
- **************************************************************************/
-//PID 任务刚读到data1，你还没改完data2/data3/data4，导致 PID 拿到 “半截数据”，云台控制抖 / 失控
-
-/* USER CODE BEGIN Header_gimbal_CAN_RxTask */
-/**
-* @brief Function implementing the gimbal_CANTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_gimbal_CAN_RxTask */
-void gimbal_CAN_RxTask(void *argument)
-{
-    /* USER CODE BEGIN StartCAN_Rx */
-    static uint8_t buf[9]  ={0};
-    /* Infinite loop */
-    for(;;)
-    {
-        osMessageQueueGet(CAN_1RxQueueHandle,&buf,NULL,osWaitForever);
-
-        if (buf[8] == 1)
-        {
-            p_reg->gimbal.pitch_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
-            p_reg->gimbal.pitch_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
-            p_reg->gimbal.pitch_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
-            p_reg->gimbal.pitch_RxData.data4 = ((int16_t)buf[7] & 0xFF) | ((int16_t)buf[6] << 8);
-        }
-        if (buf[8] == 2)
-        {
-            p_reg->gimbal.yaw_RxData.data1 = ((int16_t)buf[1] &0xFF) | ((int16_t)buf[0]<<8);
-            p_reg->gimbal.yaw_RxData.data2 = ((int16_t)buf[3] &0xFF) | ((int16_t)buf[2]<<8);
-            p_reg->gimbal.yaw_RxData.data3 = ((int16_t)buf[5] &0xFF) | ((int16_t)buf[4]<<8);
-            p_reg->gimbal.yaw_RxData.data4 = ((int16_t)buf[7] &0xFF) | ((int16_t)buf[6]<<8);
-        }
-        if (buf[8] == 3)
-        {
-            p_reg->gimbal.pitch_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
-            p_reg->gimbal.pitch_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
-            p_reg->gimbal.pitch_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
-            p_reg->gimbal.pitch_RxData.data4 = ((int16_t)buf[7] & 0xFF) | ((int16_t)buf[6] << 8);
-        }
-        if (buf[8] == 4)
-        {
-            p_reg->gimbal.yaw_RxData.data1 = ((int16_t)buf[1] &0xFF) | ((int16_t)buf[0]<<8);
-            p_reg->gimbal.yaw_RxData.data2 = ((int16_t)buf[3] &0xFF) | ((int16_t)buf[2]<<8);
-            p_reg->gimbal.yaw_RxData.data3 = ((int16_t)buf[5] &0xFF) | ((int16_t)buf[4]<<8);
-            p_reg->gimbal.yaw_RxData.data4 = ((int16_t)buf[7] &0xFF) | ((int16_t)buf[6]<<8);
-        }
-    }
-    /* USER CODE END StartCAN_Rx */
-}
-/***************************************************************************
  *					        BMI088和四元解算
  **************************************************************************/
 /* USER CODE BEGIN Header_Startbmi088Task */
@@ -242,7 +166,13 @@ void Startbmi088Task(void *argument)
         p_reg->gimbal.curr_angle.roll  = atan2f(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1]*q[1]+q[2]*q[2]))
                                     * 57.3f;
 
-        osMessageQueuePut(BMI_USBTxQueueHandle,&p_reg->gimbal.curr_angle,0,osWaitForever);
+        // 向视觉发送数据
+        p_reg->gimbal.sendpacket.pitch = p_reg->gimbal.curr_angle.pitch;
+        p_reg->gimbal.sendpacket.yaw = p_reg->gimbal.curr_angle.yaw;
+        p_reg->gimbal.sendpacket.roll = p_reg->gimbal.curr_angle.roll;
+
+        USB_Send(&p_reg->gimbal.sendpacket);
+
         osDelay(10);
     }
     /* USER CODE END Startbmi088Task */
@@ -267,49 +197,52 @@ void StartSentry_modeTask(void *argument)
         SENTRY_SCAN_PITCH,   // Pitch轴逐度调整
         SENTRY_SCAN_IDLE     // 空闲
     } Sentry_Scan_State_t;
+
     Sentry_Scan_State_t scan_state = SENTRY_SCAN_RESET;
 
-    uint8_t scan_yaw_cnt = 0;  // Yaw扫描计数（0~90）
-    uint8_t scan_pitch_cnt = 0;// Pitch扫描计数（0~90）
+    uint8_t scan_yaw_cnt = 0;       // Yaw扫描计数（0~90）
+    uint8_t scan_pitch_cnt = 0;     // Pitch扫描计数（0~90）
     const uint32_t SCAN_DELAY = 10; // 扫描步长延时（ms，可调整）
 
+    float YAW_MIN = -45.0f;
+    float YAW_MAX = 45.0f;
     // 初始角度（右上角45°）
-    const float INIT_YAW = 45.0f;
-    const float INIT_PITCH = 45.0f;
+    const float YAW_INIT = 45.0f;
+    const float PITCH_INIT = 45.0f;
 
     /* Infinite loop */
     for(;;)
     {
-        // 哨兵模式禁用时才执行扫描
         if (p_reg->gimbal.sentry_state == SENTRY_ENABLED)
         {
             switch(scan_state)
             {
                 case SENTRY_SCAN_RESET:
-                    p_reg->gimbal.yaw_pid.outer.Target += INIT_YAW;
-                    p_reg->gimbal.pitch_pid.outer.Target += INIT_PITCH;
+                    p_reg->gimbal.yaw_pid.outer.Target = YAW_INIT;
+                    p_reg->gimbal.pitch_pid.outer.Target = PITCH_INIT;
 
-                    p_reg->TxData.data1 = (int16_t)(p_reg->gimbal.yaw_pid.outer.Target); // 放大10倍提高精度
+                    p_reg->TxData.data1 = (int16_t)(p_reg->gimbal.yaw_pid.outer.Target);
                     p_reg->TxData.data2 = (int16_t)(p_reg->gimbal.pitch_pid.outer.Target);
                         CAN_Send(CAN_6020_1, &p_reg->TxData, 8);
                         memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
-                    // 切换到Yaw扫描状态
+                    // 1，切换到Yaw扫描状态
                     scan_state = SENTRY_SCAN_YAW;
                     scan_yaw_cnt = 0;
                     scan_pitch_cnt = 0;
                     break;
 
                 case SENTRY_SCAN_YAW:
-                    // 步骤2：Yaw轴逐度向左扫描（每次任务循环只减1°）
+                    // 2，Yaw轴逐度向左扫描（每次任务循环只减1°）
+                    // 90是转动次数不是角度
                     if (scan_yaw_cnt < 90)
                     {
                         // 只修改一次角度，避免重复操作
                         p_reg->gimbal.yaw_pid.outer.Target -= 1.0f;
-                        // 角度范围保护（-45°~45°）
-                        if (p_reg->gimbal.yaw_pid.outer.Target < -45.0f)
-                            p_reg->gimbal.yaw_pid.outer.Target = -45.0f;
-                        if (p_reg->gimbal.yaw_pid.outer.Target > 45.0f)
-                            p_reg->gimbal.yaw_pid.outer.Target = 45.0f;
+                            // 角度范围保护（-45°~45°）
+                            if (p_reg->gimbal.yaw_pid.outer.Target < YAW_MIN)
+                                p_reg->gimbal.yaw_pid.outer.Target = YAW_MIN;
+                            if (p_reg->gimbal.yaw_pid.outer.Target > YAW_MAX)
+                                p_reg->gimbal.yaw_pid.outer.Target = YAW_MAX;
 
                         // 更新CAN数据并发送
                         p_reg->TxData.data1 = (int16_t)(p_reg->gimbal.yaw_pid.outer.Target);
@@ -327,16 +260,15 @@ void StartSentry_modeTask(void *argument)
                     break;
 
                 case SENTRY_SCAN_PITCH:
-                    // 步骤3：Pitch轴逐度向下扫描（每次任务循环只减1°）
+                    // 3，Pitch轴逐度向下扫描（每次任务循环只减1°）
                     if (scan_pitch_cnt < 90)
                     {
                         p_reg->gimbal.pitch_pid.outer.Target -= 1.0f;
-                        // Pitch角度保护（防止超过机械限位，示例：-30°~60°）
-                        // 这里用target还是actual？
-                        if (p_reg->gimbal.pitch_pid.outer.Target < -45.0f)
-                            p_reg->gimbal.pitch_pid.outer.Target = -45.0f;
-                        if (p_reg->gimbal.pitch_pid.outer.Target > 45.0f)
-                            p_reg->gimbal.pitch_pid.outer.Target = 45.0f;
+                            // 这里用target还是actual？
+                            if (p_reg->gimbal.pitch_pid.outer.Target < YAW_MIN)
+                                p_reg->gimbal.pitch_pid.outer.Target = YAW_MIN;
+                            if (p_reg->gimbal.pitch_pid.outer.Target > YAW_MAX)
+                                p_reg->gimbal.pitch_pid.outer.Target = YAW_MAX;
 
                         // 更新CAN数据并发送
                         p_reg->TxData.data1 = (int16_t)(p_reg->gimbal.yaw_pid.outer.Target);
@@ -357,7 +289,10 @@ void StartSentry_modeTask(void *argument)
                     break;
             }
         }
-        // 核心：释放CPU，让其他任务运行（RTOS必加）
+        else
+        {
+            // 云台识别到目标，自稳
+        }
         osDelay(SCAN_DELAY);
     }
     /* USER CODE END StartSentry_modeTask */

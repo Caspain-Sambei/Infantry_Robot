@@ -1,6 +1,6 @@
 D:\DevEnv\STM32CubeCLT_1.18.0\CMake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=D:/CLion 2025.3.2/bin/ninja/win/x64/ninja.exe" -DCMAKE_C_COMPILER=D:/DevEnv/New_OpenOCD/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe -DCMAKE_CXX_COMPILER=D:/DevEnv/New_OpenOCD/GNU-tools-for-STM32/bin/arm-none-eabi-g++.exe -G Ninja -S D:\CODE\CLionProjects\gimbal -B D:\CODE\CLionProjects\gimbal\build
 Build type: Debug
--- Configuring done (0.3s)
+-- Configuring done (0.1s)
 You have changed variables that require your cache to be deleted.
 Configure will be re-run and you may have to reset some variables.
 The following variables have changed:

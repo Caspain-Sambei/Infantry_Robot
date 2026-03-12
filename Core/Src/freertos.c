@@ -61,33 +61,12 @@ const osThreadAttr_t bmi088Task_attributes = {
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal6,
 };
-/* Definitions for USB_TxTask */
-osThreadId_t USB_TxTaskHandle;
-const osThreadAttr_t USB_TxTask_attributes = {
-  .name = "USB_TxTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityHigh3,
-};
 /* Definitions for USB_RxTask */
 osThreadId_t USB_RxTaskHandle;
 const osThreadAttr_t USB_RxTask_attributes = {
   .name = "USB_RxTask",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityHigh4,
-};
-/* Definitions for CAN_TxTask */
-osThreadId_t CAN_TxTaskHandle;
-const osThreadAttr_t CAN_TxTask_attributes = {
-  .name = "CAN_TxTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityHigh,
-};
-/* Definitions for gimbal_CANTask */
-osThreadId_t gimbal_CANTaskHandle;
-const osThreadAttr_t gimbal_CANTask_attributes = {
-  .name = "gimbal_CANTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal1,
 };
 /* Definitions for gimbal_exPID */
 osThreadId_t gimbal_exPIDHandle;
@@ -110,26 +89,12 @@ const osThreadAttr_t chassis_CANTask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityAboveNormal2,
 };
-/* Definitions for chassis_calcul */
-osThreadId_t chassis_calculHandle;
-const osThreadAttr_t chassis_calcul_attributes = {
-  .name = "chassis_calcul",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityHigh3,
-};
 /* Definitions for chassis_inPID */
 osThreadId_t chassis_inPIDHandle;
 const osThreadAttr_t chassis_inPID_attributes = {
   .name = "chassis_inPID",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityAboveNormal5,
-};
-/* Definitions for chassis_exPID */
-osThreadId_t chassis_exPIDHandle;
-const osThreadAttr_t chassis_exPID_attributes = {
-  .name = "chassis_exPID",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal6,
 };
 /* Definitions for sentry_mode */
 osThreadId_t sentry_modeHandle;
@@ -142,21 +107,6 @@ const osThreadAttr_t sentry_mode_attributes = {
 osMessageQueueId_t USBRxQueueHandle;
 const osMessageQueueAttr_t USBRxQueue_attributes = {
   .name = "USBRxQueue"
-};
-/* Definitions for USBTxQueue */
-osMessageQueueId_t USBTxQueueHandle;
-const osMessageQueueAttr_t USBTxQueue_attributes = {
-  .name = "USBTxQueue"
-};
-/* Definitions for CAN_1RxQueue */
-osMessageQueueId_t CAN_1RxQueueHandle;
-const osMessageQueueAttr_t CAN_1RxQueue_attributes = {
-  .name = "CAN_1RxQueue"
-};
-/* Definitions for BMI_USBTxQueue */
-osMessageQueueId_t BMI_USBTxQueueHandle;
-const osMessageQueueAttr_t BMI_USBTxQueue_attributes = {
-  .name = "BMI_USBTxQueue"
 };
 /* Definitions for SbusFrameQueue */
 osMessageQueueId_t SbusFrameQueueHandle;
@@ -176,16 +126,11 @@ const osMessageQueueAttr_t CAN_2RxQueue_attributes = {
 
 void gimbal_inPIDTask(void *argument);
 void Startbmi088Task(void *argument);
-void StartUSB_TxTask(void *argument);
 void StartUSB_RxTask(void *argument);
-void StartCAN_TxTask(void *argument);
-void gimbal_CAN_RxTask(void *argument);
 void gimbal_exPIDTask(void *argument);
 void StartSbusTransTask(void *argument);
 void chassis_CAN_RxTask(void *argument);
-void chassis_calculateTask(void *argument);
 void chassis_inPIDTask(void *argument);
-void chassis_exPIDTask(void *argument);
 void StartSentry_modeTask(void *argument);
 
 extern void MX_USB_DEVICE_Init(void);
@@ -217,15 +162,6 @@ void MX_FREERTOS_Init(void) {
   /* creation of USBRxQueue */
   USBRxQueueHandle = osMessageQueueNew (16, 10, &USBRxQueue_attributes);
 
-  /* creation of USBTxQueue */
-  USBTxQueueHandle = osMessageQueueNew (16, 14, &USBTxQueue_attributes);
-
-  /* creation of CAN_1RxQueue */
-  CAN_1RxQueueHandle = osMessageQueueNew (16, 9, &CAN_1RxQueue_attributes);
-
-  /* creation of BMI_USBTxQueue */
-  BMI_USBTxQueueHandle = osMessageQueueNew (16, 12, &BMI_USBTxQueue_attributes);
-
   /* creation of SbusFrameQueue */
   SbusFrameQueueHandle = osMessageQueueNew (16, 18, &SbusFrameQueue_attributes);
 
@@ -243,17 +179,8 @@ void MX_FREERTOS_Init(void) {
   /* creation of bmi088Task */
   bmi088TaskHandle = osThreadNew(Startbmi088Task, NULL, &bmi088Task_attributes);
 
-  /* creation of USB_TxTask */
-  USB_TxTaskHandle = osThreadNew(StartUSB_TxTask, NULL, &USB_TxTask_attributes);
-
   /* creation of USB_RxTask */
   USB_RxTaskHandle = osThreadNew(StartUSB_RxTask, NULL, &USB_RxTask_attributes);
-
-  /* creation of CAN_TxTask */
-  CAN_TxTaskHandle = osThreadNew(StartCAN_TxTask, NULL, &CAN_TxTask_attributes);
-
-  /* creation of gimbal_CANTask */
-  gimbal_CANTaskHandle = osThreadNew(gimbal_CAN_RxTask, NULL, &gimbal_CANTask_attributes);
 
   /* creation of gimbal_exPID */
   gimbal_exPIDHandle = osThreadNew(gimbal_exPIDTask, NULL, &gimbal_exPID_attributes);
@@ -264,14 +191,8 @@ void MX_FREERTOS_Init(void) {
   /* creation of chassis_CANTask */
   chassis_CANTaskHandle = osThreadNew(chassis_CAN_RxTask, NULL, &chassis_CANTask_attributes);
 
-  /* creation of chassis_calcul */
-  chassis_calculHandle = osThreadNew(chassis_calculateTask, NULL, &chassis_calcul_attributes);
-
   /* creation of chassis_inPID */
   chassis_inPIDHandle = osThreadNew(chassis_inPIDTask, NULL, &chassis_inPID_attributes);
-
-  /* creation of chassis_exPID */
-  chassis_exPIDHandle = osThreadNew(chassis_exPIDTask, NULL, &chassis_exPID_attributes);
 
   /* creation of sentry_mode */
   sentry_modeHandle = osThreadNew(StartSentry_modeTask, NULL, &sentry_mode_attributes);
@@ -324,24 +245,6 @@ __weak void Startbmi088Task(void *argument)
   /* USER CODE END Startbmi088Task */
 }
 
-/* USER CODE BEGIN Header_StartUSB_TxTask */
-/**
-* @brief Function implementing the USB_TxTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartUSB_TxTask */
-__weak void StartUSB_TxTask(void *argument)
-{
-  /* USER CODE BEGIN StartUSB_TxTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END StartUSB_TxTask */
-}
-
 /* USER CODE BEGIN Header_StartUSB_RxTask */
 /**
 * @brief Function implementing the USB_RxTask thread.
@@ -358,42 +261,6 @@ __weak void StartUSB_RxTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END StartUSB_RxTask */
-}
-
-/* USER CODE BEGIN Header_StartCAN_TxTask */
-/**
-* @brief Function implementing the CAN_TxTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartCAN_TxTask */
-__weak void StartCAN_TxTask(void *argument)
-{
-  /* USER CODE BEGIN StartCAN_TxTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END StartCAN_TxTask */
-}
-
-/* USER CODE BEGIN Header_gimbal_CAN_RxTask */
-/**
-* @brief Function implementing the gimbal_CANTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_gimbal_CAN_RxTask */
-__weak void gimbal_CAN_RxTask(void *argument)
-{
-  /* USER CODE BEGIN gimbal_CAN_RxTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END gimbal_CAN_RxTask */
 }
 
 /* USER CODE BEGIN Header_gimbal_exPIDTask */
@@ -450,24 +317,6 @@ __weak void chassis_CAN_RxTask(void *argument)
   /* USER CODE END chassis_CAN_RxTask */
 }
 
-/* USER CODE BEGIN Header_chassis_calculateTask */
-/**
-* @brief Function implementing the chassis_calcul thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_chassis_calculateTask */
-__weak void chassis_calculateTask(void *argument)
-{
-  /* USER CODE BEGIN chassis_calculateTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END chassis_calculateTask */
-}
-
 /* USER CODE BEGIN Header_chassis_inPIDTask */
 /**
 * @brief Function implementing the chassis_inPID thread.
@@ -484,24 +333,6 @@ __weak void chassis_inPIDTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END chassis_inPIDTask */
-}
-
-/* USER CODE BEGIN Header_chassis_exPIDTask */
-/**
-* @brief Function implementing the chassis_exPID thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_chassis_exPIDTask */
-__weak void chassis_exPIDTask(void *argument)
-{
-  /* USER CODE BEGIN chassis_exPIDTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END chassis_exPIDTask */
 }
 
 /* USER CODE BEGIN Header_StartSentry_modeTask */

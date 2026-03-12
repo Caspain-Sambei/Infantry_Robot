@@ -81,9 +81,26 @@ TYPEDEF reg ={
                 0.0f,0.0f,0.0f,
                 0.0f,0.0f,0.0f},
             },
+    .chassis.Speed_pid = {
+        {
+            0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f,
+            0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 0.0f
+        },
+        {
+            0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f,
+            0.0f, 0.0f, 5.0f,
+            0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 0.0f
+        },
+    },
 
     // 底盘绝对坐标系下的目标速度
     .chassis.target_speed = 0.0f,
+    .chassis.actual_speed = 0.0f,
     .chassis.target_angle = 0.0f,
     .chassis.target_omega = 0.0f,
     // 底盘四个电机的返回速度

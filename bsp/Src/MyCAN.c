@@ -11,7 +11,7 @@
 #include "bsp_Motor.h"
 
 /**
- * @brief 注释掉发送完自动memset清空p_reg->TxData数组的功能
+ * @brief 注释掉发送完自动memset清空p_reg->TxData数组的功能；包含基础函数CAN_bsp_Send
  * @param ID CAN_6020_1，CAN_6020_2，CAN_C620_1，CAN_C620_2
  * @param Data int16_t大小为4的数组
  * @param Length 4
@@ -35,7 +35,7 @@ void CAN_Send(uint16_t ID,CAN_Structure *Data,uint8_t Length)
 }
 
 /**
- *
+ * @brief 用于CAN发送的基础函数
  * @param ID CAN_ID1或CAN_ID2
  * @param Data 类型为uint8_t
  * @param Length 数组大小
@@ -87,50 +87,61 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
                 case (0x201):
                     {
                         buf[8] = 1;
-                        osMessageQueuePut(CAN_1RxQueueHandle, buf, 0, 0);
+                        p_reg->gimbal.pitch_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
+                        p_reg->gimbal.pitch_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
+                        p_reg->gimbal.pitch_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
+                        p_reg->gimbal.pitch_RxData.data4 = ((int16_t)buf[7] & 0xFF) | ((int16_t)buf[6] << 8);
                         break;
                     }
                 case (0x202):
                     {
                         buf[8] = 2;
-                        osMessageQueuePut(CAN_1RxQueueHandle, buf, 0, 0);
+                        p_reg->gimbal.yaw_RxData.data1 = ((int16_t)buf[1] &0xFF) | ((int16_t)buf[0]<<8);
+                        p_reg->gimbal.yaw_RxData.data2 = ((int16_t)buf[3] &0xFF) | ((int16_t)buf[2]<<8);
+                        p_reg->gimbal.yaw_RxData.data3 = ((int16_t)buf[5] &0xFF) | ((int16_t)buf[4]<<8);
+                        p_reg->gimbal.yaw_RxData.data4 = ((int16_t)buf[7] &0xFF) | ((int16_t)buf[6]<<8);
                         break;
                     }
                 case (0x203):
                     {
                         buf[8] = 3;
-                        osMessageQueuePut(CAN_1RxQueueHandle, buf, 0, 0);
+                        p_reg->gimbal.pitch_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
+                        p_reg->gimbal.pitch_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
+                        p_reg->gimbal.pitch_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
+                        p_reg->gimbal.pitch_RxData.data4 = ((int16_t)buf[7] & 0xFF) | ((int16_t)buf[6] << 8);
                         break;
                     }
                 case (0x204):
                     {
                         buf[8] = 4;
-                        osMessageQueuePut(CAN_1RxQueueHandle, buf, 0, 0);
+                        p_reg->gimbal.yaw_RxData.data1 = ((int16_t)buf[1] &0xFF) | ((int16_t)buf[0]<<8);
+                        p_reg->gimbal.yaw_RxData.data2 = ((int16_t)buf[3] &0xFF) | ((int16_t)buf[2]<<8);
+                        p_reg->gimbal.yaw_RxData.data3 = ((int16_t)buf[5] &0xFF) | ((int16_t)buf[4]<<8);
+                        p_reg->gimbal.yaw_RxData.data4 = ((int16_t)buf[7] &0xFF) | ((int16_t)buf[6]<<8);
                         break;
                     }
                 case (0x205):
                     {
                         buf[8] = 5;
-                        osMessageQueuePut(CAN_1RxQueueHandle, buf, 0, 0);
                     }
                 case (0x206):
                     {
                         buf[8] = 6;
-                        osMessageQueuePut(CAN_1RxQueueHandle, buf, 0, 0);
                     }
                 case (0x207):
                     {
                         buf[8] = 7;
-                        osMessageQueuePut(CAN_1RxQueueHandle, buf, 0, 0);
                     }
                 case (0x208):
                     {
                         buf[8] = 8;
-                        osMessageQueuePut(CAN_1RxQueueHandle, buf, 0, 0);
                     }
             }
         }
     }
+    /******************************************************
+     *                  负责底盘的四个电机
+     ******************************************************/
     if (hcan->Instance == CAN2)
     {
         CAN_RxHeaderTypeDef RxHeader;

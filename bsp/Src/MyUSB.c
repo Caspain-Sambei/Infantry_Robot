@@ -17,25 +17,28 @@ extern osMessageQueueId_t USBRxQueueHandle;
  *
  * @param Data SENPACKET类型的结构体成员
  */
-void USB_Send(SENDPACKET Data)
+void USB_Send(SENDPACKET *Data)
 {
     static uint8_t buf[3 * 4 + 2] = {0};
     buf[0] = USB_HEAD;
     buf[13] = USB_TAIL;
     uint8_t *p_byte;
-    p_byte = (uint8_t*)&Data.pitch;
+
+    // Data->pitch去地址后强制转换类型
+    // Data->pitch已经是指针所指向的那个结构体成员了？而不是指向那个成员的指针
+    p_byte = (uint8_t*)&Data->pitch;
     buf[1] = p_byte[0];
     buf[2] = p_byte[1];
     buf[3] = p_byte[2];
     buf[4] = p_byte[3];
 
-    p_byte = (uint8_t*)&Data.yaw;
+    p_byte = (uint8_t*)&Data->yaw;
     buf[5] = p_byte[0];
     buf[6] = p_byte[1];
     buf[7] = p_byte[2];
     buf[8] = p_byte[3];
 
-    p_byte = (uint8_t*)&Data.roll;
+    p_byte = (uint8_t*)&Data->roll;
     buf[9] = p_byte[0];
     buf[10] = p_byte[1];
     buf[11] = p_byte[2];
