@@ -46,7 +46,9 @@ void RemoteDataProcess(uint8_t *pData)
 
     RC_CtrlData.key.v = ((int16_t)pData[14]);// | ((int16_t)pData[15] << 8);
 
-    //your control code ….
+    /****************************************************************
+     *                      my code
+     ****************************************************************/
     float left_right = (float)p_reg->rc_Data.rc.ch2 * RC_TO_3508_Current * 0.01f;
     p_reg->chassis.target_speed = left_right;
     float forward_back = (float)p_reg->rc_Data.rc.ch3 * RC_TO_3508_Current * 0.01f;

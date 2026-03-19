@@ -202,10 +202,9 @@ void StartSentry_modeTask(void *argument)
 
     uint8_t scan_yaw_cnt = 0;       // Yaw扫描计数（0~90）
     uint8_t scan_pitch_cnt = 0;     // Pitch扫描计数（0~90）
-    const uint32_t SCAN_DELAY = 10; // 扫描步长延时（ms，可调整）
+    const uint32_t SCAN_DELAY = 200; // 扫描步长延时（ms，可调整）
 
-    float YAW_MIN = -45.0f;
-    float YAW_MAX = 45.0f;
+    float YAW_MIN = -45.0f,YAW_MAX = 45.0f,PITCH_MIN = -45.0f,PITCH_MAX = 45.0f;
     // 初始角度（右上角45°）
     const float YAW_INIT = 45.0f;
     const float PITCH_INIT = 45.0f;
@@ -265,10 +264,10 @@ void StartSentry_modeTask(void *argument)
                     {
                         p_reg->gimbal.pitch_pid.outer.Target -= 1.0f;
                             // 这里用target还是actual？
-                            if (p_reg->gimbal.pitch_pid.outer.Target < YAW_MIN)
-                                p_reg->gimbal.pitch_pid.outer.Target = YAW_MIN;
-                            if (p_reg->gimbal.pitch_pid.outer.Target > YAW_MAX)
-                                p_reg->gimbal.pitch_pid.outer.Target = YAW_MAX;
+                            if (p_reg->gimbal.pitch_pid.outer.Target < PITCH_MIN)
+                                p_reg->gimbal.pitch_pid.outer.Target = PITCH_MIN;
+                            if (p_reg->gimbal.pitch_pid.outer.Target > PITCH_MAX)
+                                p_reg->gimbal.pitch_pid.outer.Target = PITCH_MAX;
 
                         // 更新CAN数据并发送
                         p_reg->TxData.data1 = (int16_t)(p_reg->gimbal.yaw_pid.outer.Target);
