@@ -35,7 +35,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 101,
+				"line" : 105,
 				"parent" : 0
 			},
 			{
@@ -50,7 +50,7 @@
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 140,
+				"line" : 144,
 				"parent" : 0
 			},
 			{
@@ -62,7 +62,7 @@
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 127,
+				"line" : 131,
 				"parent" : 0
 			}
 		]
@@ -104,6 +104,10 @@
 				{
 					"backtrace" : 5,
 					"path" : "D:/CODE/CLionProjects/gimbal/Module"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "D:/CODE/CLionProjects/gimbal/App/rc"
 				},
 				{
 					"backtrace" : 4,
@@ -175,9 +179,7 @@
 				14,
 				16,
 				18,
-				20,
 				21,
-				22,
 				23,
 				24,
 				25,
@@ -191,12 +193,16 @@
 				33,
 				34,
 				35,
+				36,
 				37,
+				38,
 				39,
-				40,
 				41,
-				42,
-				43
+				43,
+				44,
+				45,
+				46,
+				47
 			]
 		},
 		{
@@ -234,6 +240,10 @@
 				{
 					"backtrace" : 5,
 					"path" : "D:/CODE/CLionProjects/gimbal/Module"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "D:/CODE/CLionProjects/gimbal/App/rc"
 				},
 				{
 					"backtrace" : 4,
@@ -287,7 +297,7 @@
 			"language" : "ASM",
 			"sourceIndexes" : 
 			[
-				36
+				40
 			]
 		}
 	],
@@ -295,15 +305,15 @@
 	[
 		{
 			"backtrace" : 4,
-			"id" : "USB_Device_Library::@768a070a0fe75716b479"
-		},
-		{
-			"backtrace" : 4,
 			"id" : "FreeRTOS::@768a070a0fe75716b479"
 		},
 		{
 			"backtrace" : 4,
 			"id" : "STM32_Drivers::@768a070a0fe75716b479"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "USB_Device_Library::@768a070a0fe75716b479"
 		}
 	],
 	"id" : "gimbal::@6890427a1f51a3e7e1df",
@@ -360,8 +370,10 @@
 				15,
 				17,
 				19,
-				38,
-				44
+				20,
+				22,
+				42,
+				48
 			]
 		},
 		{
@@ -378,9 +390,7 @@
 				14,
 				16,
 				18,
-				20,
 				21,
-				22,
 				23,
 				24,
 				25,
@@ -394,29 +404,29 @@
 				33,
 				34,
 				35,
+				36,
 				37,
+				38,
 				39,
-				40,
 				41,
-				42,
-				43
+				43,
+				44,
+				45,
+				46,
+				47
 			]
 		},
 		{
 			"name" : "",
 			"sourceIndexes" : 
 			[
-				36
+				40
 			]
 		},
 		{
 			"name" : "Object Libraries",
 			"sourceIndexes" : 
 			[
-				45,
-				46,
-				47,
-				48,
 				49,
 				50,
 				51,
@@ -448,7 +458,11 @@
 				77,
 				78,
 				79,
-				80
+				80,
+				81,
+				82,
+				83,
+				84
 			]
 		}
 	],
@@ -563,6 +577,28 @@
 			"backtrace" : 1,
 			"path" : "App/chassis/chassis.h",
 			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "App/rc/Mecanum_wheel.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "App/rc/Mecanum_wheel.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "App/rc/Omni_wheel.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "App/rc/Omni_wheel.c",
+			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 6,

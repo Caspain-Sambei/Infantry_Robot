@@ -1,10 +1,9 @@
 #include <string.h>
-#include <tgmath.h>
 #include "bsp_Motor.h"
 #include "reg.h"
 #include "cmsis_os2.h"
 #include "MyCAN.h"
-#include "PID.h"
+#include "Omni_wheel.h"
 
 /* USER CODE BEGIN Header_chassis_CAN_RxTask */
 /**
@@ -50,16 +49,9 @@ void chassis_CAN_RxTask(void *argument)
             p_reg->chassis.Motor_4_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);    // 实际扭矩电流
             p_reg->chassis.Motor_4_RxData.data4 = (int16_t)buf[6];                                      // 电机温度
         }
-        // 获取底盘速度
-        p_reg->chassis.actual_speed = (p_reg->chassis.Motor_1_RxData.data2 *sinf(45)
-                                    +p_reg->chassis.Motor_1_RxData.data2 *sinf(45)
-                                    +p_reg->chassis.Motor_1_RxData.data2 *sinf(45)
-                                    +p_reg->chassis.Motor_1_RxData.data2 *sinf(45)) / 4.0f;
     }
     /* USER CODE END chassisCAN_Rx */
 }
-
-
 
 /***************************************************************************
  *								底盘的PID
@@ -74,49 +66,21 @@ void chassis_CAN_RxTask(void *argument)
 void chassis_inPIDTask(void *argument)
 {
     /* USER CODE BEGIN chassis_inPIDTask */
+    float speed_cal[4] = {0};
     /* Infinite loop */
     for(;;)
     {
         /************************************************************
-         *                  PID
+         *                  底盘解算 + 单环PID
          ************************************************************/
+        Omni_wheel_calculate(&p_reg->rc_Data,&p_reg->chassis,speed_cal);
+        // 将结果映射为4个电机的电流
+        p_reg->TxData.data1 = (int16_t)(speed_cal[0] * RC_TO_3508_Current);
+        p_reg->TxData.data2 = (int16_t)(speed_cal[1] * RC_TO_3508_Current);
+        p_reg->TxData.data3 = (int16_t)(speed_cal[2] * RC_TO_3508_Current);
+        p_reg->TxData.data4 = (int16_t)(speed_cal[3] * RC_TO_3508_Current);
 
-        p_reg->chassis.Speed_pid.inner.Target = p_reg->chassis.target_speed;
-        p_reg->chassis.Speed_pid.inner.Actual = p_reg->chassis.actual_speed;
-
-        PID_Update(&p_reg->chassis.Speed_pid.inner,chassis_mode);
-
-        /************************************************************
-         *                  底盘速度解算
-         ************************************************************/
-        p_reg->chassis.yaw_pid.outer.Actual = p_reg->gimbal.yaw_pid.outer.Actual;
-        float sin_ang = sinf(p_reg->chassis.yaw_pid.outer.Actual);
-        float cos_ang = cosf(p_reg->chassis.yaw_pid.outer.Actual);
-        float speed_X = p_reg->chassis.Speed_pid.inner.Out * cosf(p_reg->chassis.target_angle);
-        float speed_Y = p_reg->chassis.Speed_pid.inner.Out * sinf(p_reg->chassis.target_angle);
-
-        float speed_cal[4] = {0.0f};
-
-        speed_cal[0] = (float)((-cos_ang - sin_ang) * speed_X + (-sin_ang + cos_ang) * speed_Y + CHASSIS_RADIUS  * p_reg->chassis.target_omega)
-                        / sqrtf(2);
-        speed_cal[1] = (float)((-cos_ang + sin_ang) * speed_X + (-sin_ang - cos_ang) * speed_Y + CHASSIS_RADIUS  * p_reg->chassis.target_omega)
-                        / sqrtf(2);
-        speed_cal[2] = (float)((cos_ang + sin_ang) * speed_X + (sin_ang - cos_ang) * speed_Y + CHASSIS_RADIUS  * p_reg->chassis.target_omega)
-                        / sqrtf(2);
-        speed_cal[3] = (float)((cos_ang - sin_ang) * speed_X + (sin_ang + cos_ang) * speed_Y + CHASSIS_RADIUS  * p_reg->chassis.target_omega)
-                        / sqrtf(2);
-
-        /************************************************************
-         *                   CAN发送
-         ************************************************************/
-        // 将结果转变为4个电机的转速
-        p_reg->TxData.data1 = (int16_t)speed_cal[0];
-        p_reg->TxData.data2 = (int16_t)speed_cal[1];
-        p_reg->TxData.data3 = (int16_t)speed_cal[2];
-        p_reg->TxData.data4 = (int16_t)speed_cal[3];
-
-        CAN_Send(CAN_C620_1,&p_reg->TxData,4);
-        // 每次发送完清零
+        CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
         memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
 
         osDelay(1);

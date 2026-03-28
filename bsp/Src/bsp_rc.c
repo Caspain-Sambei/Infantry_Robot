@@ -3,11 +3,11 @@
 //
 #include "bsp_rc.h"
 #include <string.h>
-#include "bsp_Motor.h"
+
 #include "cmsis_os2.h"
-#include "MyCAN.h"
 #include "usart.h"
 #include "reg.h"
+#include "Omni_wheel.h"
 
 /* ----------------------- Internal Data ----------------------------------- */
 volatile unsigned char sbus_rx_buffer[2][RC_FRAME_LENGTH];  //double sbus rx buffer to save data
@@ -46,80 +46,28 @@ void RemoteDataProcess(uint8_t *pData)
 
     RC_CtrlData.key.v = ((int16_t)pData[14]);// | ((int16_t)pData[15] << 8);
 
+    //your control code ….
     /****************************************************************
-     *                      my code
+     *                      数值转换
      ****************************************************************/
-    float left_right = (float)p_reg->rc_Data.rc.ch2 * RC_TO_3508_Current * 0.01f;
-    p_reg->chassis.target_speed = left_right;
-    float forward_back = (float)p_reg->rc_Data.rc.ch3 * RC_TO_3508_Current * 0.01f;
-    // 水平转动先给个相对小值
-    float turn = (float)p_reg->rc_Data.rc.ch0 * RC_TO_3508_Current * 0.01f;
-    //float push = (float)p_reg->rc_Data.rc.ch1 * RC_TO_3508_Current;
-    /****************************************************************
-     *                      水平平动
-     ****************************************************************/
-    if (forward_back != 0.0f)
+    uint16_t *channels[] = {
+        &p_reg->rc_Data.rc.ch0,
+        &p_reg->rc_Data.rc.ch1,
+        &p_reg->rc_Data.rc.ch2,
+        &p_reg->rc_Data.rc.ch3,
+    };
+    for (int i = 0; i < 4;i++)
     {
-        p_reg->TxData.data1 = (int16_t)forward_back;
-        p_reg->TxData.data2 = (int16_t)-forward_back;
-        p_reg->TxData.data3 = (int16_t)forward_back;
-        p_reg->TxData.data4 = (int16_t)-forward_back;
-
-        CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
-        // 每次发送完清零
-        memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
-    }
-    if (left_right != 0.0f)
-    {
-        if (left_right > 0.0f) // 向右
+        if (*channels[i] >= 1024 && *channels[i] <= 1684)
         {
-            p_reg->TxData.data1 = (int16_t)left_right;
-            p_reg->TxData.data2 = (int16_t)left_right;
-            p_reg->TxData.data3 = (int16_t)-left_right;
-            p_reg->TxData.data4 = (int16_t)-left_right;
-
-            CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
-            // 每次发送完清零
-            memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+            *channels[i] = 1684 - *channels[i];
         }
-        else
-        {
-            p_reg->TxData.data1 = (int16_t)-left_right;
-            p_reg->TxData.data2 = (int16_t)-left_right;
-            p_reg->TxData.data3 = (int16_t)left_right;
-            p_reg->TxData.data4 = (int16_t)left_right;
-
-            CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
-            // 每次发送完清零
-            memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
-        }
+        else if (*channels[i] < 1024 && *channels[i] >= 364)
+            *channels[i] = *channels[i] - 1024;
     }
     /****************************************************************
-     *                      水平转动;设遥杆向右为正
+     *                      底盘解算放在rtos任务中，包括PID
      ****************************************************************/
-    if (turn > 0.0f)
-    {
-        p_reg->TxData.data1 = (int16_t)turn;
-        p_reg->TxData.data2 = (int16_t)turn;
-        p_reg->TxData.data3 = (int16_t)turn;
-        p_reg->TxData.data4 = (int16_t)turn;
-
-        CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
-        // 每次发送完清零
-        memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
-    }
-    else
-    {
-        p_reg->TxData.data1 = (int16_t)turn;
-        p_reg->TxData.data2 = (int16_t)turn;
-        p_reg->TxData.data3 = (int16_t)turn;
-        p_reg->TxData.data4 = (int16_t)turn;
-
-        CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
-        // 每次发送完清零
-        memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
-    }
-
 }
 
 //CT = 0: 当前使用Memory 0，下一个将使用Memory1。等于1则相反。
@@ -170,8 +118,6 @@ void UART5_DT7_Callback(uint8_t *Buffer, uint16_t Length)
         HAL_UARTEx_ReceiveToIdle_DMA(&huart5, sbus_rx_buffer[0], RC_FRAME_LENGTH);
     }
 }
-
-
 
 //void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart,uint16_t Size)
 //{

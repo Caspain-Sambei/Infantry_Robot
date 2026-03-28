@@ -17,7 +17,7 @@
 //     // 一阶低通滤波系数
 //     float RC_DF;
 //     // 前馈增益
-//     float k1,k2,last_Target;
+//     float k1,last_Target;
 // }PID_Structure;
 
 void PID_Update(pid *p,uint8_t mode);

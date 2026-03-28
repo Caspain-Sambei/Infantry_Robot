@@ -104,25 +104,13 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  // 注册USART5的DT7回调函数到drv_uart
+  // 注册UART5的DT7回调函数到drv_uart
   UART_Init(&huart5,UART5_DT7_Callback,RC_FRAME_LENGTH);
-  // 云台PID参数初始化
-  PID_Init(&p_reg->gimbal.pitch_pid.inner,0.0f,0.0f,0.0f,
-    5000.0f,1000.0f,10.0f,
-    0.0f,0.0f,0.5f,0.5f);
-  PID_Init(&p_reg->gimbal.pitch_pid.outer,0.0f,0.0f,0.0f,
-    5000.0f,1000.0f,10.0f,
-    0.0f,0.0f,0.5f,0.5f);
-  PID_Init(&p_reg->gimbal.yaw_pid.inner,0.0f,0.0f,0.0f,
-    5000.0f,1000.0f,10.0f,
-    0.0f,0.0f,0.5f,0.5f);
-  PID_Init(&p_reg->gimbal.yaw_pid.outer,0.0f,0.0f,0.0f,
-    5000.0f,1000.0f,10.0f,
-    0.0f,0.0f,0.5f,0.5f);
-  // 底盘PID参数初始化
-  PID_Init(&p_reg->chassis.yaw_pid.inner,0.0f,0.0f,0.0f,
-    5000.0f,1000.0f,10.0f,
-    0.0f,0.0f,0.5f,0.5f);
+
+  // 掉电PID清零
+  PID_Clear(&p_reg->gimbal.yaw_pid.inner);
+  PID_Clear(&p_reg->gimbal.pitch_pid.outer);
+  PID_Clear(&p_reg->chassis.Speed_pid.inner);
   /* USER CODE END 2 */
 
   /* Init scheduler */

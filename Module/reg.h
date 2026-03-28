@@ -33,7 +33,7 @@ typedef struct{
     // 一阶低通滤波系数
     float RC_DF;
     // 前馈增益
-    float k1,k2,last_Target;
+    float k1,last_Target;
 }pid;
 
 /***************************************************************
@@ -49,28 +49,33 @@ typedef struct{
 }PID_Structure;
 
 /***************************************************************
+ *                      底盘/云台结构体
+ ***************************************************************/
+typedef struct
+{
+    PID_Structure pitch_pid,yaw_pid,roll_pid;
+    PID_Structure Speed_pid;
+    float speed_X,speed_Y;
+    float target_omega,actual_omega;
+    CAN_Structure Motor_1_RxData,Motor_2_RxData,Motor_3_RxData,Motor_4_RxData;
+}CHASSIS;
+
+typedef struct
+{
+    PID_Structure pitch_pid,yaw_pid;
+    CAN_Structure pitch_RxData,yaw_RxData;
+    SENDPACKET sendpacket;  // 用于向视觉发送
+    SENDPACKET recvpacket;  // 接收视觉的数据
+    SENDPACKET curr_angle;
+
+    uint8_t sentry_state;
+}GIMBAL;
+/***************************************************************
  *                      主结构体
  ***************************************************************/
 typedef struct{
-    struct
-    {
-        PID_Structure pitch_pid,yaw_pid;
-        CAN_Structure pitch_RxData,yaw_RxData;
-        SENDPACKET sendpacket;  // 用于向视觉发送
-        SENDPACKET recvpacket;  // 接收视觉的数据
-        SENDPACKET curr_angle;
-
-        uint8_t sentry_state;
-    }gimbal;
-
-    struct
-    {
-        PID_Structure pitch_pid,yaw_pid,roll_pid;
-        PID_Structure Speed_pid;
-        float target_speed,actual_speed;
-        float target_angle,target_omega;
-        CAN_Structure Motor_1_RxData,Motor_2_RxData,Motor_3_RxData,Motor_4_RxData;
-    }chassis;
+    GIMBAL gimbal;
+    CHASSIS chassis;
 
     CAN_Structure TxData;
     // 作为CAN收发的过程量

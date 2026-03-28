@@ -85,9 +85,9 @@ TYPEDEF reg ={
         {
             0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
             0.0f, 0.0f,
+            1000.0f, 1000.0f, 0.0f,
             0.0f, 0.0f, 0.0f,
-            0.0f, 0.0f, 0.0f,
-            0.0f, 0.0f, 0.0f
+            0.0f, 0.5f, 0.0f
         },
         {
             0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
@@ -99,10 +99,10 @@ TYPEDEF reg ={
     },
 
     // 底盘绝对坐标系下的目标速度
-    .chassis.target_speed = 0.0f,
-    .chassis.actual_speed = 0.0f,
-    .chassis.target_angle = 0.0f,
+    .chassis.speed_X = 0.0f,
+    .chassis.speed_Y = 0.0f,
     .chassis.target_omega = 0.0f,
+    .chassis.actual_omega = 0.0f,
     // 底盘四个电机的返回速度
     .chassis.Motor_1_RxData = {0,0,0,0},
     .chassis.Motor_2_RxData = {0,0,0,0},

@@ -114,11 +114,11 @@ void PID_Init(pid *p,
 
 void PID_Clear(pid *p)
 {
-	p->PreError = 0;
-	p->LastError = 0;
-	p->SunError = 0;
-	p->Out = 0;
-	p->LAST_OUT = 0;
-	p->LAST_D_OUT = 0;
-	p->D_OUT = 0;
+	p->PreError = 0.0f;
+	p->LastError = 0.0f;
+	p->SunError = 0.0f;
+	p->Out = 0.0f;
+	p->LAST_OUT = 0.0f;
+	p->LAST_D_OUT = 0.0f;
+	p->D_OUT = 0.0f;
 }
