@@ -80,7 +80,6 @@ void chassis_inPIDTask(void *argument)
         p_reg->TxData.data3 = (int16_t)(speed_cal[2] * RC_TO_3508_Current);
         p_reg->TxData.data4 = (int16_t)(speed_cal[3] * RC_TO_3508_Current);
 
-
         CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
         memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
 
