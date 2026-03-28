@@ -48,6 +48,8 @@ void RemoteDataProcess(uint8_t *pData)
 
     /****************************************************************
      *                      my code
+     *                      全向轮
+     *                      1~4：左上，右上，左下，右下
      ****************************************************************/
     float left_right = (float)p_reg->rc_Data.rc.ch2 * RC_TO_3508_Current * 0.01f;
     p_reg->chassis.target_speed = left_right;
@@ -170,8 +172,6 @@ void UART5_DT7_Callback(uint8_t *Buffer, uint16_t Length)
         HAL_UARTEx_ReceiveToIdle_DMA(&huart5, sbus_rx_buffer[0], RC_FRAME_LENGTH);
     }
 }
-
-
 
 //void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart,uint16_t Size)
 //{

@@ -5885,6 +5885,112 @@ Discarded input sections
  .debug_macro   0x00000000       0x34 CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
  .debug_macro   0x00000000       0x10 CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
  .debug_macro   0x00000000       0x16 CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .group         0x00000000        0xc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .text          0x00000000        0x0 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .data          0x00000000        0x0 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .bss           0x00000000        0x0 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .text.Mecanum  0x00000000        0xe CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_info    0x00000000       0x97 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_abbrev  0x00000000       0x45 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_aranges
+                0x00000000       0x20 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_ranges  0x00000000       0x10 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x23c CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0xad8 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x2ad CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x2e CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x2f CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x22 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x8e CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x51 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x103 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x6a CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x1df CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x1c CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x22 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0xfb CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000     0x1011 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x11f CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000    0x1427b CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x6d CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000     0x3693 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x190 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x5c CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x8bc CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x9e9 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x115 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x130 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0xa5 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x174 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x287 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x5f CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x236 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x40f CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x12c CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x21e CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x2e CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x127 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x7e CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x89 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x225 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x8ed CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x4d CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x2aa CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x293 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0xba CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000      0x12d CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x74 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_macro   0x00000000       0x5e CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_line    0x00000000      0x68f CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_str     0x00000000    0xbdf97 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .comment       0x00000000       0x13 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .debug_frame   0x00000000       0x30 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
+ .ARM.attributes
+                0x00000000       0x34 CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
  .group         0x00000000        0xc CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
  .group         0x00000000        0xc CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
  .group         0x00000000        0xc CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
@@ -8771,6 +8877,7 @@ LOAD CMakeFiles/gimbal.dir/Module/KalmanFilter.c.obj
 LOAD CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
 LOAD CMakeFiles/gimbal.dir/bsp/Src/bsp_Motor.c.obj
 LOAD CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
+LOAD CMakeFiles/gimbal.dir/App/rc/Mecanum_wheel.c.obj
 LOAD CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
 LOAD CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
 LOAD CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
@@ -8823,7 +8930,7 @@ LOAD D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/
                 0x08000000                g_pfnVectors
                 0x08000188                        . = ALIGN (0x4)
 
-.text           0x08000190    0x11adc
+.text           0x08000190    0x11ee4
                 0x08000190                        . = ALIGN (0x4)
  *(.text)
  .text          0x08000190       0x58 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-wf_asin.o)
@@ -9685,507 +9792,508 @@ LOAD D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/
                 0x0800e180      0x1e8 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
                 0x0800e180                Startbmi088Task
  .text.StartSentry_modeTask
-                0x0800e368      0x29c CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
+                0x0800e368      0x6a0 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
                 0x0800e368                StartSentry_modeTask
  .text.RemoteDataProcess
-                0x0800e604      0x4bc CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
-                0x0800e604                RemoteDataProcess
+                0x0800ea08      0x4bc CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
+                0x0800ea08                RemoteDataProcess
  .text.UART5_DT7_Callback
-                0x0800eac0      0x128 CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
-                0x0800eac0                UART5_DT7_Callback
+                0x0800eec4      0x128 CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
+                0x0800eec4                UART5_DT7_Callback
  .text.StartSbusTransTask
-                0x0800ebe8       0x44 CMakeFiles/gimbal.dir/App/rc/rc.c.obj
-                0x0800ebe8                StartSbusTransTask
+                0x0800efec       0x44 CMakeFiles/gimbal.dir/App/rc/rc.c.obj
+                0x0800efec                StartSbusTransTask
  .text.UART_Init
-                0x0800ec2c      0x188 CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
-                0x0800ec2c                UART_Init
+                0x0800f030      0x188 CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
+                0x0800f030                UART_Init
  .text.HAL_UARTEx_RxEventCallback
-                0x0800edb4      0x158 CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
-                0x0800edb4                HAL_UARTEx_RxEventCallback
+                0x0800f1b8      0x158 CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
+                0x0800f1b8                HAL_UARTEx_RxEventCallback
  .text.chassis_CAN_RxTask
-                0x0800ef0c      0x23c CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
-                0x0800ef0c                chassis_CAN_RxTask
+                0x0800f310      0x23c CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
+                0x0800f310                chassis_CAN_RxTask
+ *fill*         0x0800f54c        0x4 
  .text.chassis_inPIDTask
-                0x0800f148      0x360 CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
-                0x0800f148                chassis_inPIDTask
+                0x0800f550      0x360 CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
+                0x0800f550                chassis_inPIDTask
  .text.HAL_PCD_MspInit
-                0x0800f4a8       0xa8 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f4a8                HAL_PCD_MspInit
+                0x0800f8b0       0xa8 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800f8b0                HAL_PCD_MspInit
  .text.HAL_PCD_SetupStageCallback
-                0x0800f550       0x24 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f550                HAL_PCD_SetupStageCallback
+                0x0800f958       0x24 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800f958                HAL_PCD_SetupStageCallback
  .text.HAL_PCD_DataOutStageCallback
-                0x0800f574       0x36 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f574                HAL_PCD_DataOutStageCallback
+                0x0800f97c       0x36 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800f97c                HAL_PCD_DataOutStageCallback
  .text.HAL_PCD_DataInStageCallback
-                0x0800f5aa       0x34 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f5aa                HAL_PCD_DataInStageCallback
+                0x0800f9b2       0x34 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800f9b2                HAL_PCD_DataInStageCallback
  .text.HAL_PCD_SOFCallback
-                0x0800f5de       0x1c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f5de                HAL_PCD_SOFCallback
+                0x0800f9e6       0x1c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800f9e6                HAL_PCD_SOFCallback
  .text.HAL_PCD_ResetCallback
-                0x0800f5fa       0x50 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f5fa                HAL_PCD_ResetCallback
- *fill*         0x0800f64a        0x2 
+                0x0800fa02       0x50 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fa02                HAL_PCD_ResetCallback
+ *fill*         0x0800fa52        0x2 
  .text.HAL_PCD_SuspendCallback
-                0x0800f64c       0x4c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f64c                HAL_PCD_SuspendCallback
+                0x0800fa54       0x4c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fa54                HAL_PCD_SuspendCallback
  .text.HAL_PCD_ResumeCallback
-                0x0800f698       0x1c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f698                HAL_PCD_ResumeCallback
+                0x0800faa0       0x1c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800faa0                HAL_PCD_ResumeCallback
  .text.HAL_PCD_ISOOUTIncompleteCallback
-                0x0800f6b4       0x24 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f6b4                HAL_PCD_ISOOUTIncompleteCallback
+                0x0800fabc       0x24 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fabc                HAL_PCD_ISOOUTIncompleteCallback
  .text.HAL_PCD_ISOINIncompleteCallback
-                0x0800f6d8       0x24 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f6d8                HAL_PCD_ISOINIncompleteCallback
+                0x0800fae0       0x24 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fae0                HAL_PCD_ISOINIncompleteCallback
  .text.HAL_PCD_ConnectCallback
-                0x0800f6fc       0x1c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f6fc                HAL_PCD_ConnectCallback
+                0x0800fb04       0x1c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fb04                HAL_PCD_ConnectCallback
  .text.HAL_PCD_DisconnectCallback
-                0x0800f718       0x1c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f718                HAL_PCD_DisconnectCallback
+                0x0800fb20       0x1c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fb20                HAL_PCD_DisconnectCallback
  .text.USBD_LL_Init
-                0x0800f734       0x98 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f734                USBD_LL_Init
+                0x0800fb3c       0x98 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fb3c                USBD_LL_Init
  .text.USBD_LL_Start
-                0x0800f7cc       0x36 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f7cc                USBD_LL_Start
+                0x0800fbd4       0x36 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fbd4                USBD_LL_Start
  .text.USBD_LL_OpenEP
-                0x0800f802       0x4c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f802                USBD_LL_OpenEP
+                0x0800fc0a       0x4c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fc0a                USBD_LL_OpenEP
  .text.USBD_LL_CloseEP
-                0x0800f84e       0x3e CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f84e                USBD_LL_CloseEP
+                0x0800fc56       0x3e CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fc56                USBD_LL_CloseEP
  .text.USBD_LL_StallEP
-                0x0800f88c       0x3e CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f88c                USBD_LL_StallEP
+                0x0800fc94       0x3e CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fc94                USBD_LL_StallEP
  .text.USBD_LL_ClearStallEP
-                0x0800f8ca       0x3e CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f8ca                USBD_LL_ClearStallEP
+                0x0800fcd2       0x3e CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fcd2                USBD_LL_ClearStallEP
  .text.USBD_LL_IsStallEP
-                0x0800f908       0x58 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f908                USBD_LL_IsStallEP
+                0x0800fd10       0x58 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fd10                USBD_LL_IsStallEP
  .text.USBD_LL_SetUSBAddress
-                0x0800f960       0x3e CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f960                USBD_LL_SetUSBAddress
+                0x0800fd68       0x3e CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fd68                USBD_LL_SetUSBAddress
  .text.USBD_LL_Transmit
-                0x0800f99e       0x42 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f99e                USBD_LL_Transmit
+                0x0800fda6       0x42 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fda6                USBD_LL_Transmit
  .text.USBD_LL_PrepareReceive
-                0x0800f9e0       0x42 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800f9e0                USBD_LL_PrepareReceive
+                0x0800fde8       0x42 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fde8                USBD_LL_PrepareReceive
  .text.USBD_LL_GetRxDataSize
-                0x0800fa22       0x26 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800fa22                USBD_LL_GetRxDataSize
+                0x0800fe2a       0x26 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fe2a                USBD_LL_GetRxDataSize
  .text.USBD_static_malloc
-                0x0800fa48       0x1c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800fa48                USBD_static_malloc
+                0x0800fe50       0x1c CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fe50                USBD_static_malloc
  .text.USBD_static_free
-                0x0800fa64       0x14 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800fa64                USBD_static_free
+                0x0800fe6c       0x14 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fe6c                USBD_static_free
  .text.USBD_Get_USB_Status
-                0x0800fa78       0x58 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
-                0x0800fa78                USBD_Get_USB_Status
+                0x0800fe80       0x58 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+                0x0800fe80                USBD_Get_USB_Status
  .text.MX_USB_DEVICE_Init
-                0x0800fad0       0x60 CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
-                0x0800fad0                MX_USB_DEVICE_Init
+                0x0800fed8       0x60 CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
+                0x0800fed8                MX_USB_DEVICE_Init
  .text.USBD_FS_DeviceDescriptor
-                0x0800fb30       0x24 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x0800fb30                USBD_FS_DeviceDescriptor
+                0x0800ff38       0x24 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x0800ff38                USBD_FS_DeviceDescriptor
  .text.USBD_FS_LangIDStrDescriptor
-                0x0800fb54       0x24 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x0800fb54                USBD_FS_LangIDStrDescriptor
+                0x0800ff5c       0x24 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x0800ff5c                USBD_FS_LangIDStrDescriptor
  .text.USBD_FS_ProductStrDescriptor
-                0x0800fb78       0x3c CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x0800fb78                USBD_FS_ProductStrDescriptor
+                0x0800ff80       0x3c CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x0800ff80                USBD_FS_ProductStrDescriptor
  .text.USBD_FS_ManufacturerStrDescriptor
-                0x0800fbb4       0x28 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x0800fbb4                USBD_FS_ManufacturerStrDescriptor
+                0x0800ffbc       0x28 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x0800ffbc                USBD_FS_ManufacturerStrDescriptor
  .text.USBD_FS_SerialStrDescriptor
-                0x0800fbdc       0x24 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x0800fbdc                USBD_FS_SerialStrDescriptor
+                0x0800ffe4       0x24 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x0800ffe4                USBD_FS_SerialStrDescriptor
  .text.USBD_FS_ConfigStrDescriptor
-                0x0800fc00       0x3c CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x0800fc00                USBD_FS_ConfigStrDescriptor
+                0x08010008       0x3c CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08010008                USBD_FS_ConfigStrDescriptor
  .text.USBD_FS_InterfaceStrDescriptor
-                0x0800fc3c       0x3c CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
-                0x0800fc3c                USBD_FS_InterfaceStrDescriptor
+                0x08010044       0x3c CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08010044                USBD_FS_InterfaceStrDescriptor
  .text.Get_SerialNum
-                0x0800fc78       0x58 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+                0x08010080       0x58 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
  .text.IntToUnicode
-                0x0800fcd0       0x7e CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
- *fill*         0x0800fd4e        0x2 
+                0x080100d8       0x7e CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+ *fill*         0x08010156        0x2 
  .text.CDC_Init_FS
-                0x0800fd50       0x28 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+                0x08010158       0x28 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
  .text.CDC_DeInit_FS
-                0x0800fd78       0x10 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+                0x08010180       0x10 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
  .text.CDC_Control_FS
-                0x0800fd88       0xbc CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+                0x08010190       0xbc CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
  .text.CDC_Receive_FS
-                0x0800fe44       0x28 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+                0x0801024c       0x28 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
  .text.CDC_Transmit_FS
-                0x0800fe6c       0x4c CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
-                0x0800fe6c                CDC_Transmit_FS
+                0x08010274       0x4c CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+                0x08010274                CDC_Transmit_FS
  .text.CDC_TransmitCplt_FS
-                0x0800feb8       0x22 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
- *fill*         0x0800feda        0x2 
- .text.main     0x0800fedc      0x160 CMakeFiles/gimbal.dir/Core/Src/main.c.obj
-                0x0800fedc                main
+                0x080102c0       0x22 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+ *fill*         0x080102e2        0x2 
+ .text.main     0x080102e4      0x160 CMakeFiles/gimbal.dir/Core/Src/main.c.obj
+                0x080102e4                main
  .text.SystemClock_Config
-                0x0801003c       0xd4 CMakeFiles/gimbal.dir/Core/Src/main.c.obj
-                0x0801003c                SystemClock_Config
+                0x08010444       0xd4 CMakeFiles/gimbal.dir/Core/Src/main.c.obj
+                0x08010444                SystemClock_Config
  .text.HAL_TIM_PeriodElapsedCallback
-                0x08010110       0x24 CMakeFiles/gimbal.dir/Core/Src/main.c.obj
-                0x08010110                HAL_TIM_PeriodElapsedCallback
+                0x08010518       0x24 CMakeFiles/gimbal.dir/Core/Src/main.c.obj
+                0x08010518                HAL_TIM_PeriodElapsedCallback
  .text.Error_Handler
-                0x08010134        0xc CMakeFiles/gimbal.dir/Core/Src/main.c.obj
-                0x08010134                Error_Handler
+                0x0801053c        0xc CMakeFiles/gimbal.dir/Core/Src/main.c.obj
+                0x0801053c                Error_Handler
  .text.MX_GPIO_Init
-                0x08010140      0x148 CMakeFiles/gimbal.dir/Core/Src/gpio.c.obj
-                0x08010140                MX_GPIO_Init
+                0x08010548      0x148 CMakeFiles/gimbal.dir/Core/Src/gpio.c.obj
+                0x08010548                MX_GPIO_Init
  .text.MX_FREERTOS_Init
-                0x08010288      0x130 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
-                0x08010288                MX_FREERTOS_Init
+                0x08010690      0x130 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+                0x08010690                MX_FREERTOS_Init
  .text.MX_CAN1_Init
-                0x080103b8       0x6c CMakeFiles/gimbal.dir/Core/Src/can.c.obj
-                0x080103b8                MX_CAN1_Init
+                0x080107c0       0x6c CMakeFiles/gimbal.dir/Core/Src/can.c.obj
+                0x080107c0                MX_CAN1_Init
  .text.MX_CAN2_Init
-                0x08010424       0x6c CMakeFiles/gimbal.dir/Core/Src/can.c.obj
-                0x08010424                MX_CAN2_Init
+                0x0801082c       0x6c CMakeFiles/gimbal.dir/Core/Src/can.c.obj
+                0x0801082c                MX_CAN2_Init
  .text.HAL_CAN_MspInit
-                0x08010490      0x15c CMakeFiles/gimbal.dir/Core/Src/can.c.obj
-                0x08010490                HAL_CAN_MspInit
+                0x08010898      0x15c CMakeFiles/gimbal.dir/Core/Src/can.c.obj
+                0x08010898                HAL_CAN_MspInit
  .text.MX_DMA_Init
-                0x080105ec       0x9c CMakeFiles/gimbal.dir/Core/Src/dma.c.obj
-                0x080105ec                MX_DMA_Init
+                0x080109f4       0x9c CMakeFiles/gimbal.dir/Core/Src/dma.c.obj
+                0x080109f4                MX_DMA_Init
  .text.MX_SPI1_Init
-                0x08010688       0x6c CMakeFiles/gimbal.dir/Core/Src/spi.c.obj
-                0x08010688                MX_SPI1_Init
+                0x08010a90       0x6c CMakeFiles/gimbal.dir/Core/Src/spi.c.obj
+                0x08010a90                MX_SPI1_Init
  .text.HAL_SPI_MspInit
-                0x080106f4      0x15c CMakeFiles/gimbal.dir/Core/Src/spi.c.obj
-                0x080106f4                HAL_SPI_MspInit
+                0x08010afc      0x15c CMakeFiles/gimbal.dir/Core/Src/spi.c.obj
+                0x08010afc                HAL_SPI_MspInit
  .text.MX_UART5_Init
-                0x08010850       0x58 CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
-                0x08010850                MX_UART5_Init
+                0x08010c58       0x58 CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
+                0x08010c58                MX_UART5_Init
  .text.MX_USART1_UART_Init
-                0x080108a8       0x54 CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
-                0x080108a8                MX_USART1_UART_Init
+                0x08010cb0       0x54 CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
+                0x08010cb0                MX_USART1_UART_Init
  .text.HAL_UART_MspInit
-                0x080108fc      0x298 CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
-                0x080108fc                HAL_UART_MspInit
+                0x08010d04      0x298 CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
+                0x08010d04                HAL_UART_MspInit
  .text.NMI_Handler
-                0x08010b94        0x8 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010b94                NMI_Handler
+                0x08010f9c        0x8 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08010f9c                NMI_Handler
  .text.HardFault_Handler
-                0x08010b9c        0x8 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010b9c                HardFault_Handler
+                0x08010fa4        0x8 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08010fa4                HardFault_Handler
  .text.MemManage_Handler
-                0x08010ba4        0x8 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010ba4                MemManage_Handler
+                0x08010fac        0x8 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08010fac                MemManage_Handler
  .text.BusFault_Handler
-                0x08010bac        0x8 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010bac                BusFault_Handler
+                0x08010fb4        0x8 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08010fb4                BusFault_Handler
  .text.UsageFault_Handler
-                0x08010bb4        0x8 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010bb4                UsageFault_Handler
+                0x08010fbc        0x8 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08010fbc                UsageFault_Handler
  .text.DebugMon_Handler
-                0x08010bbc        0xe CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010bbc                DebugMon_Handler
- *fill*         0x08010bca        0x2 
+                0x08010fc4        0xe CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08010fc4                DebugMon_Handler
+ *fill*         0x08010fd2        0x2 
  .text.DMA1_Stream0_IRQHandler
-                0x08010bcc       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010bcc                DMA1_Stream0_IRQHandler
+                0x08010fd4       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08010fd4                DMA1_Stream0_IRQHandler
  .text.CAN1_RX0_IRQHandler
-                0x08010be0       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010be0                CAN1_RX0_IRQHandler
+                0x08010fe8       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08010fe8                CAN1_RX0_IRQHandler
  .text.EXTI9_5_IRQHandler
-                0x08010bf4        0xe CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010bf4                EXTI9_5_IRQHandler
- *fill*         0x08010c02        0x2 
+                0x08010ffc        0xe CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08010ffc                EXTI9_5_IRQHandler
+ *fill*         0x0801100a        0x2 
  .text.TIM4_IRQHandler
-                0x08010c04       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010c04                TIM4_IRQHandler
+                0x0801100c       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0801100c                TIM4_IRQHandler
  .text.USART1_IRQHandler
-                0x08010c18       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010c18                USART1_IRQHandler
+                0x08011020       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08011020                USART1_IRQHandler
  .text.UART5_IRQHandler
-                0x08010c2c       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010c2c                UART5_IRQHandler
+                0x08011034       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08011034                UART5_IRQHandler
  .text.DMA2_Stream2_IRQHandler
-                0x08010c40       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010c40                DMA2_Stream2_IRQHandler
+                0x08011048       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08011048                DMA2_Stream2_IRQHandler
  .text.DMA2_Stream3_IRQHandler
-                0x08010c54       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010c54                DMA2_Stream3_IRQHandler
+                0x0801105c       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x0801105c                DMA2_Stream3_IRQHandler
  .text.CAN2_RX0_IRQHandler
-                0x08010c68       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010c68                CAN2_RX0_IRQHandler
+                0x08011070       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08011070                CAN2_RX0_IRQHandler
  .text.OTG_FS_IRQHandler
-                0x08010c7c       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010c7c                OTG_FS_IRQHandler
+                0x08011084       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08011084                OTG_FS_IRQHandler
  .text.DMA2_Stream5_IRQHandler
-                0x08010c90       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010c90                DMA2_Stream5_IRQHandler
+                0x08011098       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x08011098                DMA2_Stream5_IRQHandler
  .text.DMA2_Stream7_IRQHandler
-                0x08010ca4       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
-                0x08010ca4                DMA2_Stream7_IRQHandler
+                0x080110ac       0x14 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+                0x080110ac                DMA2_Stream7_IRQHandler
  .text.HAL_MspInit
-                0x08010cb8       0x58 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_msp.c.obj
-                0x08010cb8                HAL_MspInit
+                0x080110c0       0x58 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+                0x080110c0                HAL_MspInit
  .text.HAL_InitTick
-                0x08010d10       0xf8 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
-                0x08010d10                HAL_InitTick
+                0x08011118       0xf8 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+                0x08011118                HAL_InitTick
  .text.Reset_Handler
-                0x08010e08       0x50 CMakeFiles/gimbal.dir/startup_stm32f405xx.s.obj
-                0x08010e08                Reset_Handler
+                0x08011210       0x50 CMakeFiles/gimbal.dir/startup_stm32f405xx.s.obj
+                0x08011210                Reset_Handler
  .text.Default_Handler
-                0x08010e58        0x2 CMakeFiles/gimbal.dir/startup_stm32f405xx.s.obj
-                0x08010e58                RTC_Alarm_IRQHandler
-                0x08010e58                HASH_RNG_IRQHandler
-                0x08010e58                EXTI2_IRQHandler
-                0x08010e58                TIM8_CC_IRQHandler
-                0x08010e58                TIM1_CC_IRQHandler
-                0x08010e58                DMA1_Stream5_IRQHandler
-                0x08010e58                PVD_IRQHandler
-                0x08010e58                SDIO_IRQHandler
-                0x08010e58                TAMP_STAMP_IRQHandler
-                0x08010e58                CAN2_RX1_IRQHandler
-                0x08010e58                EXTI3_IRQHandler
-                0x08010e58                TIM8_TRG_COM_TIM14_IRQHandler
-                0x08010e58                TIM1_UP_TIM10_IRQHandler
-                0x08010e58                TIM8_UP_TIM13_IRQHandler
-                0x08010e58                I2C3_ER_IRQHandler
-                0x08010e58                EXTI0_IRQHandler
-                0x08010e58                I2C2_EV_IRQHandler
-                0x08010e58                DMA1_Stream2_IRQHandler
-                0x08010e58                FPU_IRQHandler
-                0x08010e58                OTG_HS_WKUP_IRQHandler
-                0x08010e58                CAN2_SCE_IRQHandler
-                0x08010e58                SPI1_IRQHandler
-                0x08010e58                TIM6_DAC_IRQHandler
-                0x08010e58                TIM1_BRK_TIM9_IRQHandler
-                0x08010e58                USART6_IRQHandler
-                0x08010e58                USART3_IRQHandler
-                0x08010e58                CAN1_RX1_IRQHandler
-                0x08010e58                DMA2_Stream0_IRQHandler
-                0x08010e58                I2C1_EV_IRQHandler
-                0x08010e58                DMA1_Stream6_IRQHandler
-                0x08010e58                DMA1_Stream1_IRQHandler
-                0x08010e58                UART4_IRQHandler
-                0x08010e58                TIM3_IRQHandler
-                0x08010e58                RCC_IRQHandler
-                0x08010e58                TIM8_BRK_TIM12_IRQHandler
-                0x08010e58                Default_Handler
-                0x08010e58                EXTI15_10_IRQHandler
-                0x08010e58                ADC_IRQHandler
-                0x08010e58                DMA1_Stream7_IRQHandler
-                0x08010e58                TIM7_IRQHandler
-                0x08010e58                CAN2_TX_IRQHandler
-                0x08010e58                TIM5_IRQHandler
-                0x08010e58                I2C3_EV_IRQHandler
-                0x08010e58                RTC_WKUP_IRQHandler
-                0x08010e58                SPI2_IRQHandler
-                0x08010e58                OTG_HS_EP1_IN_IRQHandler
-                0x08010e58                CAN1_TX_IRQHandler
-                0x08010e58                EXTI4_IRQHandler
-                0x08010e58                FSMC_IRQHandler
-                0x08010e58                OTG_HS_EP1_OUT_IRQHandler
-                0x08010e58                WWDG_IRQHandler
-                0x08010e58                TIM2_IRQHandler
-                0x08010e58                OTG_FS_WKUP_IRQHandler
-                0x08010e58                TIM1_TRG_COM_TIM11_IRQHandler
-                0x08010e58                OTG_HS_IRQHandler
-                0x08010e58                EXTI1_IRQHandler
-                0x08010e58                USART2_IRQHandler
-                0x08010e58                I2C2_ER_IRQHandler
-                0x08010e58                DMA2_Stream1_IRQHandler
-                0x08010e58                CAN1_SCE_IRQHandler
-                0x08010e58                FLASH_IRQHandler
-                0x08010e58                DMA2_Stream4_IRQHandler
-                0x08010e58                SPI3_IRQHandler
-                0x08010e58                DMA1_Stream4_IRQHandler
-                0x08010e58                I2C1_ER_IRQHandler
-                0x08010e58                DMA2_Stream6_IRQHandler
-                0x08010e58                DMA1_Stream3_IRQHandler
+                0x08011260        0x2 CMakeFiles/gimbal.dir/startup_stm32f405xx.s.obj
+                0x08011260                RTC_Alarm_IRQHandler
+                0x08011260                HASH_RNG_IRQHandler
+                0x08011260                EXTI2_IRQHandler
+                0x08011260                TIM8_CC_IRQHandler
+                0x08011260                TIM1_CC_IRQHandler
+                0x08011260                DMA1_Stream5_IRQHandler
+                0x08011260                PVD_IRQHandler
+                0x08011260                SDIO_IRQHandler
+                0x08011260                TAMP_STAMP_IRQHandler
+                0x08011260                CAN2_RX1_IRQHandler
+                0x08011260                EXTI3_IRQHandler
+                0x08011260                TIM8_TRG_COM_TIM14_IRQHandler
+                0x08011260                TIM1_UP_TIM10_IRQHandler
+                0x08011260                TIM8_UP_TIM13_IRQHandler
+                0x08011260                I2C3_ER_IRQHandler
+                0x08011260                EXTI0_IRQHandler
+                0x08011260                I2C2_EV_IRQHandler
+                0x08011260                DMA1_Stream2_IRQHandler
+                0x08011260                FPU_IRQHandler
+                0x08011260                OTG_HS_WKUP_IRQHandler
+                0x08011260                CAN2_SCE_IRQHandler
+                0x08011260                SPI1_IRQHandler
+                0x08011260                TIM6_DAC_IRQHandler
+                0x08011260                TIM1_BRK_TIM9_IRQHandler
+                0x08011260                USART6_IRQHandler
+                0x08011260                USART3_IRQHandler
+                0x08011260                CAN1_RX1_IRQHandler
+                0x08011260                DMA2_Stream0_IRQHandler
+                0x08011260                I2C1_EV_IRQHandler
+                0x08011260                DMA1_Stream6_IRQHandler
+                0x08011260                DMA1_Stream1_IRQHandler
+                0x08011260                UART4_IRQHandler
+                0x08011260                TIM3_IRQHandler
+                0x08011260                RCC_IRQHandler
+                0x08011260                TIM8_BRK_TIM12_IRQHandler
+                0x08011260                Default_Handler
+                0x08011260                EXTI15_10_IRQHandler
+                0x08011260                ADC_IRQHandler
+                0x08011260                DMA1_Stream7_IRQHandler
+                0x08011260                TIM7_IRQHandler
+                0x08011260                CAN2_TX_IRQHandler
+                0x08011260                TIM5_IRQHandler
+                0x08011260                I2C3_EV_IRQHandler
+                0x08011260                RTC_WKUP_IRQHandler
+                0x08011260                SPI2_IRQHandler
+                0x08011260                OTG_HS_EP1_IN_IRQHandler
+                0x08011260                CAN1_TX_IRQHandler
+                0x08011260                EXTI4_IRQHandler
+                0x08011260                FSMC_IRQHandler
+                0x08011260                OTG_HS_EP1_OUT_IRQHandler
+                0x08011260                WWDG_IRQHandler
+                0x08011260                TIM2_IRQHandler
+                0x08011260                OTG_FS_WKUP_IRQHandler
+                0x08011260                TIM1_TRG_COM_TIM11_IRQHandler
+                0x08011260                OTG_HS_IRQHandler
+                0x08011260                EXTI1_IRQHandler
+                0x08011260                USART2_IRQHandler
+                0x08011260                I2C2_ER_IRQHandler
+                0x08011260                DMA2_Stream1_IRQHandler
+                0x08011260                CAN1_SCE_IRQHandler
+                0x08011260                FLASH_IRQHandler
+                0x08011260                DMA2_Stream4_IRQHandler
+                0x08011260                SPI3_IRQHandler
+                0x08011260                DMA1_Stream4_IRQHandler
+                0x08011260                I2C1_ER_IRQHandler
+                0x08011260                DMA2_Stream6_IRQHandler
+                0x08011260                DMA1_Stream3_IRQHandler
  .text.PID_Update
-                0x08010e5a      0x2d2 CMakeFiles/gimbal.dir/Module/PID.c.obj
-                0x08010e5a                PID_Update
+                0x08011262      0x2d2 CMakeFiles/gimbal.dir/Module/PID.c.obj
+                0x08011262                PID_Update
  .text.PID_Init
-                0x0801112c       0x78 CMakeFiles/gimbal.dir/Module/PID.c.obj
-                0x0801112c                PID_Init
+                0x08011534       0x78 CMakeFiles/gimbal.dir/Module/PID.c.obj
+                0x08011534                PID_Init
  .text.BMI088_read
-                0x080111a4      0x1d4 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
-                0x080111a4                BMI088_read
+                0x080115ac      0x1d4 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
+                0x080115ac                BMI088_read
  .text.BMI088_read_muli_reg
-                0x08011378       0x4a CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
- *fill*         0x080113c2        0x2 
+                0x08011780       0x4a CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
+ *fill*         0x080117ca        0x2 
  .text.BMI088_ACCEL_NS_L
-                0x080113c4       0x18 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
-                0x080113c4                BMI088_ACCEL_NS_L
+                0x080117cc       0x18 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
+                0x080117cc                BMI088_ACCEL_NS_L
  .text.BMI088_ACCEL_NS_H
-                0x080113dc       0x18 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
-                0x080113dc                BMI088_ACCEL_NS_H
+                0x080117e4       0x18 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
+                0x080117e4                BMI088_ACCEL_NS_H
  .text.BMI088_GYRO_NS_L
-                0x080113f4       0x18 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
-                0x080113f4                BMI088_GYRO_NS_L
+                0x080117fc       0x18 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
+                0x080117fc                BMI088_GYRO_NS_L
  .text.BMI088_GYRO_NS_H
-                0x0801140c       0x18 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
-                0x0801140c                BMI088_GYRO_NS_H
+                0x08011814       0x18 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
+                0x08011814                BMI088_GYRO_NS_H
  .text.BMI088_read_write_byte
-                0x08011424       0x2c CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
-                0x08011424                BMI088_read_write_byte
+                0x0801182c       0x2c CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
+                0x0801182c                BMI088_read_write_byte
  .text.MahonyAHRSupdateIMU
-                0x08011450      0x4ec CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
-                0x08011450                MahonyAHRSupdateIMU
- .text.invSqrt  0x0801193c       0x78 CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
-                0x0801193c                invSqrt
+                0x08011858      0x4ec CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
+                0x08011858                MahonyAHRSupdateIMU
+ .text.invSqrt  0x08011d44       0x78 CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
+                0x08011d44                invSqrt
  .text.__udivmoddi4
-                0x080119b4      0x2a0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
-                0x080119b4                __udivmoddi4
+                0x08011dbc      0x2a0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x08011dbc                __udivmoddi4
  *(.glue_7)
- .glue_7        0x08011c54        0x0 linker stubs
+ .glue_7        0x0801205c        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x08011c54        0x0 linker stubs
+ .glue_7t       0x0801205c        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x08011c54        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
+ .eh_frame      0x0801205c        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
  *(.init)
- .init          0x08011c54        0x4 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crti.o
-                0x08011c54                _init
- .init          0x08011c58        0x8 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtn.o
+ .init          0x0801205c        0x4 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crti.o
+                0x0801205c                _init
+ .init          0x08012060        0x8 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtn.o
  *(.fini)
- .fini          0x08011c60        0x4 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crti.o
-                0x08011c60                _fini
- .fini          0x08011c64        0x8 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtn.o
-                0x08011c6c                        . = ALIGN (0x4)
-                0x08011c6c                        _etext = .
+ .fini          0x08012068        0x4 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crti.o
+                0x08012068                _fini
+ .fini          0x0801206c        0x8 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtn.o
+                0x08012074                        . = ALIGN (0x4)
+                0x08012074                        _etext = .
 
-.vfp11_veneer   0x08011c6c        0x0
- .vfp11_veneer  0x08011c6c        0x0 linker stubs
+.vfp11_veneer   0x08012074        0x0
+ .vfp11_veneer  0x08012074        0x0 linker stubs
 
-.v4_bx          0x08011c6c        0x0
- .v4_bx         0x08011c6c        0x0 linker stubs
+.v4_bx          0x08012074        0x0
+ .v4_bx         0x08012074        0x0 linker stubs
 
-.iplt           0x08011c6c        0x0
- .iplt          0x08011c6c        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
+.iplt           0x08012074        0x0
+ .iplt          0x08012074        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
 
-.rodata         0x08011c6c      0x694
-                0x08011c6c                        . = ALIGN (0x4)
+.rodata         0x08012074      0x694
+                0x08012074                        . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x08011c6c        0x5 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
- *fill*         0x08011c71        0x3 
- .rodata        0x08011c74        0xd cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
- *fill*         0x08011c81        0x3 
- .rodata        0x08011c84       0x46 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
- *fill*         0x08011cca        0x2 
- .rodata        0x08011ccc       0x9d CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
- *fill*         0x08011d69        0x3 
- .rodata        0x08011d6c       0x18 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-ef_atan2.o)
- .rodata        0x08011d84      0x398 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-ef_rem_pio2.o)
- .rodata        0x0801211c       0x20 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-sf_atan.o)
- .rodata        0x0801213c       0x38 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-kf_rem_pio2.o)
+ .rodata        0x08012074        0x5 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+ *fill*         0x08012079        0x3 
+ .rodata        0x0801207c        0xd cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+ *fill*         0x08012089        0x3 
+ .rodata        0x0801208c       0x46 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+ *fill*         0x080120d2        0x2 
+ .rodata        0x080120d4       0x9d CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+ *fill*         0x08012171        0x3 
+ .rodata        0x08012174       0x18 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-ef_atan2.o)
+ .rodata        0x0801218c      0x398 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-ef_rem_pio2.o)
+ .rodata        0x08012524       0x20 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-sf_atan.o)
+ .rodata        0x08012544       0x38 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-kf_rem_pio2.o)
  *(.rodata*)
  .rodata.AHBPrescTable
-                0x08012174       0x10 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
-                0x08012174                AHBPrescTable
+                0x0801257c       0x10 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
+                0x0801257c                AHBPrescTable
  .rodata.APBPrescTable
-                0x08012184        0x8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
-                0x08012184                APBPrescTable
+                0x0801258c        0x8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
+                0x0801258c                APBPrescTable
  .rodata.flagBitshiftOffset.0
-                0x0801218c        0x8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
+                0x08012594        0x8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
  .rodata.gimbal_inPID_attributes
-                0x08012194       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
-                0x08012194                gimbal_inPID_attributes
+                0x0801259c       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+                0x0801259c                gimbal_inPID_attributes
  .rodata.bmi088Task_attributes
-                0x080121b8       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
-                0x080121b8                bmi088Task_attributes
+                0x080125c0       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+                0x080125c0                bmi088Task_attributes
  .rodata.USB_RxTask_attributes
-                0x080121dc       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
-                0x080121dc                USB_RxTask_attributes
+                0x080125e4       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+                0x080125e4                USB_RxTask_attributes
  .rodata.gimbal_exPID_attributes
-                0x08012200       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
-                0x08012200                gimbal_exPID_attributes
+                0x08012608       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+                0x08012608                gimbal_exPID_attributes
  .rodata.SbusTransTask_attributes
-                0x08012224       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
-                0x08012224                SbusTransTask_attributes
+                0x0801262c       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+                0x0801262c                SbusTransTask_attributes
  .rodata.chassis_CANTask_attributes
-                0x08012248       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
-                0x08012248                chassis_CANTask_attributes
+                0x08012650       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+                0x08012650                chassis_CANTask_attributes
  .rodata.chassis_inPID_attributes
-                0x0801226c       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
-                0x0801226c                chassis_inPID_attributes
+                0x08012674       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+                0x08012674                chassis_inPID_attributes
  .rodata.sentry_mode_attributes
-                0x08012290       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
-                0x08012290                sentry_mode_attributes
+                0x08012698       0x24 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+                0x08012698                sentry_mode_attributes
  .rodata.USBRxQueue_attributes
-                0x080122b4       0x18 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
-                0x080122b4                USBRxQueue_attributes
+                0x080126bc       0x18 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+                0x080126bc                USBRxQueue_attributes
  .rodata.SbusFrameQueue_attributes
-                0x080122cc       0x18 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
-                0x080122cc                SbusFrameQueue_attributes
+                0x080126d4       0x18 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+                0x080126d4                SbusFrameQueue_attributes
  .rodata.CAN_2RxQueue_attributes
-                0x080122e4       0x18 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
-                0x080122e4                CAN_2RxQueue_attributes
+                0x080126ec       0x18 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+                0x080126ec                CAN_2RxQueue_attributes
  .rodata.str1.4
-                0x080122fc        0x1 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-wf_asin.o)
-                0x08012300                        . = ALIGN (0x4)
- *fill*         0x080122fd        0x3 
+                0x08012704        0x1 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a(libm_a-wf_asin.o)
+                0x08012708                        . = ALIGN (0x4)
+ *fill*         0x08012705        0x3 
 
-.ARM.extab      0x08012300        0x0
-                0x08012300                        . = ALIGN (0x4)
+.ARM.extab      0x08012708        0x0
+                0x08012708                        . = ALIGN (0x4)
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x08012300                        . = ALIGN (0x4)
+                0x08012708                        . = ALIGN (0x4)
 
-.ARM            0x08012300        0x8
-                0x08012300                        . = ALIGN (0x4)
-                0x08012300                        __exidx_start = .
+.ARM            0x08012708        0x8
+                0x08012708                        . = ALIGN (0x4)
+                0x08012708                        __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x08012300        0x8 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy.o)
+ .ARM.exidx     0x08012708        0x8 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy.o)
  .ARM.exidx.text.__udivmoddi4
-                0x08012308        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x08012710        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
                                   0x8 (size before relaxing)
-                0x08012308                        __exidx_end = .
-                0x08012308                        . = ALIGN (0x4)
+                0x08012710                        __exidx_end = .
+                0x08012710                        . = ALIGN (0x4)
 
-.preinit_array  0x08012308        0x0
-                0x08012308                        . = ALIGN (0x4)
-                0x08012308                        PROVIDE (__preinit_array_start = .)
+.preinit_array  0x08012710        0x0
+                0x08012710                        . = ALIGN (0x4)
+                0x08012710                        PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x08012308                        PROVIDE (__preinit_array_end = .)
-                0x08012308                        . = ALIGN (0x4)
+                0x08012710                        PROVIDE (__preinit_array_end = .)
+                0x08012710                        . = ALIGN (0x4)
 
-.init_array     0x08012308        0x4
-                0x08012308                        . = ALIGN (0x4)
-                0x08012308                        PROVIDE (__init_array_start = .)
+.init_array     0x08012710        0x4
+                0x08012710                        . = ALIGN (0x4)
+                0x08012710                        PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x08012308        0x4 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
-                0x0801230c                        PROVIDE (__init_array_end = .)
-                0x0801230c                        . = ALIGN (0x4)
+ .init_array    0x08012710        0x4 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
+                0x08012714                        PROVIDE (__init_array_end = .)
+                0x08012714                        . = ALIGN (0x4)
 
-.fini_array     0x0801230c        0x4
-                0x0801230c                        . = ALIGN (0x4)
-                0x0801230c                        PROVIDE (__fini_array_start = .)
+.fini_array     0x08012714        0x4
+                0x08012714                        . = ALIGN (0x4)
+                0x08012714                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x0801230c        0x4 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
-                0x08012310                        PROVIDE (__fini_array_end = .)
-                0x08012310                        . = ALIGN (0x4)
-                0x08012310                        _siccmram = LOADADDR (.ccmram)
+ .fini_array    0x08012714        0x4 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
+                0x08012718                        PROVIDE (__fini_array_end = .)
+                0x08012718                        . = ALIGN (0x4)
+                0x08012718                        _siccmram = LOADADDR (.ccmram)
 
-.rel.dyn        0x08012310        0x0
- .rel.iplt      0x08012310        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
+.rel.dyn        0x08012718        0x0
+ .rel.iplt      0x08012718        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
 
-.ccmram         0x10000000        0x0 load address 0x08012310
+.ccmram         0x10000000        0x0 load address 0x08012718
                 0x10000000                        . = ALIGN (0x4)
                 0x10000000                        _sccmram = .
  *(.ccmram)
  *(.ccmram*)
                 0x10000000                        . = ALIGN (0x4)
                 0x10000000                        _eccmram = .
-                0x08012310                        _sidata = LOADADDR (.data)
+                0x08012718                        _sidata = LOADADDR (.data)
 
-.data           0x20000000      0x5d4 load address 0x08012310
+.data           0x20000000      0x5d4 load address 0x08012718
                 0x20000000                        . = ALIGN (0x4)
                 0x20000000                        _sdata = .
  *(.data)
@@ -10252,10 +10360,10 @@ LOAD D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/
  *(.RamFunc*)
                 0x200005d4                        . = ALIGN (0x4)
 
-.igot.plt       0x200005d4        0x0 load address 0x080128e4
+.igot.plt       0x200005d4        0x0 load address 0x08012cec
  .igot.plt      0x200005d4        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard/crtbegin.o
 
-.tdata          0x200005d4        0x0 load address 0x080128e4
+.tdata          0x200005d4        0x0 load address 0x08012cec
  *(.tdata .tdata.* .gnu.linkonce.td.*)
                 0x200005d4                        . = ALIGN (0x4)
                 0x200005d4                        _edata = .
@@ -10272,7 +10380,7 @@ LOAD D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/
                 [!provide]                        PROVIDE (__data_source_end = __tdata_source_end)
                 [!provide]                        PROVIDE (__data_source_size = (__data_source_end - __data_source))
 
-.tbss           0x200005d4        0x0 load address 0x080128e4
+.tbss           0x200005d4        0x0 load address 0x08012cec
                 0x200005d4                        _sbss = .
                 0x200005d4                        __bss_start__ = _sbss
  *(.tbss .tbss.*)
@@ -10289,7 +10397,7 @@ LOAD D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/
                 [!provide]                        PROVIDE (__arm32_tls_tcb_offset = MAX (0x8, __tls_align))
                 [!provide]                        PROVIDE (__arm64_tls_tcb_offset = MAX (0x10, __tls_align))
 
-.bss            0x200005d4     0x76cc load address 0x080128e4
+.bss            0x200005d4     0x76cc load address 0x08012cec
  *(.bss)
  .bss           0x200005d4      0x13c D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-findfp.o)
                 0x200005d4                __sf
@@ -10521,7 +10629,7 @@ LOAD D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/
                 [!provide]                        PROVIDE (__bss_size = (__bss_end - __bss_start))
 
 ._user_heap_stack
-                0x20007ca0      0x600 load address 0x080128e4
+                0x20007ca0      0x600 load address 0x08012cec
                 0x20007ca0                        . = ALIGN (0x8)
                 [!provide]                        PROVIDE (end = .)
                 0x20007ca0                        PROVIDE (_end = .)
@@ -10823,7 +10931,7 @@ LOAD linker stubs
  .comment       0x00000012        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
                                  0x13 (size before relaxing)
 
-.debug_info     0x00000000    0x2fcaf
+.debug_info     0x00000000    0x2fc8b
  .debug_info    0x00000000      0x523 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_info    0x00000523     0x2c17 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
  .debug_info    0x0000313a     0x160f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
@@ -10852,42 +10960,42 @@ LOAD linker stubs
  .debug_info    0x0001de63      0x53c CMakeFiles/gimbal.dir/Module/reg.c.obj
  .debug_info    0x0001e39f      0xcc4 CMakeFiles/gimbal.dir/bsp/Src/MyCAN.c.obj
  .debug_info    0x0001f063      0x2e7 CMakeFiles/gimbal.dir/bsp/Src/MyUSB.c.obj
- .debug_info    0x0001f34a      0x96b CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
- .debug_info    0x0001fcb5      0xcb1 CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
- .debug_info    0x00020966      0x1b3 CMakeFiles/gimbal.dir/App/rc/rc.c.obj
- .debug_info    0x00020b19      0x83e CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
- .debug_info    0x00021357      0x74e CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
- .debug_info    0x00021aa5     0x1d3e CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
- .debug_info    0x000237e3      0x778 CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
- .debug_info    0x00023f5b      0x498 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
- .debug_info    0x000243f3      0x97d CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
- .debug_info    0x00024d70     0x134f CMakeFiles/gimbal.dir/Core/Src/main.c.obj
- .debug_info    0x000260bf      0x6dd CMakeFiles/gimbal.dir/Core/Src/gpio.c.obj
- .debug_info    0x0002679c      0x6d4 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
- .debug_info    0x00026e70      0xbac CMakeFiles/gimbal.dir/Core/Src/can.c.obj
- .debug_info    0x00027a1c      0x4f7 CMakeFiles/gimbal.dir/Core/Src/dma.c.obj
- .debug_info    0x00027f13      0xa48 CMakeFiles/gimbal.dir/Core/Src/spi.c.obj
- .debug_info    0x0002895b      0xd07 CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
- .debug_info    0x00029662     0x1396 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_info    0x0002a9f8      0x4e4 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_info    0x0002aedc      0xc39 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_info    0x0002bb15       0x30 CMakeFiles/gimbal.dir/startup_stm32f405xx.s.obj
- .debug_info    0x0002bb45      0x2f3 CMakeFiles/gimbal.dir/Module/PID.c.obj
- .debug_info    0x0002be38      0x774 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
- .debug_info    0x0002c5ac      0x837 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
- .debug_info    0x0002cde3      0x4b9 CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
- .debug_info    0x0002d29c       0xd3 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
- .debug_info    0x0002d36f       0x57 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
- .debug_info    0x0002d3c6       0x3f D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
- .debug_info    0x0002d405       0x24 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_info    0x0002d429      0x703 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
- .debug_info    0x0002db2c       0x3c D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
- .debug_info    0x0002db68     0x10c4 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-findfp.o)
- .debug_info    0x0002ec2c      0x135 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memset.o)
- .debug_info    0x0002ed61      0x715 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-impure.o)
- .debug_info    0x0002f476      0x6fb D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-errno.o)
- .debug_info    0x0002fb71      0x10b D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
- .debug_info    0x0002fc7c       0x33 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy.o)
+ .debug_info    0x0001f34a      0x947 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
+ .debug_info    0x0001fc91      0xcb1 CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
+ .debug_info    0x00020942      0x1b3 CMakeFiles/gimbal.dir/App/rc/rc.c.obj
+ .debug_info    0x00020af5      0x83e CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
+ .debug_info    0x00021333      0x74e CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
+ .debug_info    0x00021a81     0x1d3e CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+ .debug_info    0x000237bf      0x778 CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
+ .debug_info    0x00023f37      0x498 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+ .debug_info    0x000243cf      0x97d CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+ .debug_info    0x00024d4c     0x134f CMakeFiles/gimbal.dir/Core/Src/main.c.obj
+ .debug_info    0x0002609b      0x6dd CMakeFiles/gimbal.dir/Core/Src/gpio.c.obj
+ .debug_info    0x00026778      0x6d4 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+ .debug_info    0x00026e4c      0xbac CMakeFiles/gimbal.dir/Core/Src/can.c.obj
+ .debug_info    0x000279f8      0x4f7 CMakeFiles/gimbal.dir/Core/Src/dma.c.obj
+ .debug_info    0x00027eef      0xa48 CMakeFiles/gimbal.dir/Core/Src/spi.c.obj
+ .debug_info    0x00028937      0xd07 CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
+ .debug_info    0x0002963e     0x1396 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_info    0x0002a9d4      0x4e4 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_info    0x0002aeb8      0xc39 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_info    0x0002baf1       0x30 CMakeFiles/gimbal.dir/startup_stm32f405xx.s.obj
+ .debug_info    0x0002bb21      0x2f3 CMakeFiles/gimbal.dir/Module/PID.c.obj
+ .debug_info    0x0002be14      0x774 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
+ .debug_info    0x0002c588      0x837 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
+ .debug_info    0x0002cdbf      0x4b9 CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
+ .debug_info    0x0002d278       0xd3 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
+ .debug_info    0x0002d34b       0x57 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
+ .debug_info    0x0002d3a2       0x3f D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
+ .debug_info    0x0002d3e1       0x24 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_info    0x0002d405      0x703 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+ .debug_info    0x0002db08       0x3c D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
+ .debug_info    0x0002db44     0x10c4 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-findfp.o)
+ .debug_info    0x0002ec08      0x135 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memset.o)
+ .debug_info    0x0002ed3d      0x715 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-impure.o)
+ .debug_info    0x0002f452      0x6fb D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-errno.o)
+ .debug_info    0x0002fb4d      0x10b D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
+ .debug_info    0x0002fc58       0x33 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy.o)
 
 .debug_abbrev   0x00000000     0x76d4
  .debug_abbrev  0x00000000      0x116 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
@@ -11137,7 +11245,7 @@ LOAD linker stubs
  .debug_ranges  0x00001f08       0x40 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
  .debug_ranges  0x00001f48       0x20 CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
 
-.debug_macro    0x00000000    0x27d6a
+.debug_macro    0x00000000    0x27d71
  .debug_macro   0x00000000      0x206 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_macro   0x00000206      0xad8 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_macro   0x00000cde       0x2e cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
@@ -11259,46 +11367,46 @@ LOAD linker stubs
  .debug_macro   0x00023571       0x1c CMakeFiles/gimbal.dir/bsp/Src/MyUSB.c.obj
  .debug_macro   0x0002358d       0x1c CMakeFiles/gimbal.dir/bsp/Src/MyUSB.c.obj
  .debug_macro   0x000235a9       0x10 CMakeFiles/gimbal.dir/bsp/Src/MyUSB.c.obj
- .debug_macro   0x000235b9      0x3ef CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
- .debug_macro   0x000239a8      0x19b CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
- .debug_macro   0x00023b43       0x2e CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
- .debug_macro   0x00023b71      0x190 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
- .debug_macro   0x00023d01       0x28 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
- .debug_macro   0x00023d29       0x16 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
- .debug_macro   0x00023d3f       0x88 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
- .debug_macro   0x00023dc7       0x10 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
- .debug_macro   0x00023dd7      0x317 CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
- .debug_macro   0x000240ee       0x34 CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
- .debug_macro   0x00024122      0x37f CMakeFiles/gimbal.dir/App/rc/rc.c.obj
- .debug_macro   0x000244a1      0x251 CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
- .debug_macro   0x000246f2      0x332 CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
- .debug_macro   0x00024a24      0x394 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
- .debug_macro   0x00024db8      0x3b0 CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
- .debug_macro   0x00025168       0x22 CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
- .debug_macro   0x0002518a       0x16 CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
- .debug_macro   0x000251a0      0x3ba CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
- .debug_macro   0x0002555a       0x1c CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
- .debug_macro   0x00025576      0x39b CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
- .debug_macro   0x00025911      0x45a CMakeFiles/gimbal.dir/Core/Src/main.c.obj
- .debug_macro   0x00025d6b       0x10 CMakeFiles/gimbal.dir/Core/Src/main.c.obj
- .debug_macro   0x00025d7b      0x21f CMakeFiles/gimbal.dir/Core/Src/gpio.c.obj
- .debug_macro   0x00025f9a      0x29f CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
- .debug_macro   0x00026239       0x6c CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
- .debug_macro   0x000262a5      0x21f CMakeFiles/gimbal.dir/Core/Src/can.c.obj
- .debug_macro   0x000264c4      0x21f CMakeFiles/gimbal.dir/Core/Src/dma.c.obj
- .debug_macro   0x000266e3      0x21f CMakeFiles/gimbal.dir/Core/Src/spi.c.obj
- .debug_macro   0x00026902      0x21f CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
- .debug_macro   0x00026b21      0x21f CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_macro   0x00026d40      0x215 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_macro   0x00026f55      0x206 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_macro   0x0002715b      0x2d1 CMakeFiles/gimbal.dir/Module/PID.c.obj
- .debug_macro   0x0002742c      0x264 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
- .debug_macro   0x00027690      0x3a2 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
- .debug_macro   0x00027a32       0x10 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
- .debug_macro   0x00027a42      0x239 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
- .debug_macro   0x00027c7b       0xef CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
+ .debug_macro   0x000235b9      0x3f6 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
+ .debug_macro   0x000239af      0x19b CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
+ .debug_macro   0x00023b4a       0x2e CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
+ .debug_macro   0x00023b78      0x190 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
+ .debug_macro   0x00023d08       0x28 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
+ .debug_macro   0x00023d30       0x16 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
+ .debug_macro   0x00023d46       0x88 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
+ .debug_macro   0x00023dce       0x10 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
+ .debug_macro   0x00023dde      0x317 CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
+ .debug_macro   0x000240f5       0x34 CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
+ .debug_macro   0x00024129      0x37f CMakeFiles/gimbal.dir/App/rc/rc.c.obj
+ .debug_macro   0x000244a8      0x251 CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
+ .debug_macro   0x000246f9      0x332 CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
+ .debug_macro   0x00024a2b      0x394 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+ .debug_macro   0x00024dbf      0x3b0 CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
+ .debug_macro   0x0002516f       0x22 CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
+ .debug_macro   0x00025191       0x16 CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
+ .debug_macro   0x000251a7      0x3ba CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+ .debug_macro   0x00025561       0x1c CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+ .debug_macro   0x0002557d      0x39b CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+ .debug_macro   0x00025918      0x45a CMakeFiles/gimbal.dir/Core/Src/main.c.obj
+ .debug_macro   0x00025d72       0x10 CMakeFiles/gimbal.dir/Core/Src/main.c.obj
+ .debug_macro   0x00025d82      0x21f CMakeFiles/gimbal.dir/Core/Src/gpio.c.obj
+ .debug_macro   0x00025fa1      0x29f CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+ .debug_macro   0x00026240       0x6c CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+ .debug_macro   0x000262ac      0x21f CMakeFiles/gimbal.dir/Core/Src/can.c.obj
+ .debug_macro   0x000264cb      0x21f CMakeFiles/gimbal.dir/Core/Src/dma.c.obj
+ .debug_macro   0x000266ea      0x21f CMakeFiles/gimbal.dir/Core/Src/spi.c.obj
+ .debug_macro   0x00026909      0x21f CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
+ .debug_macro   0x00026b28      0x21f CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_macro   0x00026d47      0x215 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_macro   0x00026f5c      0x206 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_macro   0x00027162      0x2d1 CMakeFiles/gimbal.dir/Module/PID.c.obj
+ .debug_macro   0x00027433      0x264 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
+ .debug_macro   0x00027697      0x3a2 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
+ .debug_macro   0x00027a39       0x10 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
+ .debug_macro   0x00027a49      0x239 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
+ .debug_macro   0x00027c82       0xef CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
 
-.debug_line     0x00000000    0x2a4e2
+.debug_line     0x00000000    0x2a6d1
  .debug_line    0x00000000      0x64a cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
  .debug_line    0x0000064a     0x363b cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
  .debug_line    0x00003c85     0x1826 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
@@ -11327,171 +11435,171 @@ LOAD linker stubs
  .debug_line    0x0001b235      0x63e CMakeFiles/gimbal.dir/Module/reg.c.obj
  .debug_line    0x0001b873      0xad9 CMakeFiles/gimbal.dir/bsp/Src/MyCAN.c.obj
  .debug_line    0x0001c34c      0x984 CMakeFiles/gimbal.dir/bsp/Src/MyUSB.c.obj
- .debug_line    0x0001ccd0      0xc74 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
- .debug_line    0x0001d944      0x9f4 CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
- .debug_line    0x0001e338      0x877 CMakeFiles/gimbal.dir/App/rc/rc.c.obj
- .debug_line    0x0001ebaf      0x7a3 CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
- .debug_line    0x0001f352      0xa00 CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
- .debug_line    0x0001fd52      0xc01 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
- .debug_line    0x00020953      0x83e CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
- .debug_line    0x00021191      0x8cd CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
- .debug_line    0x00021a5e      0x891 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
- .debug_line    0x000222ef      0xa92 CMakeFiles/gimbal.dir/Core/Src/main.c.obj
- .debug_line    0x00022d81      0x609 CMakeFiles/gimbal.dir/Core/Src/gpio.c.obj
- .debug_line    0x0002338a      0x8a4 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
- .debug_line    0x00023c2e      0x6f0 CMakeFiles/gimbal.dir/Core/Src/can.c.obj
- .debug_line    0x0002431e      0x5d9 CMakeFiles/gimbal.dir/Core/Src/dma.c.obj
- .debug_line    0x000248f7      0x6a1 CMakeFiles/gimbal.dir/Core/Src/spi.c.obj
- .debug_line    0x00024f98      0x74a CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
- .debug_line    0x000256e2      0x765 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
- .debug_line    0x00025e47      0x5d5 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_msp.c.obj
- .debug_line    0x0002641c      0x652 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
- .debug_line    0x00026a6e       0x7a CMakeFiles/gimbal.dir/startup_stm32f405xx.s.obj
- .debug_line    0x00026ae8      0x8b8 CMakeFiles/gimbal.dir/Module/PID.c.obj
- .debug_line    0x000273a0      0xed8 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
- .debug_line    0x00028278      0x6ba CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
- .debug_line    0x00028932      0x66a CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
- .debug_line    0x00028f9c      0x16f D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
- .debug_line    0x0002910b      0x184 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
- .debug_line    0x0002928f       0x76 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
- .debug_line    0x00029305       0x4e D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_line    0x00029353      0x503 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
- .debug_line    0x00029856       0x4a D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
- .debug_line    0x000298a0      0x66c D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-findfp.o)
- .debug_line    0x00029f0c      0x1c9 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memset.o)
- .debug_line    0x0002a0d5       0xfa D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-impure.o)
- .debug_line    0x0002a1cf      0x11f D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-errno.o)
- .debug_line    0x0002a2ee      0x13b D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
- .debug_line    0x0002a429       0xb9 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy.o)
+ .debug_line    0x0001ccd0      0xe63 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
+ .debug_line    0x0001db33      0x9f4 CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
+ .debug_line    0x0001e527      0x877 CMakeFiles/gimbal.dir/App/rc/rc.c.obj
+ .debug_line    0x0001ed9e      0x7a3 CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
+ .debug_line    0x0001f541      0xa00 CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
+ .debug_line    0x0001ff41      0xc01 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+ .debug_line    0x00020b42      0x83e CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
+ .debug_line    0x00021380      0x8cd CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+ .debug_line    0x00021c4d      0x891 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+ .debug_line    0x000224de      0xa92 CMakeFiles/gimbal.dir/Core/Src/main.c.obj
+ .debug_line    0x00022f70      0x609 CMakeFiles/gimbal.dir/Core/Src/gpio.c.obj
+ .debug_line    0x00023579      0x8a4 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+ .debug_line    0x00023e1d      0x6f0 CMakeFiles/gimbal.dir/Core/Src/can.c.obj
+ .debug_line    0x0002450d      0x5d9 CMakeFiles/gimbal.dir/Core/Src/dma.c.obj
+ .debug_line    0x00024ae6      0x6a1 CMakeFiles/gimbal.dir/Core/Src/spi.c.obj
+ .debug_line    0x00025187      0x74a CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
+ .debug_line    0x000258d1      0x765 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_line    0x00026036      0x5d5 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_line    0x0002660b      0x652 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_line    0x00026c5d       0x7a CMakeFiles/gimbal.dir/startup_stm32f405xx.s.obj
+ .debug_line    0x00026cd7      0x8b8 CMakeFiles/gimbal.dir/Module/PID.c.obj
+ .debug_line    0x0002758f      0xed8 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
+ .debug_line    0x00028467      0x6ba CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
+ .debug_line    0x00028b21      0x66a CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
+ .debug_line    0x0002918b      0x16f D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
+ .debug_line    0x000292fa      0x184 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
+ .debug_line    0x0002947e       0x76 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
+ .debug_line    0x000294f4       0x4e D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_line    0x00029542      0x503 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+ .debug_line    0x00029a45       0x4a D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
+ .debug_line    0x00029a8f      0x66c D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-findfp.o)
+ .debug_line    0x0002a0fb      0x1c9 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memset.o)
+ .debug_line    0x0002a2c4       0xfa D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-impure.o)
+ .debug_line    0x0002a3be      0x11f D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-errno.o)
+ .debug_line    0x0002a4dd      0x13b D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
+ .debug_line    0x0002a618       0xb9 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy.o)
 
-.debug_str      0x00000000    0xd8748
- .debug_str     0x00000000    0xd8748 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
+.debug_str      0x00000000    0xd8704
+ .debug_str     0x00000000    0xd8704 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
                               0xbdd4c (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
                               0xbf0d6 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
                               0xbe8e2 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c.obj
                               0xbe82a (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c.obj
                               0xbe11a (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c.obj
                               0xbe705 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj
                               0xbe180 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj
                               0xbdec7 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
                               0xbe166 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj
                               0xbe62b (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj
                               0xbe8af (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c.obj
                               0xbe446 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c.obj
                               0xbe60a (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj
                               0xbe761 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c.obj
                               0xc2230 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c.obj
                               0xc205b (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c.obj
                               0xc1f30 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/USB_Device_Library.dir/__/__/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c.obj
                               0xc28d7 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
                                0xa5b2 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
                                0xc0a2 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
                                0xcb5f (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
                                0xc624 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
                               0xc8367 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
                                0xaef4 (size before relaxing)
- .debug_str     0x000d8748        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
+ .debug_str     0x000d8704        0x0 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
                                0x878b (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Module/reg.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Module/reg.c.obj
                               0xbe18c (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/bsp/Src/MyCAN.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/bsp/Src/MyCAN.c.obj
                               0xc5ade (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/bsp/Src/MyUSB.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/bsp/Src/MyUSB.c.obj
                               0xc22d7 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
-                              0xc3adb (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/App/gimbal/gimbal.c.obj
+                              0xc3a9d (size before relaxing)
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/bsp/Src/bsp_rc.c.obj
                               0xc14dd (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/App/rc/rc.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/App/rc/rc.c.obj
                               0xc543d (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/bsp/Src/bsp_uart.c.obj
                               0xbe6d1 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/App/chassis/chassis.c.obj
                               0xc22c7 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/USB_DEVICE/Target/usbd_conf.c.obj
                               0xc3104 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/USB_DEVICE/App/usb_device.c.obj
                               0xc22e3 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_desc.c.obj
                               0xc1e28 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/USB_DEVICE/App/usbd_cdc_if.c.obj
                               0xc2323 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Core/Src/main.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Core/Src/main.c.obj
                               0xc733d (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Core/Src/gpio.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Core/Src/gpio.c.obj
                               0xbe353 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Core/Src/freertos.c.obj
                               0xc2d8a (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Core/Src/can.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Core/Src/can.c.obj
                               0xbe641 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Core/Src/dma.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Core/Src/dma.c.obj
                               0xbe285 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Core/Src/spi.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Core/Src/spi.c.obj
                               0xbe316 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Core/Src/usart.c.obj
                               0xbe881 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_it.c.obj
                               0xbebe9 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_msp.c.obj
                               0xbe275 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
                               0xbe822 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/startup_stm32f405xx.s.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/startup_stm32f405xx.s.obj
                                  0x70 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Module/PID.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Module/PID.c.obj
                               0xc139d (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/bsp/Src/BMI088driver.c.obj
                               0xbfec1 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/bsp/Src/BMI088Middleware.c.obj
                               0xbe278 (size before relaxing)
- .debug_str     0x000d8748        0x0 CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
+ .debug_str     0x000d8704        0x0 CMakeFiles/gimbal.dir/Module/MahonyAHRS.c.obj
                                0x6a40 (size before relaxing)
- .debug_str     0x000d8748        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
+ .debug_str     0x000d8704        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
                                 0x12e (size before relaxing)
- .debug_str     0x000d8748        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
+ .debug_str     0x000d8704        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
                                  0xae (size before relaxing)
- .debug_str     0x000d8748        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
+ .debug_str     0x000d8704        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
                                  0x9b (size before relaxing)
- .debug_str     0x000d8748        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_str     0x000d8704        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
                                  0x7d (size before relaxing)
- .debug_str     0x000d8748        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+ .debug_str     0x000d8704        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
                                 0x695 (size before relaxing)
- .debug_str     0x000d8748        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
+ .debug_str     0x000d8704        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
                                  0x9d (size before relaxing)
- .debug_str     0x000d8748        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-findfp.o)
+ .debug_str     0x000d8704        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-findfp.o)
                                 0x729 (size before relaxing)
- .debug_str     0x000d8748        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memset.o)
+ .debug_str     0x000d8704        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memset.o)
                                 0x19a (size before relaxing)
- .debug_str     0x000d8748        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-impure.o)
+ .debug_str     0x000d8704        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-impure.o)
                                 0x4a6 (size before relaxing)
- .debug_str     0x000d8748        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-errno.o)
+ .debug_str     0x000d8704        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-errno.o)
                                 0x4a0 (size before relaxing)
- .debug_str     0x000d8748        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
+ .debug_str     0x000d8704        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-init.o)
                                 0x1e7 (size before relaxing)
- .debug_str     0x000d8748        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy.o)
+ .debug_str     0x000d8704        0x0 D:/DevEnv/msys64/ucrt64/bin/../lib/gcc/arm-none-eabi/13.3.0/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy.o)
                                  0xa2 (size before relaxing)
 
 .debug_frame    0x00000000     0x9270

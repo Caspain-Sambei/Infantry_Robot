@@ -5,5 +5,4 @@
 #ifndef GIMBAL_RC_H
 #define GIMBAL_RC_H
 
-#define
 #endif //GIMBAL_RC_H

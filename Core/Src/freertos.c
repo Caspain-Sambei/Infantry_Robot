@@ -160,7 +160,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the queue(s) */
   /* creation of USBRxQueue */
-  USBRxQueueHandle = osMessageQueueNew (16, 10, &USBRxQueue_attributes);
+  USBRxQueueHandle = osMessageQueueNew (16, 14, &USBRxQueue_attributes);
 
   /* creation of SbusFrameQueue */
   SbusFrameQueueHandle = osMessageQueueNew (16, 18, &SbusFrameQueue_attributes);

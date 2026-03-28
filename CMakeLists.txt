@@ -91,7 +91,11 @@ add_executable(${CMAKE_PROJECT_NAME}
         bsp/Src/bsp_Motor.c
         bsp/Inc/bsp_Motor.h
         App/chassis/chassis.c
-        App/chassis/chassis.h)
+        App/chassis/chassis.h
+        App/rc/Mecanum_wheel.h
+        App/rc/Mecanum_wheel.c
+        App/rc/Omni_wheel.h
+        App/rc/Omni_wheel.c)
 
 # 禁用共享库
 set(BUILD_SHARED_LIBS OFF)

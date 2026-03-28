@@ -59,11 +59,11 @@ uint8_t CDC_Receive_FS(uint8_t* Data, uint32_t Len)
         return 0;
     }
 
-    for (uint32_t i = 0; i < Len; i++)
+    for (uint8_t i = 0; i < Len; i++)
     {
         if (rx_cnt == 0) //收到帧头才开始 接收数据
         {
-            if (Data[i] == USB_HEAD)
+            if (Data[i] == USB_RX_HEAD)
             {
                 buf[rx_cnt ++] = Data[i];
             }
@@ -73,7 +73,7 @@ uint8_t CDC_Receive_FS(uint8_t* Data, uint32_t Len)
             buf[rx_cnt ++] = Data[i];
             if (rx_cnt >= STD_LEN)
             {
-                if (buf[rx_cnt - 1] == USB_TAIL)
+                if (buf[rx_cnt - 1] == USB_RX_TAIL)
                 {
                     rx_cnt = 0;
                     RxFlag = 1;

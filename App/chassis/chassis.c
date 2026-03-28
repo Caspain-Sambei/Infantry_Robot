@@ -78,9 +78,8 @@ void chassis_inPIDTask(void *argument)
     for(;;)
     {
         /************************************************************
-         *                  PID
+         *                  单环PID
          ************************************************************/
-
         p_reg->chassis.Speed_pid.inner.Target = p_reg->chassis.target_speed;
         p_reg->chassis.Speed_pid.inner.Actual = p_reg->chassis.actual_speed;
 
@@ -115,9 +114,9 @@ void chassis_inPIDTask(void *argument)
         p_reg->TxData.data3 = (int16_t)speed_cal[2];
         p_reg->TxData.data4 = (int16_t)speed_cal[3];
 
-        CAN_Send(CAN_C620_1,&p_reg->TxData,4);
-        // 每次发送完清零
-        memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+            CAN_Send(CAN_C620_1,&p_reg->TxData,4);
+            // 每次发送完清零
+            memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
 
         osDelay(1);
     }
