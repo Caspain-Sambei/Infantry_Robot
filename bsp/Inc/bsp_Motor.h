@@ -14,7 +14,7 @@ enum Enum_CAN_Motor_Status
 
 #define CAN_6020_1     0x1FE
 #define CAN_6020_2     0x2FE
-#define EXT_ID     0
+#define EXT_ID         0x00
 #define CAN_C620_1     0x200
 #define CAN_C620_2     0x1FF
 
@@ -25,7 +25,6 @@ enum Enum_CAN_Motor_Status
 
 #define SPEED_TO_CURRENT        1.0f
 // 3508:-16384~16384 RC:364~1024~1684
-// #define RC_TO_3508_Current      24.824f     // 通道数值转化为电流值
-#define RC_TO_3508_Current      12.412f     // 通道数值转化为电流值
+ #define RC_TO_3508_Current      24.824f     // 通道数值转化为电流值
 
 #endif //GIMBAL_BSP_MOTOR_H

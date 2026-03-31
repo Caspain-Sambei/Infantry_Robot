@@ -28,10 +28,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "BMI088driver.h"
+#include "bsp_Motor.h"
 #include "reg.h"
 #include "bsp_rc.h"
 #include "bsp_uart.h"
+#include "MyCAN.h"
 #include "PID.h"
+#include "gimbal.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -104,6 +108,11 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  // CAN使能和配置筛选器
+  CAN_Init(&hcan1);
+  CAN_Init(&hcan2);
+  // BMI088初始化
+  BMI088_init();
   // 注册UART5的DT7回调函数到drv_uart
   UART_Init(&huart5,UART5_DT7_Callback,RC_FRAME_LENGTH);
 
@@ -111,6 +120,43 @@ int main(void)
   PID_Clear(&p_reg->gimbal.yaw_pid.inner);
   PID_Clear(&p_reg->gimbal.pitch_pid.outer);
   PID_Clear(&p_reg->chassis.Speed_pid.inner);
+
+  /*****************************************************************
+   *                    底盘测试
+   *****************************************************************/
+  // 底盘CAN测试
+  uint8_t chassis_send_state = 0,a,b;
+  p_reg->TxData.data1 = 100;
+  for (uint8_t i = 0; i < 10; i++)
+  {
+    p_reg->TxData.data1 -= 10;
+    chassis_send_state = CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
+    chassis_send_state = CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
+  }
+  if (chassis_send_state)
+  {
+    a=1;
+  }
+  else
+  {
+    b=1;
+  }
+
+  /*****************************************************************
+   *                    云台测试
+   *****************************************************************/
+  // 测试；哨兵禁用
+  p_reg->gimbal.sentry_state == SENTRY_DISABLED;
+  // CAN测试
+  // uint8_t gimbal_send_state = 0;
+  // p_reg->TxData.data1 = 0;
+  // p_reg->TxData.data2 = 20;
+  // p_reg->TxData.data3 = 0;
+  // p_reg->TxData.data4 = 0;
+  // gimbal_send_state = CAN_Send(CAN_6020_1, &p_reg->TxData, 4);
+  // p_reg->TxData.data2 = 0;
+  // gimbal_send_state = CAN_Send(CAN_6020_1, &p_reg->TxData, 4);
+
   /* USER CODE END 2 */
 
   /* Init scheduler */

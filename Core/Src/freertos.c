@@ -82,13 +82,6 @@ const osThreadAttr_t SbusTransTask_attributes = {
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityAboveNormal7,
 };
-/* Definitions for chassis_CANTask */
-osThreadId_t chassis_CANTaskHandle;
-const osThreadAttr_t chassis_CANTask_attributes = {
-  .name = "chassis_CANTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal2,
-};
 /* Definitions for chassis_inPID */
 osThreadId_t chassis_inPIDHandle;
 const osThreadAttr_t chassis_inPID_attributes = {
@@ -113,11 +106,6 @@ osMessageQueueId_t SbusFrameQueueHandle;
 const osMessageQueueAttr_t SbusFrameQueue_attributes = {
   .name = "SbusFrameQueue"
 };
-/* Definitions for CAN_2RxQueue */
-osMessageQueueId_t CAN_2RxQueueHandle;
-const osMessageQueueAttr_t CAN_2RxQueue_attributes = {
-  .name = "CAN_2RxQueue"
-};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -129,7 +117,6 @@ void Startbmi088Task(void *argument);
 void StartUSB_RxTask(void *argument);
 void gimbal_exPIDTask(void *argument);
 void StartSbusTransTask(void *argument);
-void chassis_CAN_RxTask(void *argument);
 void chassis_inPIDTask(void *argument);
 void StartSentry_modeTask(void *argument);
 
@@ -165,9 +152,6 @@ void MX_FREERTOS_Init(void) {
   /* creation of SbusFrameQueue */
   SbusFrameQueueHandle = osMessageQueueNew (16, 18, &SbusFrameQueue_attributes);
 
-  /* creation of CAN_2RxQueue */
-  CAN_2RxQueueHandle = osMessageQueueNew (16, 9, &CAN_2RxQueue_attributes);
-
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -187,9 +171,6 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of SbusTransTask */
   SbusTransTaskHandle = osThreadNew(StartSbusTransTask, NULL, &SbusTransTask_attributes);
-
-  /* creation of chassis_CANTask */
-  chassis_CANTaskHandle = osThreadNew(chassis_CAN_RxTask, NULL, &chassis_CANTask_attributes);
 
   /* creation of chassis_inPID */
   chassis_inPIDHandle = osThreadNew(chassis_inPIDTask, NULL, &chassis_inPID_attributes);
@@ -297,24 +278,6 @@ __weak void StartSbusTransTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END StartSbusTransTask */
-}
-
-/* USER CODE BEGIN Header_chassis_CAN_RxTask */
-/**
-* @brief Function implementing the chassis_CANTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_chassis_CAN_RxTask */
-__weak void chassis_CAN_RxTask(void *argument)
-{
-  /* USER CODE BEGIN chassis_CAN_RxTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END chassis_CAN_RxTask */
 }
 
 /* USER CODE BEGIN Header_chassis_inPIDTask */

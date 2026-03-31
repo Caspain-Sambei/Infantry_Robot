@@ -3,11 +3,10 @@
 //
 #include "bsp_rc.h"
 #include <string.h>
-
 #include "cmsis_os2.h"
 #include "usart.h"
 #include "reg.h"
-#include "Omni_wheel.h"
+#include "../../App/wheel/Omni_wheel.h"
 
 /* ----------------------- Internal Data ----------------------------------- */
 volatile unsigned char sbus_rx_buffer[2][RC_FRAME_LENGTH];  //double sbus rx buffer to save data

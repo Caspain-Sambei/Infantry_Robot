@@ -1,7 +1,5 @@
 #include "bsp_uart.h"
 #include "bsp_rc.h"
-#include "cmsis_os2.h"
-#include "usart.h"
 
 Struct_UART_Manage_Object UART1_Manage_Object = {0};
 Struct_UART_Manage_Object UART2_Manage_Object = {0};
