@@ -38,7 +38,7 @@ void StartUSB_RxTask(void *argument)
 
         if (status == osOK)
         {
-            p_reg->gimbal.sentry_state = SENTRY_ENABLED;
+            p_reg->gimbal.sentry_state = SENTRY_DISABLED;
             uint8_t *p_byte;
             // 处理数据
             p_byte = &rx_data[1];
@@ -48,7 +48,7 @@ void StartUSB_RxTask(void *argument)
             p_byte = NULL;
         }
         else
-            p_reg->gimbal.sentry_state = SENTRY_DISABLED;
+            p_reg->gimbal.sentry_state = SENTRY_ENABLED;
     }
     /* USER CODE END StartUSB_Rx */
 }
@@ -73,10 +73,10 @@ void gimbal_inPIDTask(void *argument)
     for(;;)
     {
         p_reg->gimbal.pitch_pid.inner.Target = p_reg->gimbal.pitch_pid.inner.Out;
-        p_reg->gimbal.pitch_pid.inner.Actual = p_reg->gimbal.pitch_RxData.data2;
+        p_reg->gimbal.pitch_pid.inner.Actual = p_reg->gimbal.pitch_RxData.data1;
 
         p_reg->gimbal.yaw_pid.inner.Target = p_reg->gimbal.yaw_pid.inner.Out;
-        p_reg->gimbal.yaw_pid.inner.Actual = p_reg->gimbal.yaw_RxData.data2;
+        p_reg->gimbal.yaw_pid.inner.Actual = p_reg->gimbal.yaw_RxData.data1;
 
         PID_Update(&p_reg->gimbal.pitch_pid.inner,gimbal_mode);
         PID_Update(&p_reg->gimbal.yaw_pid.inner,gimbal_mode);
@@ -129,7 +129,7 @@ void gimbal_exPIDTask(void *argument)
 
 /***************************************************************************
  *					        BMI088和四元解算
- *					        向视觉发送数据
+ *					        向视觉发送三个欧拉角
  **************************************************************************/
 /* USER CODE BEGIN Header_Startbmi088Task */
 /**
@@ -157,17 +157,23 @@ void Startbmi088Task(void *argument)
     for(;;)
     {
         BMI088_read(&p_bmi_data[0], &p_bmi_data[3],p_temp);
-        MahonyAHRSupdateIMU(q,bmi_data[3],bmi_data[4],bmi_data[5],
-                                 bmi_data[0],bmi_data[1],bmi_data[2]);
-        /*********************************************************************
-         *                  云台数据
-         ********************************************************************/
+        MahonyAHRSupdateIMU(q,bmi_data[0],bmi_data[1],bmi_data[2],
+                                bmi_data[3],bmi_data[4],bmi_data[5]);
+        // /*********************************************************************
+        //  *                  云台数据
+        //  ********************************************************************/
         // p_reg->gimbal.curr_angle.yaw  = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]))
         //                             * 57.3f;
-        // p_reg->gimbal.curr_angle.pitch = asinf(2*(q[0]*q[2]-q[3]*q[1]))
+        // p_reg->gimbal.curr_angle.roll = asinf(2*(q[0]*q[2]-q[3]*q[1]))
         //                             * 57.3f;
-        // p_reg->gimbal.curr_angle.roll  = atan2f(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1]*q[1]+q[2]*q[2]))
+        // p_reg->gimbal.curr_angle.pitch  = atan2f(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1]*q[1]+q[2]*q[2]))
         //                             * 57.3f;
+        // p_reg->gimbal.curr_angle.pitch = -p_reg->gimbal.curr_angle.pitch;
+        // p_reg->gimbal.curr_angle.pitch = -p_reg->gimbal.curr_angle.pitch;
+        //
+        // static float angle_yaw = 0;
+        // float dt = 0.001f;  // 先按 1ms 假设，实际应测量
+        // angle_yaw = 0.98f * (angle_yaw + bmi_data[2] * dt) + 0.02f * atan2f(bmi_data[4], bmi_data[3]);
         /*********************************************************************
          *                  底盘bmi088数据
          ********************************************************************/
@@ -179,14 +185,14 @@ void Startbmi088Task(void *argument)
                                     * 57.3f;
         p_reg->chassis.roll_pid.outer.Actual  = atan2f(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1]*q[1]+q[2]*q[2]))
                                     * 57.3f;
+
         // 向视觉发送数据
         p_reg->gimbal.sendpacket.pitch = p_reg->gimbal.curr_angle.pitch;
         p_reg->gimbal.sendpacket.yaw = p_reg->gimbal.curr_angle.yaw;
         p_reg->gimbal.sendpacket.roll = p_reg->gimbal.curr_angle.roll;
 
         USB_Send(&p_reg->gimbal.sendpacket);
-
-        osDelay(10);
+        osDelay(1);
     }
     /* USER CODE END Startbmi088Task */
 }
@@ -211,9 +217,9 @@ void StartSentry_modeTask(void* argument)
     const uint16_t SCAN_DELAY = 100; // 扫描步长延时
     // 次数 * 分辨率 = 90
     #define F_EPSILON   0.3f
-    float YAW_MIN = -45.0f, YAW_MAX = 45.0f, PITCH_MIN = -45.0f, PITCH_MAX = 45.0f; // 电机限位
-    // 初始角度（右上角45°）
-    const float YAW_INIT = 45.0f,PITCH_INIT = 45.0f;
+    float YAW_MIN = -45.0f, YAW_MAX = 45.0f, PITCH_MIN = -42.0f, PITCH_MAX = 42.0f; // 电机限位
+    // 初始角度
+    const float YAW_INIT = 0.0f,PITCH_INIT = 0.0f;
     // 首次进入哨兵模式从初始角度开始。
     float start_yaw = 0.0f;
     float start_pitch = 0.0f;
@@ -274,8 +280,8 @@ void StartSentry_modeTask(void* argument)
                 *					转动部分
                 *****************************************************/
                 // 当云台处于最上和最下时yaw都是从左往右扫描
-                if ((fabsf(p_reg->gimbal.pitch_pid.outer.Target - 45.0f) < F_EPSILON
-                    ||fabsf(p_reg->gimbal.pitch_pid.outer.Target - -45.0f) < F_EPSILON)
+                if ((fabsf(p_reg->gimbal.pitch_pid.outer.Target - PITCH_MAX) < F_EPSILON
+                    ||fabsf(p_reg->gimbal.pitch_pid.outer.Target - PITCH_MIN) < F_EPSILON)
                     && p_reg->gimbal.yaw_pid.outer.Target < YAW_MAX
                     && p_reg->gimbal.yaw_pid.outer.Target > YAW_MIN)
                 {

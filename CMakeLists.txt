@@ -92,10 +92,11 @@ add_executable(${CMAKE_PROJECT_NAME}
         bsp/Inc/bsp_Motor.h
         App/chassis/chassis.c
         App/chassis/chassis.h
-        App/rc/Mecanum_wheel.h
-        App/rc/Mecanum_wheel.c
-        App/rc/Omni_wheel.h
-        App/rc/Omni_wheel.c)
+        App/wheel/Mecanum_wheel.h
+        App/wheel/Mecanum_wheel.c
+        App/wheel/Omni_wheel.h
+        App/wheel/Omni_wheel.c
+)
 
 # 禁用共享库
 set(BUILD_SHARED_LIBS OFF)
@@ -147,6 +148,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         bsp/Src/
         Module/
         App/rc/
+        App/gimbal/
 )
 
 # Add project symbols (macros)
