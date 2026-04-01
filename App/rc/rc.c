@@ -3,7 +3,6 @@
 //
 /* USER CODE END Header_StartSbusProcessor */
 #include <string.h>
-#include "bsp_Motor.h"
 #include "cmsis_os.h"
 #include "cmsis_os2.h"
 #include "bsp_rc.h"

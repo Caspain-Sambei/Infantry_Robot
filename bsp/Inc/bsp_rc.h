@@ -63,6 +63,6 @@ typedef __packed struct
 void RemoteDataProcess(uint8_t *pData);
 
 // 声明DT7的回调函数（注册到drv_uart）
-void UART5_DT7_Callback(uint8_t *Buffer, uint16_t Length);
+void UART3_DT7_Callback(uint8_t *Buffer, uint16_t Length);
 
 #endif //GIMBAL_REMOTE_CONTROL_H

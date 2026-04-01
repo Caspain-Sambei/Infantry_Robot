@@ -52,49 +52,49 @@ osThreadId_t gimbal_inPIDHandle;
 const osThreadAttr_t gimbal_inPID_attributes = {
   .name = "gimbal_inPID",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal7,
+  .priority = (osPriority_t) osPriorityAboveNormal1,
 };
 /* Definitions for bmi088Task */
 osThreadId_t bmi088TaskHandle;
 const osThreadAttr_t bmi088Task_attributes = {
   .name = "bmi088Task",
   .stack_size = 512 * 4,
-  .priority = (osPriority_t) osPriorityNormal6,
+  .priority = (osPriority_t) osPriorityNormal2,
 };
 /* Definitions for USB_RxTask */
 osThreadId_t USB_RxTaskHandle;
 const osThreadAttr_t USB_RxTask_attributes = {
   .name = "USB_RxTask",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityHigh4,
+  .priority = (osPriority_t) osPriorityNormal1,
 };
 /* Definitions for gimbal_exPID */
 osThreadId_t gimbal_exPIDHandle;
 const osThreadAttr_t gimbal_exPID_attributes = {
   .name = "gimbal_exPID",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityLow,
+  .priority = (osPriority_t) osPriorityAboveNormal2,
 };
 /* Definitions for SbusTransTask */
 osThreadId_t SbusTransTaskHandle;
 const osThreadAttr_t SbusTransTask_attributes = {
   .name = "SbusTransTask",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal7,
+  .priority = (osPriority_t) osPriorityNormal3,
 };
 /* Definitions for chassis_inPID */
 osThreadId_t chassis_inPIDHandle;
 const osThreadAttr_t chassis_inPID_attributes = {
   .name = "chassis_inPID",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal5,
+  .priority = (osPriority_t) osPriorityAboveNormal,
 };
 /* Definitions for sentry_mode */
 osThreadId_t sentry_modeHandle;
 const osThreadAttr_t sentry_mode_attributes = {
   .name = "sentry_mode",
   .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal4,
+  .priority = (osPriority_t) osPriorityLow,
 };
 /* Definitions for USBRxQueue */
 osMessageQueueId_t USBRxQueueHandle;
