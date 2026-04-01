@@ -106,15 +106,20 @@ int main(void)
   MX_CAN2_Init();
   MX_UART5_Init();
   MX_USART1_UART_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  // CAN使能和配置筛选器
+  /*****************************************************************
+   *                    CAN使能
+   *****************************************************************/
   CAN_Init(&hcan1);
   CAN_Init(&hcan2);
+  CAN_Filter_Mask_Config(&hcan1, CAN_FILTER(12) | CAN_FIFO_0 | CAN_STDID | CAN_DATA_TYPE, 0, 0);
+  CAN_Filter_Mask_Config(&hcan2, CAN_FILTER(15) | CAN_FIFO_0 | CAN_STDID | CAN_DATA_TYPE, 0, 0);
   // BMI088初始化
   BMI088_init();
   // 注册UART5的DT7回调函数到drv_uart
-  UART_Init(&huart5,UART5_DT7_Callback,RC_FRAME_LENGTH);
+  UART_Init(&huart3,UART3_DT7_Callback,RC_FRAME_LENGTH);
 
   // 掉电PID清零
   PID_Clear(&p_reg->gimbal.yaw_pid.inner);
@@ -125,21 +130,13 @@ int main(void)
    *                    底盘测试
    *****************************************************************/
   // 底盘CAN测试
-  uint8_t chassis_send_state = 0,a,b;
+  uint8_t chassis_send_state = 0;
   p_reg->TxData.data1 = 100;
   for (uint8_t i = 0; i < 10; i++)
   {
     p_reg->TxData.data1 -= 10;
     chassis_send_state = CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
     chassis_send_state = CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
-  }
-  if (chassis_send_state)
-  {
-    a=1;
-  }
-  else
-  {
-    b=1;
   }
 
   /*****************************************************************

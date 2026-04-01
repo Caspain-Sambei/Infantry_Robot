@@ -3,25 +3,18 @@
 //
 #include "MyCAN.h"
 #include <string.h>
-#include "reg.h"
 #include "can.h"
 #include "bsp_Motor.h"
 
 uint8_t CAN_Init(CAN_HandleTypeDef *hcanx)
 {
-    if (hcanx == &hcan1)
-    {
-        CAN_Filter_Mask_Config(hcanx, CAN_FILTER(13) | CAN_FIFO_0 | CAN_STDID | CAN_DATA_TYPE, 0, 0);
-    }
-    else
-    {
-        CAN_Filter_Mask_Config(hcanx, CAN_FILTER(14) | CAN_FIFO_0 | CAN_STDID | CAN_DATA_TYPE, 0, 0);
-    }
     if (HAL_CAN_Start(hcanx) != HAL_OK)
     {
         return HAL_ERROR;
     }
-    return HAL_CAN_ActivateNotification(hcanx, CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_RX_FIFO1_MSG_PENDING);
+    __HAL_CAN_ENABLE_IT(hcanx, CAN_IT_RX_FIFO0_MSG_PENDING);
+    __HAL_CAN_ENABLE_IT(hcanx, CAN_IT_RX_FIFO1_MSG_PENDING);
+    return HAL_OK;
 }
 
 /**
@@ -54,11 +47,11 @@ void CAN_Filter_Mask_Config(CAN_HandleTypeDef *hcan, uint8_t Object_Para, uint32
 
     // ID配置, 标准帧的ID是11bit, 按规定放在高16bit中的[15:5]位
     // 掩码后ID的高16bit
-    can_filter_init_structure.FilterIdHigh = (ID & 0x7FF) << 5;
+    can_filter_init_structure.FilterIdHigh = ((ID & 0x7FF) << 5);;
     // 掩码后ID的低16bit
     can_filter_init_structure.FilterIdLow = 0x0000;
     // 掩码后屏蔽位的高16bit
-    can_filter_init_structure.FilterMaskIdHigh = (Mask_ID & 0x7FF) << 5;
+    can_filter_init_structure.FilterMaskIdHigh = ((Mask_ID & 0x7FF) << 5);
     // 掩码后屏蔽位的低16bit
     can_filter_init_structure.FilterMaskIdLow = 0x0000;
 
@@ -134,7 +127,7 @@ uint8_t CAN_bsp_Send(CAN_HandleTypeDef *hcanx,uint16_t ID,uint8_t *Data,uint8_t 
     TxMessage.IDE = CAN_ID_STD;
     TxMessage.RTR = CAN_RTR_DATA;
 
-    return HAL_CAN_AddTxMessage(hcanx,&TxMessage,Data,&TxMailbox);
+    return (HAL_CAN_AddTxMessage(hcanx,&TxMessage,Data,&TxMailbox));
 }
 
 /**
@@ -144,18 +137,16 @@ uint8_t CAN_bsp_Send(CAN_HandleTypeDef *hcanx,uint16_t ID,uint8_t *Data,uint8_t 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
     if (hcan->Instance == CAN1)
-    //if (hcan == &hcan1)
     {
         CAN_RxHeaderTypeDef RxHeader;
-        uint8_t buf[9] = {0};
-
+        uint8_t buf[8] = {0};
         if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, buf) == HAL_OK)
         {
+
             switch (RxHeader.StdId)
             {
                 case (0x201):
                     {
-                        buf[8] = 1;
                         p_reg->chassis.Motor_1_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
                         p_reg->chassis.Motor_1_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
                         p_reg->chassis.Motor_1_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
@@ -164,7 +155,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
                     }
                 case (0x202):
                     {
-                        buf[8] = 2;
                         p_reg->chassis.Motor_2_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
                         p_reg->chassis.Motor_2_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
                         p_reg->chassis.Motor_2_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
@@ -173,7 +163,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
                     }
                 case (0x203):
                     {
-                        buf[8] = 3;
                         p_reg->chassis.Motor_3_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
                         p_reg->chassis.Motor_3_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
                         p_reg->chassis.Motor_3_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
@@ -182,7 +171,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
                     }
                 case (0x204):
                     {
-                        buf[8] = 4;
                         p_reg->chassis.Motor_4_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
                         p_reg->chassis.Motor_4_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
                         p_reg->chassis.Motor_4_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
@@ -198,15 +186,14 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     if (hcan->Instance == CAN2)
     {
         CAN_RxHeaderTypeDef RxHeader;
-        uint8_t buf[9] = {0};
+        uint8_t buf[8] = {0};
 
         if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, buf) == HAL_OK)
         {
             switch (RxHeader.StdId)
             {
-            case (0x207):
+            case (0x208):
                 {
-                    buf[8] = 3;
                     p_reg->gimbal.pitch_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
                     p_reg->gimbal.pitch_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
                     p_reg->gimbal.pitch_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
@@ -215,7 +202,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
                 }
             case (0x206):
                 {
-                    buf[8] = 2;
                     p_reg->gimbal.yaw_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
                     p_reg->gimbal.yaw_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
                     p_reg->gimbal.yaw_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);

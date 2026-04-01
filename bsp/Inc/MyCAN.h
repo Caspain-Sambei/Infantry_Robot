@@ -4,9 +4,10 @@
 
 #ifndef GIMBAL_MYCAN_H
 #define GIMBAL_MYCAN_H
-
+#include "stm32f4xx_hal.h"
 #include <stdint.h>
 #include "reg.h"
+#include "stm32f4xx_hal_can.h"
 
 // 滤波器编号
 #define CAN_FILTER(x) ((x) << 3)

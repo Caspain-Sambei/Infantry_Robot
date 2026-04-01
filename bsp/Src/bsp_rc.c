@@ -70,9 +70,9 @@ void RemoteDataProcess(uint8_t *pData)
 }
 
 //CT = 0: 当前使用Memory 0，下一个将使用Memory1。等于1则相反。
-void UART5_DT7_Callback(uint8_t *Buffer, uint16_t Length)
+void UART3_DT7_Callback(uint8_t *Buffer, uint16_t Length)
 {
-    if (huart5.hdmarx->Instance->CR &DMA_SxCR_CT)    // 判断当前DMA使用的是哪个内存缓冲区
+    if (huart3.hdmarx->Instance->CR &DMA_SxCR_CT)    // 判断当前DMA使用的是哪个内存缓冲区
     {
         // 当前使用的是 Memory 1 (缓冲区1)，那么收到数据的是缓冲区0，应处理缓冲区0的数据
         //RemoteDataProcess(sbus_rx_buffer[0]);
@@ -86,15 +86,15 @@ void UART5_DT7_Callback(uint8_t *Buffer, uint16_t Length)
 
         // 准备下一次接收：重新配置DMA目标为 缓冲区1
         // 先停止DMA（HAL提供了原子操作）
-        HAL_UART_DMAStop(&huart5);
+        HAL_UART_DMAStop(&huart3);
         // 重新设置接收缓冲区为另一个缓冲
-        huart5.hdmarx->Instance->PAR = (uint32_t)&huart5.Instance->DR; // 外设地址不变
-        huart5.hdmarx->Instance->M0AR = (uint32_t)sbus_rx_buffer[1];   // 切换到另一个内存
-        huart5.hdmarx->Instance->NDTR = RC_FRAME_LENGTH;               // 重置长度
+        huart3.hdmarx->Instance->PAR = (uint32_t)&huart3.Instance->DR; // 外设地址不变
+        huart3.hdmarx->Instance->M0AR = (uint32_t)sbus_rx_buffer[1];   // 切换到另一个内存
+        huart3.hdmarx->Instance->NDTR = RC_FRAME_LENGTH;               // 重置长度
         // 清除切换标志位，确保下一次从新的内存开始
-        huart5.hdmarx->Instance->CR &= ~(DMA_SxCR_CT);
+        huart3.hdmarx->Instance->CR &= ~(DMA_SxCR_CT);
         // 重新使能DMA和串口空闲中断
-        HAL_UARTEx_ReceiveToIdle_DMA(&huart5, sbus_rx_buffer[1], RC_FRAME_LENGTH);
+        HAL_UARTEx_ReceiveToIdle_DMA(&huart3, sbus_rx_buffer[1], RC_FRAME_LENGTH);
     }
     else
     {
@@ -110,11 +110,11 @@ void UART5_DT7_Callback(uint8_t *Buffer, uint16_t Length)
         osMessageQueuePut(SbusFrameQueueHandle,temp,0,0);
 
         // 切换回缓冲区0
-        HAL_UART_DMAStop(&huart5);
-        huart5.hdmarx->Instance->M0AR = (uint32_t)sbus_rx_buffer[0];
-        huart5.hdmarx->Instance->NDTR = RC_FRAME_LENGTH;
-        huart5.hdmarx->Instance->CR |= DMA_SxCR_CT; // 设置标志，表示下一次使用Memory1
-        HAL_UARTEx_ReceiveToIdle_DMA(&huart5, sbus_rx_buffer[0], RC_FRAME_LENGTH);
+        HAL_UART_DMAStop(&huart3);
+        huart3.hdmarx->Instance->M0AR = (uint32_t)sbus_rx_buffer[0];
+        huart3.hdmarx->Instance->NDTR = RC_FRAME_LENGTH;
+        huart3.hdmarx->Instance->CR |= DMA_SxCR_CT; // 设置标志，表示下一次使用Memory1
+        HAL_UARTEx_ReceiveToIdle_DMA(&huart3, sbus_rx_buffer[0], RC_FRAME_LENGTH);
     }
 }
 
@@ -144,7 +144,7 @@ void UART5_DT7_Callback(uint8_t *Buffer, uint16_t Length)
          //     // 清除切换标志位，确保下一次从新的内存开始
          //     huart->hdmarx->Instance->CR &= ~(DMA_SxCR_CT);
          //     // 重新使能DMA和串口空闲中断
-         //     HAL_UARTEx_ReceiveToIdle_DMA(&huart5, sbus_rx_buffer[1], RC_FRAME_LENGTH);
+         //     HAL_UARTEx_ReceiveToIdle_DMA(&huart3, sbus_rx_buffer[1], RC_FRAME_LENGTH);
          // }
         // else
         //  {
@@ -164,7 +164,7 @@ void UART5_DT7_Callback(uint8_t *Buffer, uint16_t Length)
         //     huart->hdmarx->Instance->M0AR = (uint32_t)sbus_rx_buffer[0];
         //     huart->hdmarx->Instance->NDTR = RC_FRAME_LENGTH;
         //     huart->hdmarx->Instance->CR |= DMA_SxCR_CT; // 设置标志，表示下一次使用Memory1
-        //     HAL_UARTEx_ReceiveToIdle_DMA(&huart5, sbus_rx_buffer[0], RC_FRAME_LENGTH);
+        //     HAL_UARTEx_ReceiveToIdle_DMA(&huart3, sbus_rx_buffer[0], RC_FRAME_LENGTH);
         // }
 //    }
 //}

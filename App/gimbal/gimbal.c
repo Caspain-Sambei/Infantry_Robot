@@ -49,6 +49,7 @@ void StartUSB_RxTask(void *argument)
         }
         else
             p_reg->gimbal.sentry_state = SENTRY_ENABLED;
+        osDelay(10);
     }
     /* USER CODE END StartUSB_Rx */
 }
