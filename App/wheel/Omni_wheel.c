@@ -15,15 +15,15 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
      *             全向轮;默认装配方向：一侧同向，两侧镜像；逆时针为正
      *                      1~4：左上，右上，左下，右下
      ****************************************************************/
-    float test_num = 0.001f;    // 水平转动先给个相对小值
+    float test_num = 0.01f;    // 水平转动先给个相对小值
     // 云台yaw和pitch
     float gimbal_yaw = (float)rc_Data->rc.ch0 * RC_TO_3508_Current * test_num;
     float gimbal_pitch = (float)rc_Data->rc.ch1 * RC_TO_3508_Current * test_num;
     /************************************************************
      *                   正解算
     ************************************************************/
-    float dt7_x = (float)(rc_Data->rc.ch2 - 1024) / 660.0f;
-    float dt7_y = (float)(rc_Data->rc.ch3 - 1024) / 660.0f;
+    float dt7_x = ((float)(rc_Data->rc.ch2) - 1024.0f) / 660.0f;
+    float dt7_y = ((float)(rc_Data->rc.ch3) - 1024.0f) / 660.0f;
     chassis->yaw_pid.outer.Target = atan2f(dt7_y, dt7_x);
     // 线速度单位 m/s
     chassis->speed_X = (float)rc_Data->rc.ch3 * RC_TO_3508_Current * test_num;
@@ -31,7 +31,7 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
     chassis->Speed_pid.inner.Target =
         sqrtf(chassis->speed_X * chassis->speed_X + chassis->speed_Y * chassis->speed_Y);
     /************************************************************
-     *                  判断角度和速度（世界坐标系下）,逆解算
+     *                  逆解算，判断角度和速度（世界坐标系下）
     ************************************************************/
     // 角度部分已经在gimbal.c的Startbmi088Task任务中实现;chassis->yaw_pid.outer.Actual
 
@@ -41,14 +41,14 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
     float Motor_3_Speed = (float)chassis->Motor_3_RxData.data2 * 2 * PI /60.0f / GEAR_RATIO_3508 * CHASSIS_RADIUS;
     float Motor_4_Speed = (float)chassis->Motor_4_RxData.data2 * 2 * PI /60.0f / GEAR_RATIO_3508 * CHASSIS_RADIUS;
 
-    chassis->speed_X = -sqrtf(2.0f) / 4.0f *
-        ((float)(Motor_1_Speed - Motor_3_Speed)
+    chassis->speed_X = -sqrtf(2.0f) / 4.0f
+        * ((float)(Motor_1_Speed - Motor_3_Speed)
         * (cosf(chassis->yaw_pid.outer.Actual) + sinf(chassis->yaw_pid.outer.Actual))
         +
         (float)(Motor_2_Speed - Motor_4_Speed)
         * (cosf(chassis->yaw_pid.outer.Actual) - sinf(chassis->yaw_pid.outer.Actual)));
-    chassis->speed_Y = -sqrtf(2.0f) / 4.0f *
-        ((float)(Motor_1_Speed - Motor_3_Speed)
+    chassis->speed_Y = -sqrtf(2.0f) / 4.0f
+        * ((float)(Motor_1_Speed - Motor_3_Speed)
         * (sinf(chassis->yaw_pid.outer.Actual) - cosf(chassis->yaw_pid.outer.Actual))
         +
         (float)(Motor_2_Speed - Motor_4_Speed)
@@ -63,7 +63,7 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
     PID_Update(&chassis->Speed_pid.inner,chassis_mode);
 
     /************************************************************
-     *                  底盘速度解算
+     *                  底盘速度解算为通道值
     ************************************************************/
     //chassis->yaw_pid.outer.Actual = p_reg->gimbal.yaw_pid.outer.Actual;
     float sin_ang = sinf(chassis->yaw_pid.outer.Actual);

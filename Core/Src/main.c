@@ -104,19 +104,14 @@ int main(void)
   MX_SPI1_Init();
   MX_CAN1_Init();
   MX_CAN2_Init();
-  MX_UART5_Init();
   MX_USART1_UART_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-
   /*****************************************************************
-   *                    CAN使能
+   *                    各种初始化
    *****************************************************************/
   CAN_Init(&hcan1);
   CAN_Init(&hcan2);
-  CAN_Filter_Mask_Config(&hcan1, CAN_FILTER(12) | CAN_FIFO_0 | CAN_STDID | CAN_DATA_TYPE, 0, 0);
-  CAN_Filter_Mask_Config(&hcan2, CAN_FILTER(15) | CAN_FIFO_0 | CAN_STDID | CAN_DATA_TYPE, 0, 0);
-  // BMI088初始化
   BMI088_init();
   // 注册UART5的DT7回调函数到drv_uart
   UART_Init(&huart3,UART3_DT7_Callback,RC_FRAME_LENGTH);
@@ -129,30 +124,12 @@ int main(void)
   /*****************************************************************
    *                    底盘测试
    *****************************************************************/
-  // 底盘CAN测试
-  uint8_t chassis_send_state = 0;
-  p_reg->TxData.data1 = 100;
-  for (uint8_t i = 0; i < 10; i++)
-  {
-    p_reg->TxData.data1 -= 10;
-    chassis_send_state = CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
-    chassis_send_state = CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
-  }
 
   /*****************************************************************
    *                    云台测试
    *****************************************************************/
-  // 测试；哨兵禁用
-  p_reg->gimbal.sentry_state == SENTRY_DISABLED;
-  // CAN测试
-  // uint8_t gimbal_send_state = 0;
-  // p_reg->TxData.data1 = 0;
-  // p_reg->TxData.data2 = 20;
-  // p_reg->TxData.data3 = 0;
-  // p_reg->TxData.data4 = 0;
-  // gimbal_send_state = CAN_Send(CAN_6020_1, &p_reg->TxData, 4);
-  // p_reg->TxData.data2 = 0;
-  // gimbal_send_state = CAN_Send(CAN_6020_1, &p_reg->TxData, 4);
+  // p_reg->gimbal.sentry_state == SENTRY_DISABLED;
+  p_reg->gimbal.sentry_state = SENTRY_ENABLED;
 
   /* USER CODE END 2 */
 
@@ -197,8 +174,8 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 25;
-  RCC_OscInitStruct.PLL.PLLN = 336;
+  RCC_OscInitStruct.PLL.PLLM = 4;
+  RCC_OscInitStruct.PLL.PLLN = 168;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 7;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -227,7 +204,7 @@ void SystemClock_Config(void)
 
 /**
   * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM4 interrupt took place, inside
+  * @note   This function is called  when TIM1 interrupt took place, inside
   * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
   * a global variable "uwTick" used as application time base.
   * @param  htim : TIM handle
@@ -238,7 +215,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM4)
+  if (htim->Instance == TIM1)
   {
     HAL_IncTick();
   }

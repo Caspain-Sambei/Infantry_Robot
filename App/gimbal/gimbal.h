@@ -20,4 +20,6 @@ typedef enum {
     SENTRY_ENABLED = 1,
 } sentry_state;
 
+void INS_QuaternionToEuler(const float q[4], float *roll_deg, float *pitch_deg, float *yaw_deg);
+
 #endif //GIMBAL_GIMBAL_H

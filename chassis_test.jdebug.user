@@ -1,33 +1,30 @@
 
 
 
-Breakpoint=D:/CODE/CLionProjects/gimbal/Core/Src/main.c:137:10, State=BP_STATE_DISABLED
-Breakpoint=D:/CODE/CLionProjects/gimbal/Core/Src/main.c:160:3, State=BP_STATE_DISABLED
+Breakpoint=D:/CODE/CLionProjects/gimbal/Core/Src/main.c:175:1, State=BP_STATE_DISABLED
 GraphedExpression="((((reg).chassis).Speed_pid).inner).Target", Color=#e56a6f
 GraphedExpression="((((reg).chassis).Speed_pid).inner).Actual", Color=#35792b
-OpenDocument="main.c", FilePath="D:/CODE/CLionProjects/gimbal/Core/Src/main.c", Line=58
-OpenDocument="cmsis_os2.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c", Line=188
-OpenDocument="stm32f4xx_hal.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c", Line=314
+OpenDocument="tasks.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3422
 OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=1297
-OpenDocument="stm32f4xx_it.c", FilePath="D:/CODE/CLionProjects/gimbal/Core/Src/stm32f4xx_it.c", Line=87
-OpenDocument="tasks.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3640
-OpenDocument="cmsis_gcc.h", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/CMSIS/Include/cmsis_gcc.h", Line=1021
 OpenDocument="startup_stm32f405xx.s", FilePath="D:/CODE/CLionProjects/gimbal/startup_stm32f405xx.s", Line=51
-OpenDocument="chassis.c", FilePath="D:/CODE/CLionProjects/gimbal/App/chassis/chassis.c", Line=0
+OpenDocument="Omni_wheel.c", FilePath="D:/CODE/CLionProjects/gimbal/App/wheel/Omni_wheel.c", Line=12
+OpenDocument="main.c", FilePath="D:/CODE/CLionProjects/gimbal/Core/Src/main.c", Line=69
 OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=1029, h=144, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Global Data", DockArea=BOTTOM, x=0, y=0, w=759, h=609, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Watched Data 1", DockArea=BOTTOM, x=1, y=0, w=1253, h=609, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=390, h=872, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Data Sampling", DockArea=BOTTOM, x=2, y=0, w=546, h=609, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
-OpenWindow="Timeline", DockArea=RIGHT, x=0, y=0, w=1493, h=872, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="914;0", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1234;-75", CodeGraphLegendShown=0, CodeGraphLegendPosition="1241;0"
+OpenWindow="Timeline", DockArea=RIGHT, x=0, y=1, w=1029, h=727, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="450;0", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1220;0", CodeGraphLegendShown=0, CodeGraphLegendPosition="1241;0"
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
 TableHeader="Global Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[187;100;120;100;100;454]
 TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[764;113;100;100;354]
 TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" ((((reg).chassis).Speed_pid).inner).Target";" ((((reg).chassis).Speed_pid).inner).Actual"], ColWidths=[100;100;100;100]
-TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[140;100;100;168;179;110;130;150;150]
+TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[140;100;100;100;100;110;130;150;150]
 TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
 TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[505;347;151;250]
 TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
+TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;330]
 WatchedExpression="((((reg).chassis).Speed_pid).inner).kp", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="((((reg).chassis).Speed_pid).inner).ki", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="((((reg).chassis).Speed_pid).inner).Target", RefreshRate=5, Window=Watched Data 1
@@ -42,3 +39,9 @@ WatchedExpression="(((p_reg)->chassis).Motor_2_RxData).data2", RefreshRate=5, Wi
 WatchedExpression="(((p_reg)->chassis).Motor_3_RxData).data2", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="(((p_reg)->chassis).Motor_4_RxData).data2", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="chassis_send_state", RefreshRate=2, Window=Watched Data 1
+WatchedExpression="(p_reg)->speed_cal[0]", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="(p_reg)->speed_cal[1]", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="(p_reg)->speed_cal[2]", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="(p_reg)->speed_cal[3]", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="Motor_1_Speed", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="dt7_x", RefreshRate=5, Window=Watched Data 1

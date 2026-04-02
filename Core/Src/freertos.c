@@ -51,7 +51,7 @@
 osThreadId_t gimbal_inPIDHandle;
 const osThreadAttr_t gimbal_inPID_attributes = {
   .name = "gimbal_inPID",
-  .stack_size = 128 * 4,
+  .stack_size = 1024 * 4,
   .priority = (osPriority_t) osPriorityAboveNormal1,
 };
 /* Definitions for bmi088Task */
@@ -65,36 +65,29 @@ const osThreadAttr_t bmi088Task_attributes = {
 osThreadId_t USB_RxTaskHandle;
 const osThreadAttr_t USB_RxTask_attributes = {
   .name = "USB_RxTask",
-  .stack_size = 128 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal1,
-};
-/* Definitions for gimbal_exPID */
-osThreadId_t gimbal_exPIDHandle;
-const osThreadAttr_t gimbal_exPID_attributes = {
-  .name = "gimbal_exPID",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal2,
 };
 /* Definitions for SbusTransTask */
 osThreadId_t SbusTransTaskHandle;
 const osThreadAttr_t SbusTransTask_attributes = {
   .name = "SbusTransTask",
-  .stack_size = 128 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal3,
 };
 /* Definitions for chassis_inPID */
 osThreadId_t chassis_inPIDHandle;
 const osThreadAttr_t chassis_inPID_attributes = {
   .name = "chassis_inPID",
-  .stack_size = 128 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityAboveNormal,
 };
 /* Definitions for sentry_mode */
 osThreadId_t sentry_modeHandle;
 const osThreadAttr_t sentry_mode_attributes = {
   .name = "sentry_mode",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 512 * 4,
+  .priority = (osPriority_t) osPriorityAboveNormal4,
 };
 /* Definitions for USBRxQueue */
 osMessageQueueId_t USBRxQueueHandle;
@@ -115,7 +108,6 @@ const osMessageQueueAttr_t SbusFrameQueue_attributes = {
 void gimbal_inPIDTask(void *argument);
 void Startbmi088Task(void *argument);
 void StartUSB_RxTask(void *argument);
-void gimbal_exPIDTask(void *argument);
 void StartSbusTransTask(void *argument);
 void chassis_inPIDTask(void *argument);
 void StartSentry_modeTask(void *argument);
@@ -165,9 +157,6 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of USB_RxTask */
   USB_RxTaskHandle = osThreadNew(StartUSB_RxTask, NULL, &USB_RxTask_attributes);
-
-  /* creation of gimbal_exPID */
-  gimbal_exPIDHandle = osThreadNew(gimbal_exPIDTask, NULL, &gimbal_exPID_attributes);
 
   /* creation of SbusTransTask */
   SbusTransTaskHandle = osThreadNew(StartSbusTransTask, NULL, &SbusTransTask_attributes);
@@ -242,24 +231,6 @@ __weak void StartUSB_RxTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END StartUSB_RxTask */
-}
-
-/* USER CODE BEGIN Header_gimbal_exPIDTask */
-/**
-* @brief Function implementing the gimbal_exPID thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_gimbal_exPIDTask */
-__weak void gimbal_exPIDTask(void *argument)
-{
-  /* USER CODE BEGIN gimbal_exPIDTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END gimbal_exPIDTask */
 }
 
 /* USER CODE BEGIN Header_StartSbusTransTask */

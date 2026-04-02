@@ -5,16 +5,31 @@
 #include <string.h>
 #include "can.h"
 #include "bsp_Motor.h"
+#include "stm32f4xx_hal_can.h"
 
+/**
+ * @brief HAL_CAN_Start，使能接收中断，配置过滤器
+ * @param hcanx CAN1~CAN2
+ * @return HAL_CAN_Start初始化错误或者过滤器配置错误返回HAL_ERROR
+ */
 uint8_t CAN_Init(CAN_HandleTypeDef *hcanx)
 {
     if (HAL_CAN_Start(hcanx) != HAL_OK)
     {
         return HAL_ERROR;
     }
-    __HAL_CAN_ENABLE_IT(hcanx, CAN_IT_RX_FIFO0_MSG_PENDING);
-    __HAL_CAN_ENABLE_IT(hcanx, CAN_IT_RX_FIFO1_MSG_PENDING);
-    return HAL_OK;
+    HAL_CAN_ActivateNotification(hcanx,CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_RX_FIFO1_MSG_PENDING);
+    if (hcanx == &hcan1)
+    {
+        CAN_Filter_Mask_Config(&hcan1, CAN_FILTER(12) | CAN_FIFO_0 | CAN_STDID | CAN_DATA_TYPE, 0, 0);
+        return HAL_OK;
+    }
+    if (hcanx == &hcan2)
+    {
+        CAN_Filter_Mask_Config(&hcan2, CAN_FILTER(15) | CAN_FIFO_0 | CAN_STDID | CAN_DATA_TYPE, 0, 0);
+        return HAL_OK;
+    }
+    return HAL_ERROR;
 }
 
 /**
@@ -29,19 +44,13 @@ void CAN_Filter_Mask_Config(CAN_HandleTypeDef *hcan, uint8_t Object_Para, uint32
 {
     CAN_FilterTypeDef can_filter_init_structure;
 
-    // 看第0位ID, 判断是数据帧还是遥控帧
-    // 遥控帧暂不处理
+    // 看第0位ID, 判断是数据帧还是遥控帧，遥控帧暂不处理
     if (Object_Para & 0x01)
-    {
         return;
-    }
 
-    // 看第1位ID, 判断是标准帧还是扩展帧
-    // 扩展帧暂不处理
+    // 看第1位ID, 判断是标准帧还是扩展帧，扩展帧暂不处理
     if ((Object_Para & 0x02) >> 1)
-    {
         return;
-    }
 
     // 标准帧
 
@@ -76,7 +85,7 @@ void CAN_Filter_Mask_Config(CAN_HandleTypeDef *hcan, uint8_t Object_Para, uint32
 }
 
 /**
- * @brief 注释掉发送完自动memset清空p_reg->TxData数组的功能；包含基础函数CAN_bsp_Send
+ * @brief 包含基础函数CAN_bsp_Send，适用CAN_C620_1(0x200),CAN_6020_1（0x1FF）
  * @param ID CAN_6020_1，CAN_6020_2，CAN_C620_1，CAN_C620_2
  * @param Data int16_t大小为4的数组
  * @param Length 4
@@ -94,7 +103,15 @@ uint8_t CAN_Send(uint16_t ID,CAN_Structure *Data,uint8_t Length)
     arr[7] = (uint8_t)(Data->data4 & 0xFF);
     arr[6] = (uint8_t)(Data->data4 >> 8);
 
-    return CAN_bsp_Send(&hcan1,ID,arr,8);
+    if (ID == CAN_C620_1)
+    {
+        return CAN_bsp_Send(&hcan1,ID,arr,8);
+    }
+    if(ID == CAN_6020_1)
+    {
+        return CAN_bsp_Send(&hcan2,ID,arr,8);
+    }
+    return HAL_ERROR;
 }
 
 /**
@@ -103,31 +120,32 @@ uint8_t CAN_Send(uint16_t ID,CAN_Structure *Data,uint8_t Length)
  * @param ID CAN_ID1或CAN_ID2
  * @param Data 类型为uint8_t
  * @param Length 数组大小
- * @return 发送成功即返回1,数值错误或者
+ * @return 发送成功即返回0,数值错误或者
  */
 uint8_t CAN_bsp_Send(CAN_HandleTypeDef *hcanx,uint16_t ID,uint8_t *Data,uint8_t Length)
 {
     if (Data == NULL || Length == 0 || Length > 8)
     {
-        return 0;
+        return HAL_ERROR;
     }
     //检查CAN状态
     if (HAL_CAN_GetState(hcanx)  != HAL_CAN_STATE_READY &&
        HAL_CAN_GetState(hcanx) != HAL_CAN_STATE_LISTENING)
     {
-        return 0;
+        return HAL_ERROR;
     }
     // 存储发送邮箱编号（HAL 需传入该变量接收邮箱号）
     uint32_t TxMailbox;
-    CAN_TxHeaderTypeDef TxMessage;
+    CAN_TxHeaderTypeDef TxMessage = {0};
 
     TxMessage.StdId = ID;
     TxMessage.ExtId = 0;
     TxMessage.DLC = Length;
     TxMessage.IDE = CAN_ID_STD;
     TxMessage.RTR = CAN_RTR_DATA;
+    TxMessage.TransmitGlobalTime = DISABLE; // 不发送时间戳
 
-    return (HAL_CAN_AddTxMessage(hcanx,&TxMessage,Data,&TxMailbox));
+    return HAL_CAN_AddTxMessage(hcanx,&TxMessage,Data,&TxMailbox);
 }
 
 /**

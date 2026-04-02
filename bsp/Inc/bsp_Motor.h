@@ -12,11 +12,11 @@ enum Enum_CAN_Motor_Status
     CAN_Motor_Enable = 1,
 };
 
-#define CAN_6020_1     0x1FE
-#define CAN_6020_2     0x2FE
+#define CAN_6020_1     0x1FF
+#define CAN_6020_2     0x2FF
 #define EXT_ID         0x00
 #define CAN_C620_1     0x200
-#define CAN_C620_2     0x1FF
+#define CAN_C620_2
 
 #define C620_ANGLE_RESOLUTION   0.0439f     // C620电调-电机机械角度-分辨率（单位：度/LSB）
 #define CHASSIS_RADIUS          0.425f       // 单位：m

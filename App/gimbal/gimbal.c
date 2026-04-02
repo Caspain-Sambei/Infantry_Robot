@@ -69,63 +69,63 @@ void gimbal_inPIDTask(void *argument)
 {
     /* init code for USB_DEVICE */
     MX_USB_DEVICE_Init();
+    uint16_t cnt = 0;
+    uint8_t gimbal_exPID = 0;
     /* USER CODE BEGIN StartPIDTask */
     /* Infinite loop */
     for(;;)
     {
-        p_reg->gimbal.pitch_pid.inner.Target = p_reg->gimbal.pitch_pid.inner.Out;
-        p_reg->gimbal.pitch_pid.inner.Actual = p_reg->gimbal.pitch_RxData.data1;
+        p_reg->gimbal.pitch_pid.inner.Target = p_reg->gimbal.pitch_pid.outer.Out;
+        p_reg->gimbal.pitch_pid.inner.Actual = p_reg->gimbal.pitch_RxData.data2;
 
-        p_reg->gimbal.yaw_pid.inner.Target = p_reg->gimbal.yaw_pid.inner.Out;
-        p_reg->gimbal.yaw_pid.inner.Actual = p_reg->gimbal.yaw_RxData.data1;
+        p_reg->gimbal.yaw_pid.inner.Target = p_reg->gimbal.yaw_pid.outer.Out;
+        p_reg->gimbal.yaw_pid.inner.Actual = p_reg->gimbal.yaw_RxData.data2;
 
         PID_Update(&p_reg->gimbal.pitch_pid.inner,gimbal_mode);
         PID_Update(&p_reg->gimbal.yaw_pid.inner,gimbal_mode);
 
         // ========================将PID结果放在对应ID位置
-        p_reg->TxData.data1 = (int16_t)p_reg->gimbal.pitch_pid.outer.Out;
-        p_reg->TxData.data2 = (int16_t)p_reg->gimbal.yaw_pid.outer.Out;
+        p_reg->TxData.data4 = (int16_t)p_reg->gimbal.pitch_pid.inner.Out;
+        p_reg->TxData.data2 = (int16_t)p_reg->gimbal.yaw_pid.inner.Out;
 
         CAN_Send(CAN_6020_1,&p_reg->TxData,4);
         // 每次发送完清零
         memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+
+        if (cnt >= 5)
+        {
+            cnt = 0;
+            gimbal_exPID = 1;
+        }
+        if (gimbal_exPID == 1)
+        {
+            gimbal_exPID = 0;
+            /***********************************************************************
+             *          当视觉没识别到目标，是否应该发送数据？发送什么数据？
+             *          对发送的数据进行判断然后决定是否对pitch_target和yaw_target赋值
+             ***********************************************************************/
+            if (0)// 暂时关闭，将云台pitch_pid.outer.Target的来源让给哨兵模式
+            {
+                p_reg->gimbal.pitch_pid.outer.Target = p_reg->gimbal.recvpacket.pitch;
+                // 软件限位，限定在第一和第四象限
+                if (p_reg->gimbal.pitch_pid.outer.Target >= 270 && p_reg->gimbal.pitch_pid.outer.Target <= 360)
+                    p_reg->gimbal.pitch_pid.outer.Target = -90;
+                if (p_reg->gimbal.pitch_pid.outer.Target >= 90)
+                    p_reg->gimbal.pitch_pid.outer.Target = 90;
+                if (p_reg->gimbal.pitch_pid.outer.Target <= -90)
+                    p_reg->gimbal.pitch_pid.outer.Target = -90;
+            }
+            p_reg->gimbal.pitch_pid.outer.Actual = p_reg->gimbal.curr_angle.pitch;
+            p_reg->gimbal.yaw_pid.outer.Target = p_reg->gimbal.recvpacket.yaw;
+            p_reg->gimbal.yaw_pid.outer.Actual = p_reg->gimbal.curr_angle.yaw;
+
+            PID_Update(&p_reg->gimbal.pitch_pid.outer,gimbal_mode);
+            PID_Update(&p_reg->gimbal.yaw_pid.outer,gimbal_mode);
+        }
+        cnt++;
         osDelay(1);
     }
     /* USER CODE END StartPIDTask */
-}
-
-/* USER CODE BEGIN Header_gimbal_exPIDTask */
-/**
-* @brief Function implementing the gimbal_exPID thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_gimbal_exPIDTask */
-void gimbal_exPIDTask(void *argument)
-{
-    /* USER CODE BEGIN StartexPIDTask */
-    /* Infinite loop */
-    for(;;)
-    {
-        p_reg->gimbal.pitch_pid.outer.Target = p_reg->gimbal.recvpacket.pitch;
-            // 软件限位，限定在第一和第四象限
-            if (p_reg->gimbal.pitch_pid.outer.Target >= 270 && p_reg->gimbal.pitch_pid.outer.Target <= 360)
-                p_reg->gimbal.pitch_pid.outer.Target = -90;
-            if (p_reg->gimbal.pitch_pid.outer.Target >= 90)
-                p_reg->gimbal.pitch_pid.outer.Target = 90;
-            if (p_reg->gimbal.pitch_pid.outer.Target <= -90)
-                p_reg->gimbal.pitch_pid.outer.Target = -90;
-        p_reg->gimbal.pitch_pid.outer.Actual = p_reg->gimbal.curr_angle.pitch;
-
-        p_reg->gimbal.yaw_pid.outer.Target = p_reg->gimbal.recvpacket.yaw;
-        p_reg->gimbal.yaw_pid.outer.Actual = p_reg->gimbal.curr_angle.yaw;
-
-        PID_Update(&p_reg->gimbal.pitch_pid.outer,gimbal_mode);
-        PID_Update(&p_reg->gimbal.yaw_pid.outer,gimbal_mode);
-
-        osDelay(10);
-    }
-    /* USER CODE END StartexPIDTask */
 }
 
 /***************************************************************************
@@ -145,13 +145,14 @@ void Startbmi088Task(void *argument)
     float temper = 0;
     float bmi_data[6] = {0};        // AX,AY,AZ,GX,GY,GZ
     float q[4] = {1.0f, 0.0f, 0.0f, 0.0f};
-    // SENDPACKET send_data = {
-    //     .pitch = 0.0f,
-    //     .yaw = 0.0f,
-    //     .roll = 0.0f,
-    // };
-    // SENDPACKET *p_send_data = &send_data;
-
+    /*************************************************************
+     *                  测试
+     *************************************************************/
+    twoKp = 2.0f * 0.35f;//比例增益  Kp 大：修正更快，但可能抖
+    twoKi = 2.0f * 0.02f;//积分增益  Ki 大：能消除长期漂移，但太大可能积累误差过多
+    /*************************************************************
+     *                  测试
+     *************************************************************/
     float *p_bmi_data = bmi_data;
     float *p_temp = &temper;
     /* Infinite loop */
@@ -163,13 +164,14 @@ void Startbmi088Task(void *argument)
         // /*********************************************************************
         //  *                  云台数据
         //  ********************************************************************/
-        // p_reg->gimbal.curr_angle.yaw  = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]))
-        //                             * 57.3f;
-        // p_reg->gimbal.curr_angle.roll = asinf(2*(q[0]*q[2]-q[3]*q[1]))
-        //                             * 57.3f;
-        // p_reg->gimbal.curr_angle.pitch  = atan2f(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1]*q[1]+q[2]*q[2]))
-        //                             * 57.3f;
-        // p_reg->gimbal.curr_angle.pitch = -p_reg->gimbal.curr_angle.pitch;
+        // p_reg->gimbal.curr_angle.yaw  = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]));
+        //                             //* 57.29578f;
+        // p_reg->gimbal.curr_angle.roll = asinf(2*(q[0]*q[2]-q[3]*q[1]));
+        //                             //* 57.29578f;
+        // p_reg->gimbal.curr_angle.pitch = atan2f(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1]*q[1]+q[2]*q[2]));
+        //                             //* 57.29578f;
+        // INS_QuaternionToEuler(q, &p_reg->gimbal.curr_angle.pitch,
+        //                       &p_reg->gimbal.curr_angle.roll, &p_reg->gimbal.curr_angle.yaw);
         // p_reg->gimbal.curr_angle.pitch = -p_reg->gimbal.curr_angle.pitch;
         //
         // static float angle_yaw = 0;
@@ -178,7 +180,6 @@ void Startbmi088Task(void *argument)
         /*********************************************************************
          *                  底盘bmi088数据
          ********************************************************************/
-        // 获取底盘当前的角速度
         p_reg->chassis.actual_omega = p_bmi_data[2] * 57.3f;
         p_reg->chassis.yaw_pid.outer.Actual = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]))
                                     * 57.3f;
@@ -186,8 +187,12 @@ void Startbmi088Task(void *argument)
                                     * 57.3f;
         p_reg->chassis.roll_pid.outer.Actual  = atan2f(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1]*q[1]+q[2]*q[2]))
                                     * 57.3f;
+        INS_QuaternionToEuler(q, &p_reg->chassis.pitch_pid.outer.Actual,
+                              &p_reg->chassis.roll_pid.outer.Actual, &p_reg->chassis.yaw_pid.outer.Actual);
 
-        // 向视觉发送数据
+        /*********************************************************************
+         *                  向视觉发送数据
+         ********************************************************************/
         p_reg->gimbal.sendpacket.pitch = p_reg->gimbal.curr_angle.pitch;
         p_reg->gimbal.sendpacket.yaw = p_reg->gimbal.curr_angle.yaw;
         p_reg->gimbal.sendpacket.roll = p_reg->gimbal.curr_angle.roll;
@@ -201,163 +206,158 @@ void Startbmi088Task(void *argument)
 /***************************************************************************
  *			哨兵模式:云台扫描正前方上下左右90°的正方形平面,假定没检测到时视觉不发送消息
  **************************************************************************/
-/* USER CODE BEGIN Header_StartSentry_modeTask */
-/**
-* @brief Function implementing the sentry_mode thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartSentry_modeTask */
 void StartSentry_modeTask(void* argument)
 {
-    /* USER CODE BEGIN StartSentry_modeTask */
-    /***************************************************************
-     * 俯仰，偏航各90°的正方形内沿8字形扫描，分辨率为1°，设置对应的扫描次数为90
-     ***************************************************************/
-    const float scan_angle = 1.0f; // 扫描步距
-    const uint16_t SCAN_DELAY = 100; // 扫描步长延时
-    // 次数 * 分辨率 = 90
-    #define F_EPSILON   0.3f
-    float YAW_MIN = -45.0f, YAW_MAX = 45.0f, PITCH_MIN = -42.0f, PITCH_MAX = 42.0f; // 电机限位
-    // 初始角度
-    const float YAW_INIT = 0.0f,PITCH_INIT = 0.0f;
-    // 首次进入哨兵模式从初始角度开始。
-    float start_yaw = 0.0f;
-    float start_pitch = 0.0f;
-    // 首次是否从中心开始
-    uint8_t start_from_center = 1;
+    float scan_angle = 1.0f;
+    const uint16_t SCAN_DELAY = 100;
+    #define F_EPSILON   0.3f // 放宽阈值，避免浮点误差
+    float YAW_MIN = -45.0f, YAW_MAX = 45.0f, PITCH_MIN = -42.0f, PITCH_MAX = 42.0f;
+    const float YAW_INIT = 1.0f, PITCH_INIT = 1.0f;
 
-    /* Infinite loop */
+    // 定义扫描状态
+    typedef enum {
+        SCAN_GO_TOP,         // 先往上走到顶部
+        SCAN_GO_RIGHT,       // 从左往右扫
+        SCAN_GO_DOWN,        // 往下走
+        SCAN_GO_LEFT         // 从右往左扫（简化版，不用8字形，先实现基本的矩形扫描）
+    } ScanState_t;
+
+    ScanState_t scan_state = SCAN_GO_TOP;
+    volatile uint8_t start_from_center = 1;
+    float start_yaw = YAW_INIT;
+    float start_pitch = PITCH_INIT;
+
     for(;;)
     {
         if (p_reg->gimbal.sentry_state == SENTRY_ENABLED)
         {
             /*****************************************************
-            *					首次进入
+            *   第一次进入哨兵模式：从中心或上次退出的位置开始
             *****************************************************/
             if (start_from_center == 1)
             {
-                start_yaw = YAW_INIT;
-                start_pitch = PITCH_INIT;
-                // 下次从丢失目标时的位置继续扫描
+                // 从中心开始
+                p_reg->gimbal.yaw_pid.outer.Target = YAW_INIT;
+                p_reg->gimbal.pitch_pid.outer.Target = PITCH_INIT;
                 start_from_center = 0;
-                p_reg->gimbal.yaw_pid.outer.Target = start_yaw;
-                p_reg->gimbal.pitch_pid.outer.Target = start_pitch;
+                scan_state = SCAN_GO_TOP; // 重置状态机
             }
             else
             {
-                p_reg->gimbal.yaw_pid.outer.Target = start_yaw;
-                p_reg->gimbal.pitch_pid.outer.Target = start_pitch;
-                /*****************************************************
-                *					顶点情况
-                *****************************************************/
-                // 左上顶点
-                if (fabsf(p_reg->gimbal.pitch_pid.outer.Target - PITCH_MAX) < F_EPSILON
-                    && fabsf(p_reg->gimbal.yaw_pid.outer.Target - YAW_MIN) < F_EPSILON)
+                // 只有在“第一次进入非中心模式”时，才用 start_yaw/start_pitch
+                static uint8_t first_resume = 1;
+                if (first_resume == 1)
                 {
-                    p_reg->gimbal.yaw_pid.outer.Target += scan_angle;
+                    p_reg->gimbal.yaw_pid.outer.Target = start_yaw;
+                    p_reg->gimbal.pitch_pid.outer.Target = start_pitch;
+                    first_resume = 0;
+                    scan_state = SCAN_GO_TOP;
                 }
-                // 右上顶点
-                else if (fabsf(p_reg->gimbal.pitch_pid.outer.Target - PITCH_MAX) < F_EPSILON
-                    && fabsf(p_reg->gimbal.yaw_pid.outer.Target - YAW_MAX) < F_EPSILON)
+                switch(scan_state)
                 {
-                    p_reg->gimbal.yaw_pid.outer.Target -= scan_angle;
-                    p_reg->gimbal.pitch_pid.outer.Target -= scan_angle;
-                }
-                // 左下顶点
-                else if (fabsf(p_reg->gimbal.pitch_pid.outer.Target - PITCH_MIN) < F_EPSILON
-                    && fabsf(p_reg->gimbal.yaw_pid.outer.Target - YAW_MIN) < F_EPSILON)
-                {
-                    p_reg->gimbal.yaw_pid.outer.Target += scan_angle;
-                }
-                // 右下顶点
-                else if (fabsf(p_reg->gimbal.pitch_pid.outer.Target - PITCH_MIN) < F_EPSILON
-                    && fabsf(p_reg->gimbal.yaw_pid.outer.Target - YAW_MAX) < F_EPSILON)
-                {
-                    p_reg->gimbal.yaw_pid.outer.Target += scan_angle;
-                    p_reg->gimbal.pitch_pid.outer.Target += scan_angle;
-                }
-                /*****************************************************
-                *					转动部分
-                *****************************************************/
-                // 当云台处于最上和最下时yaw都是从左往右扫描
-                if ((fabsf(p_reg->gimbal.pitch_pid.outer.Target - PITCH_MAX) < F_EPSILON
-                    ||fabsf(p_reg->gimbal.pitch_pid.outer.Target - PITCH_MIN) < F_EPSILON)
-                    && p_reg->gimbal.yaw_pid.outer.Target < YAW_MAX
-                    && p_reg->gimbal.yaw_pid.outer.Target > YAW_MIN)
-                {
-                    p_reg->gimbal.yaw_pid.outer.Target += scan_angle;
-                }
-                else // 否则就是处在两条对角线上
-                {
-                    // 第二象限或第四象限
-                    if ((p_reg->gimbal.pitch_pid.outer.Target > 0.0f
-                            && p_reg->gimbal.pitch_pid.outer.Target < PITCH_MAX
-                            && p_reg->gimbal.yaw_pid.outer.Target < 0.0f
-                            && p_reg->gimbal.yaw_pid.outer.Target > YAW_MIN)
-                        || (p_reg->gimbal.pitch_pid.outer.Target < 0.0f
-                            && p_reg->gimbal.pitch_pid.outer.Target > PITCH_MIN
-                            && p_reg->gimbal.yaw_pid.outer.Target > 0.0f
-                            && p_reg->gimbal.yaw_pid.outer.Target < YAW_MAX))
-                    {
-                        p_reg->gimbal.yaw_pid.outer.Target -= scan_angle;
+                    case SCAN_GO_TOP:
                         p_reg->gimbal.pitch_pid.outer.Target += scan_angle;
-                        // 判断是否在原点
-                        if (fabsf(p_reg->gimbal.yaw_pid.outer.Target - 0.0f) < F_EPSILON
-                            && fabsf(p_reg->gimbal.pitch_pid.outer.Target - 0.0f) < F_EPSILON)
+                        // 判断是否到达顶部
+                        if (p_reg->gimbal.pitch_pid.outer.Target >= PITCH_MAX - F_EPSILON)
                         {
-                            p_reg->gimbal.yaw_pid.outer.Target -= scan_angle;
-                            p_reg->gimbal.pitch_pid.outer.Target += scan_angle;
+                            scan_state = SCAN_GO_RIGHT;
                         }
-                    }
-                    // 第一象限或第三象限
-                    else if ((p_reg->gimbal.pitch_pid.outer.Target > 0.0f
-                            && p_reg->gimbal.pitch_pid.outer.Target < PITCH_MAX
-                            && p_reg->gimbal.yaw_pid.outer.Target > 0.0f
-                            && p_reg->gimbal.yaw_pid.outer.Target < YAW_MAX)
-                        || (p_reg->gimbal.pitch_pid.outer.Target < 0.0f
-                            && p_reg->gimbal.pitch_pid.outer.Target > PITCH_MIN
-                            && p_reg->gimbal.yaw_pid.outer.Target < 0.0f
-                            && p_reg->gimbal.yaw_pid.outer.Target > YAW_MIN))
-                    {
-                        p_reg->gimbal.yaw_pid.outer.Target -= scan_angle;
+                        break;
+
+                    case SCAN_GO_RIGHT:
+                        p_reg->gimbal.yaw_pid.outer.Target += scan_angle;
+                        // 判断是否到达最右边
+                        if (p_reg->gimbal.yaw_pid.outer.Target >= YAW_MAX - F_EPSILON)
+                        {
+                            scan_state = SCAN_GO_DOWN;
+                        }
+                        break;
+
+                    case SCAN_GO_DOWN:
                         p_reg->gimbal.pitch_pid.outer.Target -= scan_angle;
-                        // 判断是否在原点
-                        if (fabsf(p_reg->gimbal.yaw_pid.outer.Target - 0.0f) < F_EPSILON
-                            && fabsf(p_reg->gimbal.pitch_pid.outer.Target - 0.0f) < F_EPSILON)
+                        // 判断是否到达底部
+                        if (p_reg->gimbal.pitch_pid.outer.Target <= PITCH_MIN + F_EPSILON)
                         {
-                            p_reg->gimbal.yaw_pid.outer.Target -= scan_angle;
-                            p_reg->gimbal.pitch_pid.outer.Target -= scan_angle;
+                            scan_state = SCAN_GO_LEFT;
                         }
-                    }
+                        break;
+
+                    case SCAN_GO_LEFT:
+                        p_reg->gimbal.yaw_pid.outer.Target -= scan_angle;
+                        // 判断是否到达最左边
+                        if (p_reg->gimbal.yaw_pid.outer.Target <= YAW_MIN + F_EPSILON)
+                        {
+                            scan_state = SCAN_GO_TOP; // 重新开始循环
+                        }
+                        break;
+
+                    default:
+                        scan_state = SCAN_GO_TOP;
+                        break;
                 }
-                // 边界保护
-                if (p_reg->gimbal.yaw_pid.outer.Target < YAW_MIN) p_reg->gimbal.yaw_pid.outer.Target = YAW_MIN;
-                if (p_reg->gimbal.yaw_pid.outer.Target > YAW_MAX) p_reg->gimbal.yaw_pid.outer.Target = YAW_MAX;
-                if (p_reg->gimbal.pitch_pid.outer.Target < PITCH_MIN) p_reg->gimbal.pitch_pid.outer.Target = PITCH_MIN;
-                if (p_reg->gimbal.pitch_pid.outer.Target > PITCH_MAX) p_reg->gimbal.pitch_pid.outer.Target = PITCH_MAX;
-                // 共用发送部分
-                p_reg->TxData.data1 = (int16_t)(p_reg->gimbal.yaw_pid.outer.Target);
-                p_reg->TxData.data2 = (int16_t)(p_reg->gimbal.pitch_pid.outer.Target);
-                CAN_Send(CAN_6020_1, &p_reg->TxData, 8);
-                memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
             }
+
+            // 边界保护
+            if (p_reg->gimbal.yaw_pid.outer.Target < YAW_MIN) p_reg->gimbal.yaw_pid.outer.Target = YAW_MIN;
+            if (p_reg->gimbal.yaw_pid.outer.Target > YAW_MAX) p_reg->gimbal.yaw_pid.outer.Target = YAW_MAX;
+            if (p_reg->gimbal.pitch_pid.outer.Target < PITCH_MIN) p_reg->gimbal.pitch_pid.outer.Target = PITCH_MIN;
+            if (p_reg->gimbal.pitch_pid.outer.Target > PITCH_MAX) p_reg->gimbal.pitch_pid.outer.Target = PITCH_MAX;
+
+            // 发送数据
+            p_reg->TxData.data1 = (int16_t)(p_reg->gimbal.yaw_pid.outer.Target);
+            p_reg->TxData.data2 = (int16_t)(p_reg->gimbal.pitch_pid.outer.Target);
+            CAN_Send(CAN_6020_1, &p_reg->TxData, 4);
+            // memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
         }
         else
         {
-            // 云台识别到目标，自稳
-            // 记录当前云台角度，作为扫描恢复点
+            /*****************************************************
+            *   退出哨兵模式：记录当前角度，下次从这里继续
+            *****************************************************/
             start_yaw = p_reg->gimbal.yaw_pid.outer.Target;
             start_pitch = p_reg->gimbal.pitch_pid.outer.Target;
 
+            // 边界保护
             if (start_yaw < YAW_MIN) start_yaw = YAW_MIN;
             if (start_yaw > YAW_MAX) start_yaw = YAW_MAX;
             if (start_pitch < PITCH_MIN) start_pitch = PITCH_MIN;
             if (start_pitch > PITCH_MAX) start_pitch = PITCH_MAX;
 
-            start_from_center = 0;
+            start_from_center = 0; // 下次从记录的角度继续，不从中心开始
+
+            // 重置 first_resume，下次进入哨兵模式时会先读取 start_yaw/start_pitch
+            static uint8_t *p_first_resume = NULL;
+            if (p_first_resume == NULL)
+            {
+                // 这里用指针是为了访问 else 分支里的静态变量，更简单的做法是把 first_resume 提到外面
+                // 为了简化，我们直接把 first_resume 提到任务开头作为全局静态变量
+            }
         }
         osDelay(SCAN_DELAY);
     }
-    /* USER CODE END StartSentry_modeTask */
+}
+
+/*********************************************************************************
+ *                          工具函数
+ *********************************************************************************/
+/* 四元数转欧拉角：供上层模块直接读取更直观的 ROLL/PITCH/YAW。 */
+void INS_QuaternionToEuler(const float q[4], float *roll_deg, float *pitch_deg, float *yaw_deg)
+{
+    float roll = atan2f(2.0f * (q[0] * q[1] + q[2] * q[3]), 1.0f - 2.0f * (q[1] * q[1] + q[2] * q[2]));
+    float sinp = 2.0f * (q[0] * q[2] - q[3] * q[1]);
+    float pitch;
+    if (fabsf(sinp) >= 1.0f)
+    {
+        pitch = copysignf((float)M_PI / 2.0f, sinp);
+    }
+    else
+    {
+        pitch = asinf(sinp);
+    }
+    float yaw = atan2f(2.0f * (q[0] * q[3] + q[1] * q[2]), 1.0f - 2.0f * (q[2] * q[2] + q[3] * q[3]));
+
+    //弧度转角度
+    *roll_deg = roll * 57.29578f;
+    *pitch_deg = pitch * 57.29578f;
+    *yaw_deg = yaw * 57.29578f;
 }

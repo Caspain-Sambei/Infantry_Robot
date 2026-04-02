@@ -5,9 +5,8 @@
 #include "MyCAN.h"
 #include "../wheel/Omni_wheel.h"
 
-
 /***************************************************************************
- *								底盘的PID
+ *								底盘解算 + 单环PID
  **************************************************************************/
 /* USER CODE BEGIN Header_chassis_inPIDTask */
 /**
@@ -23,10 +22,7 @@ void chassis_inPIDTask(void *argument)
     /* Infinite loop */
     for(;;)
     {
-        /************************************************************
-         *                  底盘解算 + 单环PID
-         ************************************************************/
-        Omni_wheel_calculate(&p_reg->rc_Data,&p_reg->chassis,speed_cal);
+        Omni_wheel_calculate(&p_reg->rc_Data,&p_reg->chassis,p_reg->speed_cal);
         // 将结果映射为4个电机的电流
         p_reg->TxData.data1 = (int16_t)(speed_cal[0] * RC_TO_3508_Current);
         p_reg->TxData.data2 = (int16_t)(speed_cal[1] * RC_TO_3508_Current);
