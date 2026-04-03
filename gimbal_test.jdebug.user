@@ -1,23 +1,20 @@
 
 
 
-Breakpoint=D:/CODE/CLionProjects/gimbal/App/gimbal/gimbal.c:119:55, State=BP_STATE_DISABLED
-DataBreakpoint=gimbal.c::StartSentry_modeTask::first_resume, State=On
-OpenDocument="main.c", FilePath="D:/CODE/CLionProjects/gimbal/Core/Src/main.c", Line=70
-OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=1306
-OpenDocument="gimbal.c", FilePath="D:/CODE/CLionProjects/gimbal/App/gimbal/gimbal.c", Line=241
-OpenDocument="tasks.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3423
-OpenDocument="startup_stm32f405xx.s", FilePath="D:/CODE/CLionProjects/gimbal/startup_stm32f405xx.s", Line=52
-OpenDocument="BMI088Middleware.c", FilePath="D:/CODE/CLionProjects/gimbal/bsp/Src/BMI088Middleware.c", Line=7
-OpenDocument="stm32f4xx_hal.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c", Line=315
-OpenDocument="stm32f4xx_hal_tim.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c", Line=3883
+Breakpoint=D:/CODE/CLionProjects/gimbal/App/gimbal/gimbal.c:78, Permitted Impl.=BP_TYPE_MIXED, State=BP_STATE_ON
+Breakpoint=D:/CODE/CLionProjects/gimbal/App/gimbal/gimbal.c:84, State=BP_STATE_ON
+Breakpoint=D:/CODE/CLionProjects/gimbal/App/gimbal/gimbal.c:85, State=BP_STATE_ON
+Breakpoint=D:/CODE/CLionProjects/gimbal/App/gimbal/gimbal.c:90, State=BP_STATE_ON
+Breakpoint=D:/CODE/CLionProjects/gimbal/App/gimbal/gimbal.c:92, State=BP_STATE_ON
+Breakpoint=D:/CODE/CLionProjects/gimbal/App/gimbal/gimbal.c:121:57, State=BP_STATE_DISABLED
+OpenDocument="main.c", FilePath="D:/CODE/CLionProjects/gimbal/Core/Src/main.c", Line=76
+OpenDocument="gimbal.c", FilePath="D:/CODE/CLionProjects/gimbal/App/gimbal/gimbal.c", Line=69
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=1424, h=169, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Global Data", DockArea=BOTTOM, x=0, y=0, w=778, h=648, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Watched Data 1", DockArea=BOTTOM, x=1, y=0, w=1429, h=648, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=388, h=833, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Data Sampling", DockArea=BOTTOM, x=2, y=0, w=351, h=648, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
-OpenWindow="Timeline", DockArea=RIGHT, x=0, y=1, w=1424, h=663, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="1151;479", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="793;0", CodeGraphLegendShown=0, CodeGraphLegendPosition="800;0"
+OpenWindow="Timeline", DockArea=RIGHT, x=0, y=0, w=1194, h=833, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="100 ms / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="0;648", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="756;-75", CodeGraphLegendShown=0, CodeGraphLegendPosition="777;0"
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
 TableHeader="Global Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[187;100;120;100;100;141]
 TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[764;113;100;100;354]
@@ -45,4 +42,7 @@ WatchedExpression="((((p_reg)->gimbal).pitch_pid).inner).kp", RefreshRate=5, Win
 WatchedExpression="((((p_reg)->gimbal).pitch_pid).inner).ki", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="((((p_reg)->gimbal).pitch_pid).outer).kp", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="((((p_reg)->gimbal).pitch_pid).outer).ki", RefreshRate=5, Window=Watched Data 1
-WatchedExpression="first_resume", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="enter_time", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="PID_finished_time", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="begin_CAN_time", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="end_CAN_time", RefreshRate=5, Window=Watched Data 1

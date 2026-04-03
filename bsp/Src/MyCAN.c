@@ -165,33 +165,33 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
             {
                 case (0x201):
                     {
-                        p_reg->chassis.Motor_1_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
-                        p_reg->chassis.Motor_1_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
-                        p_reg->chassis.Motor_1_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
+                        p_reg->chassis.Motor_1_RxData.data1 = (int16_t)((uint16_t)buf[0] << 8 | buf[1]);
+                        p_reg->chassis.Motor_1_RxData.data2 = (int16_t)((uint16_t)buf[2] << 8 | buf[3]);
+                        p_reg->chassis.Motor_1_RxData.data3 = (int16_t)((uint16_t)buf[4] << 8 | buf[5]);
                         p_reg->chassis.Motor_1_RxData.data4 = (int16_t)buf[6];
                         break;
                     }
                 case (0x202):
                     {
-                        p_reg->chassis.Motor_2_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
-                        p_reg->chassis.Motor_2_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
-                        p_reg->chassis.Motor_2_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
+                        p_reg->chassis.Motor_2_RxData.data1 = (int16_t)((uint16_t)buf[0] << 8 | buf[1]);
+                        p_reg->chassis.Motor_2_RxData.data2 = (int16_t)((uint16_t)buf[2] << 8 | buf[3]);
+                        p_reg->chassis.Motor_2_RxData.data3 = (int16_t)((uint16_t)buf[4] << 8 | buf[5]);
                         p_reg->chassis.Motor_2_RxData.data4 = (int16_t)buf[6];
                         break;
                     }
                 case (0x203):
                     {
-                        p_reg->chassis.Motor_3_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
-                        p_reg->chassis.Motor_3_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
-                        p_reg->chassis.Motor_3_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
+                        p_reg->chassis.Motor_3_RxData.data1 = (int16_t)((uint16_t)buf[0] << 8 | buf[1]);
+                        p_reg->chassis.Motor_3_RxData.data2 = (int16_t)((uint16_t)buf[2] << 8 | buf[3]);
+                        p_reg->chassis.Motor_3_RxData.data3 = (int16_t)((uint16_t)buf[4] << 8 | buf[5]);
                         p_reg->chassis.Motor_3_RxData.data4 = (int16_t)buf[6];
                         break;
                     }
                 case (0x204):
                     {
-                        p_reg->chassis.Motor_4_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
-                        p_reg->chassis.Motor_4_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
-                        p_reg->chassis.Motor_4_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
+                        p_reg->chassis.Motor_4_RxData.data1 = (int16_t)((uint16_t)buf[0] << 8 | buf[1]);
+                        p_reg->chassis.Motor_4_RxData.data2 = (int16_t)((uint16_t)buf[2] << 8 | buf[3]);
+                        p_reg->chassis.Motor_4_RxData.data3 = (int16_t)((uint16_t)buf[4] << 8 | buf[5]);
                         p_reg->chassis.Motor_4_RxData.data4 = (int16_t)buf[6];
                         break;
                     }
@@ -212,18 +212,18 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
             {
             case (0x208):
                 {
-                    p_reg->gimbal.pitch_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
-                    p_reg->gimbal.pitch_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
-                    p_reg->gimbal.pitch_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
-                    p_reg->gimbal.pitch_RxData.data4 = ((int16_t)buf[6] << 8);
+                    p_reg->gimbal.pitch_RxData.data1 = (int16_t)((uint16_t)buf[0] << 8 | buf[1]);
+                    p_reg->gimbal.pitch_RxData.data2 = (int16_t)((uint16_t)buf[2] << 8 | buf[3]);
+                    p_reg->gimbal.pitch_RxData.data3 = (int16_t)((uint16_t)buf[4] << 8 | buf[5]);
+                    p_reg->gimbal.pitch_RxData.data4 = (int16_t)buf[6];
                     break;
                 }
             case (0x206):
                 {
-                    p_reg->gimbal.yaw_RxData.data1 = ((int16_t)buf[1] & 0xFF) | ((int16_t)buf[0] << 8);
-                    p_reg->gimbal.yaw_RxData.data2 = ((int16_t)buf[3] & 0xFF) | ((int16_t)buf[2] << 8);
-                    p_reg->gimbal.yaw_RxData.data3 = ((int16_t)buf[5] & 0xFF) | ((int16_t)buf[4] << 8);
-                    p_reg->gimbal.yaw_RxData.data4 = ((int16_t)buf[6] << 8);
+                    p_reg->gimbal.yaw_RxData.data1 = (int16_t)((uint16_t)buf[0] << 8 | buf[1]);
+                    p_reg->gimbal.yaw_RxData.data2 = (int16_t)((uint16_t)buf[2] << 8 | buf[3]);
+                    p_reg->gimbal.yaw_RxData.data3 = (int16_t)((uint16_t)buf[4] << 8 | buf[5]);
+                    p_reg->gimbal.yaw_RxData.data4 = (int16_t)buf[6];
                     break;
                 }
             }

@@ -15,7 +15,7 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
      *             全向轮;默认装配方向：一侧同向，两侧镜像；逆时针为正
      *                      1~4：左上，右上，左下，右下
      ****************************************************************/
-    float test_num = 0.01f;    // 水平转动先给个相对小值
+    float test_num = 0.1f;    // 水平转动先给个相对小值
     // 云台yaw和pitch
     float gimbal_yaw = (float)rc_Data->rc.ch0 * RC_TO_3508_Current * test_num;
     float gimbal_pitch = (float)rc_Data->rc.ch1 * RC_TO_3508_Current * test_num;
@@ -42,16 +42,16 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
     float Motor_4_Speed = (float)chassis->Motor_4_RxData.data2 * 2 * PI /60.0f / GEAR_RATIO_3508 * CHASSIS_RADIUS;
 
     chassis->speed_X = -sqrtf(2.0f) / 4.0f
-        * ((float)(Motor_1_Speed - Motor_3_Speed)
+        * ((Motor_1_Speed - Motor_3_Speed)
         * (cosf(chassis->yaw_pid.outer.Actual) + sinf(chassis->yaw_pid.outer.Actual))
         +
-        (float)(Motor_2_Speed - Motor_4_Speed)
+        (Motor_2_Speed - Motor_4_Speed)
         * (cosf(chassis->yaw_pid.outer.Actual) - sinf(chassis->yaw_pid.outer.Actual)));
     chassis->speed_Y = -sqrtf(2.0f) / 4.0f
-        * ((float)(Motor_1_Speed - Motor_3_Speed)
+        * ((Motor_1_Speed - Motor_3_Speed)
         * (sinf(chassis->yaw_pid.outer.Actual) - cosf(chassis->yaw_pid.outer.Actual))
         +
-        (float)(Motor_2_Speed - Motor_4_Speed)
+        (Motor_2_Speed - Motor_4_Speed)
         * (cosf(chassis->yaw_pid.outer.Actual) + sinf(chassis->yaw_pid.outer.Actual)));
     // 获取底盘速度
     chassis->Speed_pid.inner.Actual =

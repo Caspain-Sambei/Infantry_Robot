@@ -27,16 +27,19 @@ void PID_Update(pid *p,uint8_t mode)
 	}
 	// 死区积分清零
 	else if (mode == 2)
-		if(fabs(p->PreError) <= p->DEADZONE){p->SunError = 0.0f;}
+	{
+		if(fabs(p->PreError) <= p->DEADZONE)
+			p->SunError = 0.0f;
+	}
 
 	// =======================变速积分======================
 	if(p->ki != 0.0f)
 	{
-		if (fabs(p->PreError) <= p->I_L)
+		if (fabs(p->PreError) < p->I_L)
 		{
 			p->SunError += (p->PreError + p->LastError) / 2.0f;
 		}
-		else if (fabs(p->PreError) <= p->I_M)
+		else if (fabs(p->PreError) < p->I_M)
 		{
 			p->SunError += (p->PreError + p->LastError) / 2.0f * (p->I_M - p->PreError) / (p->I_M - p->I_L);
 		}
@@ -53,10 +56,9 @@ void PID_Update(pid *p,uint8_t mode)
 	 **************************************************************************/
 	// =======================不完全微分===================
 	// 在纯微分项后面串联一个一阶低通滤波器，来抑制微分项的噪声放大效应
-	float temp_Out = p->kp * p->PreError + p->ki * p->SunError;
-
-	p->D_OUT = (1 - p->RC_DF) * (temp_Out - p->LAST_OUT)
-				+ p->RC_DF * p->LAST_D_OUT;
+	float temp_Out = p->kp * (p->PreError - p->LastError);
+	p->D_OUT = (1 - p->RC_DF) * temp_Out + p->RC_DF * p->LAST_D_OUT;
+	p->LAST_D_OUT = p->D_OUT;
 
 	/***************************************************************************
 	 *								前馈计算
