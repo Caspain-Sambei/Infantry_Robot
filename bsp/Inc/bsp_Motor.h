@@ -23,8 +23,9 @@ enum Enum_CAN_Motor_Status
 #define GEAR_RATIO_3508         15.764f     // 268.0f/17.0f区别于3508P19电机
 #define PI                      3.1415926f
 
-#define SPEED_TO_CURRENT        1.0f
+#define SPEED_TO_CURRENT 1.0f
 // 3508:-16384~16384 RC:364~1024~1684
- #define RC_TO_3508_Current      24.824f     // 通道数值转化为电流值
+//#define RC_TO_3508_Current 24.824f // 通道数值转化为电流值
+#define RC_TO_3508_Current 1.0f // 通道数值转化为电流值
 
 #endif //GIMBAL_BSP_MOTOR_H

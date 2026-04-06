@@ -14,6 +14,6 @@
 #include "PID.h"
 #include <math.h>
 
-void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_cal[4]);
+void Omni_wheel_calculate(RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_cal[4]);
 
 #endif //GIMBAL_OMNI_WHEEL_H

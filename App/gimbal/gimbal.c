@@ -179,10 +179,7 @@ void Startbmi088Task(void *argument)
         INS_QuaternionToEuler(q, &p_reg->gimbal.curr_angle.pitch,
                               &p_reg->gimbal.curr_angle.roll, &p_reg->gimbal.curr_angle.yaw);
         p_reg->gimbal.curr_angle.pitch = -p_reg->gimbal.curr_angle.pitch;
-        // 不知何用
-        // static float angle_yaw = 0;
-        // float dt = 0.001f;  // 先按 1ms 假设，实际应测量
-        // angle_yaw = 0.98f * (angle_yaw + bmi_data[2] * dt) + 0.02f * atan2f(bmi_data[4], bmi_data[3]);
+       
         /*********************************************************************
          *                  底盘bmi088数据
          ********************************************************************/

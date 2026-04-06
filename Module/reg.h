@@ -55,7 +55,8 @@ typedef struct
 {
     PID_Structure pitch_pid,yaw_pid,roll_pid;
     PID_Structure Speed_pid;
-    float speed_X,speed_Y;
+    float inverse_speed_X,inverse_speed_Y;
+    float forward_speed_X,forward_speed_Y;
     float target_omega,actual_omega;
     CAN_Structure Motor_1_RxData,Motor_2_RxData,Motor_3_RxData,Motor_4_RxData;
 }CHASSIS;

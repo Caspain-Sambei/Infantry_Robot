@@ -55,15 +55,19 @@ void RemoteDataProcess(uint8_t *pData)
         &p_reg->rc_Data.rc.ch2,
         &p_reg->rc_Data.rc.ch3,
     };
+    /*
     for (int i = 0; i < 4;i++)
     {
         if (*channels[i] >= 1024 && *channels[i] <= 1684)
         {
-            *channels[i] = 1684 - *channels[i];
+            *channels[i] = *channels[i] - 1024;
         }
         else if (*channels[i] < 1024 && *channels[i] >= 364)
-            *channels[i] = *channels[i] - 1024;
+        {
+            *channels[i] = 1024 - *channels[i];
+        }
     }
+    */
     /****************************************************************
      *                      底盘解算放在rtos任务中，包括PID
      ****************************************************************/

@@ -103,8 +103,10 @@ TYPEDEF reg ={
     },
 
     // 底盘绝对坐标系下的目标速度
-    .chassis.speed_X = 0.0f,
-    .chassis.speed_Y = 0.0f,
+    .chassis.inverse_speed_X = 0.0f,
+    .chassis.inverse_speed_Y = 0.0f,
+    .chassis.forward_speed_X = 0.0f,
+    .chassis.forward_speed_Y = 0.0f,
     .chassis.target_omega = 0.0f,
     .chassis.actual_omega = 0.0f,
     // 底盘四个电机的返回速度

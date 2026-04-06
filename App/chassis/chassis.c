@@ -24,10 +24,10 @@ void chassis_inPIDTask(void *argument)
     {
         Omni_wheel_calculate(&p_reg->rc_Data,&p_reg->chassis,p_reg->speed_cal);
         // 将结果映射为4个电机的电流
-        p_reg->TxData.data1 = (int16_t)(speed_cal[0] * RC_TO_3508_Current);
-        p_reg->TxData.data2 = (int16_t)(speed_cal[1] * RC_TO_3508_Current);
-        p_reg->TxData.data3 = (int16_t)(speed_cal[2] * RC_TO_3508_Current);
-        p_reg->TxData.data4 = (int16_t)(speed_cal[3] * RC_TO_3508_Current);
+        p_reg->TxData.data1 = (int16_t)(p_reg->speed_cal[0] * RC_TO_3508_Current);
+        p_reg->TxData.data2 = (int16_t)(p_reg->speed_cal[1] * RC_TO_3508_Current);
+        p_reg->TxData.data3 = (int16_t)(p_reg->speed_cal[2] * RC_TO_3508_Current);
+        p_reg->TxData.data4 = (int16_t)(p_reg->speed_cal[3] * RC_TO_3508_Current);
 
         CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
         memset(&p_reg->TxData, 0, sizeof(CAN_Structure));

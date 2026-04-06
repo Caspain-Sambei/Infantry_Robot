@@ -96,6 +96,7 @@ add_executable(${CMAKE_PROJECT_NAME}
         App/wheel/Mecanum_wheel.c
         App/wheel/Omni_wheel.h
         App/wheel/Omni_wheel.c
+    
 )
 
 # 禁用共享库
@@ -144,11 +145,15 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
-        bsp/Inc/
-        bsp/Src/
-        Module/
-        App/rc/
-        App/gimbal/
+    Core/Inc/                    # 添加核心外设寄存器定义和HAL配置
+    Drivers/CMSIS/Include/       # 添加CMSIS核心头文件
+    Drivers/STM32F4xx_HAL_Driver/Inc/  # 添加HAL驱动库头文件
+    bsp/Inc/
+    bsp/Src/
+    Module/
+    App/rc/
+    App/gimbal/
+    App/wheel/
 )
 
 # Add project symbols (macros)
