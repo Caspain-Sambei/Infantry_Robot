@@ -15,41 +15,49 @@ void Omni_wheel_calculate(RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_cal[4])
 {
   volatile float gimbal_yaw = 0.0f, gimbal_pitch = 0.0f;
   volatile float dt7_x = 0.0f, dt7_y = 0.0f;
+  float test_num = 1.0f; // 水平转动先给个相对小值
   /************************************************************
    *                   云台逆解算
    ************************************************************/
-  // 云台yaw和pitch
-  if (rc_Data->rc.ch0 >= 0 && rc_Data->rc.ch0 <= 660)
+  if (rc_Data->rc.ch0 >= 1024 && rc_Data->rc.ch0 <= 1684)
   {
-    gimbal_yaw = (float)rc_Data->rc.ch0 * RC_TO_3508_Current * test_num;
+    gimbal_yaw = ((float)rc_Data->rc.ch0 - 1024.0f) / 660 * RC_TO_3508_Current * test_num;
   } 
-  else
-    gimbal_yaw = 0.0f;
+  else if(rc_Data->rc.ch0 >= 364 && rc_Data->rc.ch0 < 1024)
+  {
+    gimbal_yaw = -(1024.0f - (float)rc_Data->rc.ch0) / 660* RC_TO_3508_Current * test_num;
+  }
+    
 
-  if (rc_Data->rc.ch1 >= 0 && rc_Data->rc.ch1 <= 660)
+  if (rc_Data->rc.ch1 >= 1024 && rc_Data->rc.ch1 <= 1684)
   {
-    gimbal_pitch = (float)rc_Data->rc.ch1 * RC_TO_3508_Current * test_num;
+    gimbal_pitch = ((float)rc_Data->rc.ch1 - 1024.0f) / 660 * RC_TO_3508_Current * test_num;
   } 
-  else
-    gimbal_pitch = 0.0f;
+  else if(rc_Data->rc.ch1 >= 364 && rc_Data->rc.ch1 < 1024)
+  {
+    gimbal_pitch = -(1024.0f - (float)rc_Data->rc.ch1) / 660 * RC_TO_3508_Current * test_num;
+  }
 
   /************************************************************
    *                   底盘逆解算
    ************************************************************/
-  float test_num = 1.0f; // 水平转动先给个相对小值
-  if (rc_Data->rc.ch2 >= 0 && rc_Data->rc.ch2 <= 660) 
+  if (rc_Data->rc.ch2 >= 1024 && rc_Data->rc.ch2 <= 1684) 
   {
-    dt7_x = (float)(rc_Data->rc.ch2) / 660.0f;
+    dt7_x = ((float)(rc_Data->rc.ch2) - 1024.0f) / 660.0f;
   }
-  else
-    dt7_x = 0.0f;
+  else if(rc_Data->rc.ch2 >= 364 && rc_Data->rc.ch2 < 1024)
+  {
+    dt7_x = -(1024.0f - (float)(rc_Data->rc.ch2)) / 660.0f; 
+  }
 
-  if (rc_Data->rc.ch3 >= 364 && rc_Data->rc.ch3 <= 1684) 
+  if (rc_Data->rc.ch3 >= 1024 && rc_Data->rc.ch3 <= 1684) 
   {
-    dt7_y = (float)(rc_Data->rc.ch3) / 660.0f;
+    dt7_y = ((float)(rc_Data->rc.ch3) - 1024.0f) / 660.0f;
   }
-  else
-    dt7_y = 0.0f;
+  else if(rc_Data->rc.ch3 >= 364 && rc_Data->rc.ch3 < 1024)
+  {
+    dt7_y = -(1024.0f - (float)(rc_Data->rc.ch3)) / 660.0f;
+  }
 
   chassis->yaw_pid.outer.Target = atan2f(dt7_y, dt7_x);
   // 线速度单位 m/s
@@ -94,7 +102,7 @@ void Omni_wheel_calculate(RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_cal[4])
    *                  单环PID
    ************************************************************/
   PID_Update(&chassis->Speed_pid.inner, chassis_mode);
-
+  //p_reg->chassis.Speed_pid.inner.OUTMAX = OMNI_SPEED_MAX;
   /************************************************************
    *                  底盘速度解算为通道值
    ************************************************************/
@@ -122,4 +130,15 @@ void Omni_wheel_calculate(RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_cal[4])
       (float)((cos_ang - sin_ang) * speed_X + (sin_ang + cos_ang) * speed_Y +
               CHASSIS_RADIUS * chassis->target_omega) /
       sqrtf(2) / 2 / PI * 60.0f * GEAR_RATIO_3508 / CHASSIS_RADIUS;
+  for(uint8_t i = 0 ;i < 4;i++)
+  {
+    if(speed_cal[i] > OMNI_3508_CAL_MAX)
+    {
+      speed_cal[i] = OMNI_3508_CAL_MAX;
+    }
+    else if(speed_cal[i] < -OMNI_3508_CAL_MAX)
+    {
+      speed_cal[i] = -OMNI_3508_CAL_MAX;
+    }
+  }
 }

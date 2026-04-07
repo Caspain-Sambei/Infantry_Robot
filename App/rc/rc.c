@@ -27,9 +27,9 @@ void StartSbusTransTask(void *argument)
     /* Infinite loop */
     for(;;)
     {
-        osMessageQueueGet(SbusFrameQueueHandle,RxData,0,osWaitForever);
+        osMessageQueueGet(SbusFrameQueueHandle,RxData,0,20);
         RemoteDataProcess(RxData);
-        osDelay(10);
+        osDelay(5);
     }
     /* USER CODE END StartSbusProcessor */
 }

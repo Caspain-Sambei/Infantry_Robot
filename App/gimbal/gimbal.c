@@ -30,11 +30,14 @@ void StartUSB_RxTask(void *argument)
 {
     /* USER CODE BEGIN StartUSB_Rx */
     uint8_t rx_data[2 * 4 + 2] = {0};
+    static uint32_t last_rx_tick = 0;          // 上次收到数据时的系统滴答
+    const uint32_t timeout_tick = 1000;         // 超时阈值，单位 ms（可调整）
 
     /* Infinite loop */
     for(;;)
     {
-        osStatus_t status = osMessageQueueGet(USBRxQueueHandle,&rx_data,NULL,osWaitForever);
+        osStatus_t status = osMessageQueueGet(USBRxQueueHandle,&rx_data,NULL,25);
+        uint32_t now = osKernelGetTickCount(); // 或 HAL_GetTick()
 
         if (status == osOK)
         {
@@ -42,14 +45,39 @@ void StartUSB_RxTask(void *argument)
             uint8_t *p_byte;
             // 处理数据
             p_byte = &rx_data[1];
-            memcpy(&p_reg->gimbal.recvpacket.pitch,p_byte, 4);
-            p_byte = &rx_data[5];
             memcpy(&p_reg->gimbal.recvpacket.yaw,p_byte, 4);
+            p_byte = &rx_data[5];
+            memcpy(&p_reg->gimbal.recvpacket.pitch,p_byte, 4);
             p_byte = NULL;
-        }
+        } 
         else
-            p_reg->gimbal.sentry_state = SENTRY_ENABLED;
-        osDelay(10);
+        {
+            if ((now - last_rx_tick) >= timeout_tick)
+            {
+                p_reg->gimbal.sentry_state = SENTRY_ENABLED;
+                // 云台pitch内环
+                p_reg->gimbal.pitch_pid.inner.kp = 20.0f;
+                p_reg->gimbal.pitch_pid.inner.ki = 40.0f;
+                p_reg->gimbal.pitch_pid.inner.OUTMAX = 5000.0f;
+                p_reg->gimbal.pitch_pid.inner.IMAX = 5000.0F;
+                // 云台pitch外环
+                p_reg->gimbal.pitch_pid.outer.kp = 75.0f;
+                p_reg->gimbal.pitch_pid.outer.ki = 30.0f;
+                p_reg->gimbal.pitch_pid.outer.OUTMAX = 5000.0f;
+                p_reg->gimbal.pitch_pid.outer.IMAX = 5000.0F;
+                // 云台yaw内环
+                p_reg->gimbal.yaw_pid.inner.kp = 100.0f;
+                p_reg->gimbal.yaw_pid.inner.ki = 10.0f;
+                p_reg->gimbal.yaw_pid.inner.OUTMAX = 5000.0f;
+                p_reg->gimbal.yaw_pid.inner.IMAX = 5000.0F;
+                // 云台yaw外环
+                p_reg->gimbal.yaw_pid.outer.kp = 15.0f;
+                p_reg->gimbal.yaw_pid.outer.ki = 5.0f;
+                p_reg->gimbal.yaw_pid.outer.OUTMAX = 500.0f;
+                p_reg->gimbal.yaw_pid.outer.IMAX = 1000.0F;
+            }
+        }
+        osDelay(1);
     }
     /* USER CODE END StartUSB_Rx */
 }
@@ -69,8 +97,6 @@ void gimbal_inPIDTask(void *argument)
 {
     /* init code for USB_DEVICE */
     MX_USB_DEVICE_Init();
-    uint16_t cnt = 0;
-    uint8_t gimbal_exPID = 0;
     /* USER CODE BEGIN StartPIDTask */
     /* Infinite loop */
     for(;;)
@@ -94,41 +120,29 @@ void gimbal_inPIDTask(void *argument)
         // 每次发送完清零
         memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
 
-        if (cnt >= 1)
+        /***********************************************************************
+         *          当视觉没识别到目标，不发送数据
+         ***********************************************************************/
+        if (p_reg->gimbal.sentry_state == SENTRY_DISABLED)
         {
-            cnt = 0;
-            gimbal_exPID = 1;
-        }
-        // if (gimbal_exPID == 1)
-        if (1)
-        {
-            gimbal_exPID = 0;
-            /***********************************************************************
-             *          当视觉没识别到目标，不发送数据
-             ***********************************************************************/
-            if (p_reg->gimbal.sentry_state == SENTRY_DISABLED)
-            {
-                p_reg->gimbal.pitch_pid.outer.Target = p_reg->gimbal.recvpacket.pitch;
-                if (p_reg->gimbal.pitch_pid.outer.Target >= 270 && p_reg->gimbal.pitch_pid.outer.Target <= 360)
-                    p_reg->gimbal.pitch_pid.outer.Target = -90;
-                if (p_reg->gimbal.pitch_pid.outer.Target >= 90)
-                    p_reg->gimbal.pitch_pid.outer.Target = 90;
-                if (p_reg->gimbal.pitch_pid.outer.Target <= -90)
-                    p_reg->gimbal.pitch_pid.outer.Target = -90;
+          p_reg->gimbal.pitch_pid.outer.Target = p_reg->gimbal.recvpacket.pitch;
+          if (p_reg->gimbal.pitch_pid.outer.Target > 42)
+            p_reg->gimbal.pitch_pid.outer.Target = 42;
+          if (p_reg->gimbal.pitch_pid.outer.Target < -42)
+            p_reg->gimbal.pitch_pid.outer.Target = -42;
 
-                p_reg->gimbal.yaw_pid.outer.Target = p_reg->gimbal.recvpacket.yaw;
-                if (p_reg->gimbal.yaw_pid.outer.Target > 45)
-                    p_reg->gimbal.yaw_pid.outer.Target = 45;
-                if (p_reg->gimbal.yaw_pid.outer.Target < -45)
-                    p_reg->gimbal.yaw_pid.outer.Target = -45;
-            }
-            p_reg->gimbal.pitch_pid.outer.Actual = p_reg->gimbal.curr_angle.pitch;
-            p_reg->gimbal.yaw_pid.outer.Actual = p_reg->gimbal.curr_angle.yaw;
-
-            PID_Update(&p_reg->gimbal.pitch_pid.outer,gimbal_mode);
-            PID_Update(&p_reg->gimbal.yaw_pid.outer,gimbal_mode);
+          p_reg->gimbal.yaw_pid.outer.Target = p_reg->gimbal.recvpacket.yaw;
+          if (p_reg->gimbal.yaw_pid.outer.Target > 45)
+            p_reg->gimbal.yaw_pid.outer.Target = 45;
+          if (p_reg->gimbal.yaw_pid.outer.Target < -45)
+            p_reg->gimbal.yaw_pid.outer.Target = -45;
         }
-        cnt++;
+        p_reg->gimbal.pitch_pid.outer.Actual = p_reg->gimbal.curr_angle.pitch;
+        p_reg->gimbal.yaw_pid.outer.Actual = p_reg->gimbal.curr_angle.yaw;
+
+        PID_Update(&p_reg->gimbal.pitch_pid.outer, gimbal_mode);
+        PID_Update(&p_reg->gimbal.yaw_pid.outer, gimbal_mode);
+
         osDelay(1);
     }
     /* USER CODE END StartPIDTask */
@@ -211,22 +225,11 @@ void Startbmi088Task(void *argument)
  **************************************************************************/
 void StartSentry_modeTask(void* argument)
 {
-    float scan_angle = 0.5f;
     const uint16_t SCAN_DELAY = 10;
     #define F_EPSILON   0.3f // 放宽阈值，避免浮点误差
     float YAW_MIN = -45.0f, YAW_MAX = 45.0f, PITCH_MIN = -40.0f, PITCH_MAX = 40.0f;
     const float YAW_INIT = 1.0f, PITCH_INIT = 1.0f;
 
-    // 定义扫描状态
-    typedef enum {
-        SCAN_GO_TOP,         // 先往上走到顶部
-        SCAN_GO_RIGHT,       // 从左往右扫
-        SCAN_GO_DOWN,        // 往下走
-        SCAN_GO_LEFT         // 从右往左扫（简化版，不用8字形，先实现基本的矩形扫描）
-    } ScanState_t;
-
-    ScanState_t scan_state = SCAN_GO_TOP;
-    volatile uint8_t start_from_center = 1;
     float start_yaw = YAW_INIT;
     float start_pitch = PITCH_INIT;
     /**********************************************************
@@ -237,6 +240,8 @@ void StartSentry_modeTask(void* argument)
     const float PITCH_CENTER = 0.0f;
     const float PITCH_AMPLITUDE = 41.0f;
 
+    const float FREQ_YAW_K = 1.0f;      // 0.5f为慢速，1.0f为快速
+    const float FREQ_PITCH_K = 2.0f;    // 1.0f为慢速，2.0f为快速
     const float FREQ = 0.2f;            // 摆动频率（Hz），即每秒摆多少个周期
 
     uint32_t start_time = HAL_GetTick();
@@ -250,9 +255,9 @@ void StartSentry_modeTask(void* argument)
 
             float t = (float)(now - start_time) / 1000.0f;
             // 正弦运动：角度 = 中心 + 振幅 * sin(2π * 频率 * 时间)
-            float yaw_target   = YAW_CENTER + YAW_AMPLITUDE * sinf(2.0f * PI * (FREQ * 2.0f) * t);
+            float yaw_target   = YAW_CENTER + YAW_AMPLITUDE * sinf(2.0f * PI * (FREQ * FREQ_YAW_K) * t);
             // PITCH的周期是YAW的两倍
-            float pitch_target = PITCH_CENTER + PITCH_AMPLITUDE * sinf(2.0f * PI * (FREQ * 4.0f) * t);
+            float pitch_target = PITCH_CENTER + PITCH_AMPLITUDE * sinf(2.0f * PI * (FREQ * FREQ_PITCH_K) * t);
             // 限幅
             if (yaw_target > YAW_MAX) yaw_target = YAW_MAX;
             if (yaw_target < YAW_MIN) yaw_target = YAW_MIN;
@@ -305,7 +310,14 @@ void StartSentry_modeTask(void* argument)
 /*********************************************************************************
  *                          工具函数
  *********************************************************************************/
-/* 四元数转欧拉角：供上层模块直接读取更直观的 ROLL/PITCH/YAW。 */
+
+/**
+ * @brief 四元数转欧拉角：供上层模块直接读取更直观的 ROLL/PITCH/YAW。
+ * @param q
+ * @param roll_deg
+ * @param pitch_deg
+ * @param yaw_deg
+ */
 void INS_QuaternionToEuler(const float q[4], float *roll_deg, float *pitch_deg, float *yaw_deg)
 {
     float roll = atan2f(2.0f * (q[0] * q[1] + q[2] * q[3]), 1.0f - 2.0f * (q[1] * q[1] + q[2] * q[2]));

@@ -22,7 +22,8 @@
 #include "usbd_cdc_if.h"
 
 /* USER CODE BEGIN INCLUDE */
-
+#include "MyUSB.h"
+#include "stm32f4xx_hal_def.h"
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -263,6 +264,42 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
   /* USER CODE BEGIN 6 */
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+
+  /*****************************************************
+   *              Mycode
+   *****************************************************/
+  uint8_t STD_LEN = USB_FRAME_LEN;       //固定帧长度
+  static uint8_t temp_Buf[USB_FRAME_LEN] = {0};
+  static uint8_t rx_cnt = 0;
+
+  // 入参保护：空指针/长度0直接返回
+  if (Buf == NULL || Len == 0)
+  {
+    return HAL_ERROR;
+  }
+
+  for (uint8_t i = 0; i < *Len; i++)
+  {
+    if (rx_cnt == 0 ) //收到帧头才开始 接收数据
+    {
+      if (Buf[i] == USB_RX_HEAD)
+      {
+        temp_Buf[rx_cnt ++] = Buf[i];
+      }
+    }
+    else // 收到帧头，接受后续数据
+    {
+      temp_Buf[rx_cnt ++] = Buf[i];
+      if (rx_cnt >= STD_LEN)
+      {
+        if (temp_Buf[rx_cnt - 1] == USB_RX_TAIL)
+        {
+          osMessageQueuePut(USBRxQueueHandle,temp_Buf,0,0);
+        }
+        rx_cnt = 0;
+      }
+    }
+  }
   return (USBD_OK);
   /* USER CODE END 6 */
 }

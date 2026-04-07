@@ -66,7 +66,7 @@ osThreadId_t USB_RxTaskHandle;
 const osThreadAttr_t USB_RxTask_attributes = {
   .name = "USB_RxTask",
   .stack_size = 512 * 4,
-  .priority = (osPriority_t) osPriorityNormal1,
+  .priority = (osPriority_t) osPriorityNormal7,
 };
 /* Definitions for SbusTransTask */
 osThreadId_t SbusTransTaskHandle;
@@ -87,7 +87,7 @@ osThreadId_t sentry_modeHandle;
 const osThreadAttr_t sentry_mode_attributes = {
   .name = "sentry_mode",
   .stack_size = 512 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal4,
+  .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for USBRxQueue */
 osMessageQueueId_t USBRxQueueHandle;
@@ -139,7 +139,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the queue(s) */
   /* creation of USBRxQueue */
-  USBRxQueueHandle = osMessageQueueNew (16, 14, &USBRxQueue_attributes);
+  USBRxQueueHandle = osMessageQueueNew (16, 10, &USBRxQueue_attributes);
 
   /* creation of SbusFrameQueue */
   SbusFrameQueueHandle = osMessageQueueNew (16, 18, &SbusFrameQueue_attributes);

@@ -47,30 +47,21 @@ void RemoteDataProcess(uint8_t *pData)
 
     //your control code ….
     /****************************************************************
-     *                      数值转换
+     *                 对全局变量进行赋值
      ****************************************************************/
-    uint16_t *channels[] = {
-        &p_reg->rc_Data.rc.ch0,
-        &p_reg->rc_Data.rc.ch1,
-        &p_reg->rc_Data.rc.ch2,
-        &p_reg->rc_Data.rc.ch3,
-    };
-    /*
-    for (int i = 0; i < 4;i++)
-    {
-        if (*channels[i] >= 1024 && *channels[i] <= 1684)
-        {
-            *channels[i] = *channels[i] - 1024;
-        }
-        else if (*channels[i] < 1024 && *channels[i] >= 364)
-        {
-            *channels[i] = 1024 - *channels[i];
-        }
-    }
-    */
-    /****************************************************************
-     *                      底盘解算放在rtos任务中，包括PID
-     ****************************************************************/
+    p_reg->rc_Data.rc.ch0 = RC_CtrlData.rc.ch0;
+    p_reg->rc_Data.rc.ch1 = RC_CtrlData.rc.ch1;
+    p_reg->rc_Data.rc.ch2 = RC_CtrlData.rc.ch2;
+    p_reg->rc_Data.rc.ch3 = RC_CtrlData.rc.ch3;
+    p_reg->rc_Data.rc.s1 = RC_CtrlData.rc.s1;
+    p_reg->rc_Data.rc.s2 = RC_CtrlData.rc.s2;
+    p_reg->rc_Data.mouse.x = RC_CtrlData.mouse.x;
+    p_reg->rc_Data.mouse.y = RC_CtrlData.mouse.y;
+    p_reg->rc_Data.mouse.z = RC_CtrlData.mouse.z;
+    p_reg->rc_Data.mouse.press_l = RC_CtrlData.mouse.press_l;
+    p_reg->rc_Data.mouse.press_r = RC_CtrlData.mouse.press_r;
+    p_reg->rc_Data.key.v = RC_CtrlData.key.v;
+
 }
 
 //CT = 0: 当前使用Memory 0，下一个将使用Memory1。等于1则相反。

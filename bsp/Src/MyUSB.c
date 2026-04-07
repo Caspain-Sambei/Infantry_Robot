@@ -47,50 +47,51 @@ void USB_Send(SENDPACKET *Data)
     CDC_Transmit_FS(buf,sizeof(buf));
 }
 
-uint8_t CDC_Receive_FS(uint8_t* Data, uint32_t Len)
-{
-    uint8_t STD_LEN = USB_FRAME_LEN;       //固定帧长度
-    static uint8_t buf[2 * 4 + 2] = {0};
-    static uint8_t rx_cnt = 0;
-    uint8_t RxFlag = 0;
-
-    // 入参保护：空指针/长度0直接返回
-    if (Data == NULL || Len == 0) {
-        return 0;
-    }
-
-    for (uint8_t i = 0; i < Len; i++)
-    {
-        if (rx_cnt == 0) //收到帧头才开始 接收数据
-        {
-            if (Data[i] == USB_RX_HEAD)
-            {
-                buf[rx_cnt ++] = Data[i];
-            }
-        }
-        else // 收到帧头，接受后续数据
-        {
-            buf[rx_cnt ++] = Data[i];
-            if (rx_cnt >= STD_LEN)
-            {
-                if (buf[rx_cnt - 1] == USB_RX_TAIL)
-                {
-                    rx_cnt = 0;
-                    RxFlag = 1;
-                }
-                else
-                {
-                    rx_cnt = 0;
-                    memset(buf,0,sizeof(buf));
-                }
-            }
-        }
-    }
-    // 正确接收到数据后用队列传递到处理数据函数
-    if (RxFlag == 1)
-    {
-        RxFlag = 0;
-        osMessageQueuePut(USBRxQueueHandle,buf,0,0);
-    }
-    return Len;
-}
+// uint8_t CDC_Receive_FS(uint8_t* Data, uint32_t Len)
+// {
+//     uint8_t STD_LEN = USB_FRAME_LEN; //固定帧长度
+//     static uint8_t buf[USB_FRAME_LEN] = {0};
+//     static uint8_t rx_cnt = 0;
+//     uint8_t RxFlag = 0;
+//
+//     // 入参保护：空指针/长度0直接返回
+//     if (Data == NULL || Len == 0)
+//     {
+//         return 0;
+//     }
+//
+//      for (uint8_t i = 0; i < Len; i++)
+//      {
+//         if (rx_cnt == 0) //收到帧头才开始 接收数据
+//         {
+//             if (Data[i] == USB_RX_HEAD)
+//             {
+//                 buf[rx_cnt ++] = Data[i];
+//             }
+//         }
+//         else // 收到帧头，接受后续数据
+//         {
+//             buf[rx_cnt ++] = Data[i];
+//             if (rx_cnt >= STD_LEN)
+//             {
+//                 if (buf[rx_cnt - 1] == USB_RX_TAIL)
+//                  {
+//                     rx_cnt = 0;
+//                     RxFlag = 1;
+//                 }
+//                 else
+//                 {
+//                     rx_cnt = 0;
+//                     memset(buf,0,sizeof(buf));
+//                 }
+//             }
+//         }
+//     }
+//     // 正确接收到数据后用队列传递到处理数据函数
+//     if (RxFlag == 1)
+//     {
+//         RxFlag = 0;
+//         osMessageQueuePut(USBRxQueueHandle,buf,0,0);
+//     }
+//     return Len;
+// }
