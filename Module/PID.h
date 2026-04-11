@@ -3,10 +3,6 @@
 #define __PID_H
 
 
-//全局变量应包含这个结构体类型
-#define gimbal_mode     1
-#define chassis_mode    1
-
 // typedef struct{
 //     float Target,Actual,Out;
 //     float kp,ki,kd;
@@ -16,10 +12,11 @@
 //     float D_OUT,LAST_D_OUT,LAST_OUT;
 //     // 一阶低通滤波系数
 //     float RC_DF;
-//     // 前馈增益
+//     // 前馈增益，k1为0是完全静态前馈，k1为1时完全动态前馈
 //     float k1,last_Target;
 // }PID_Structure;
-
+#define I_FROZEN    1
+#define I_CLEAR     2
 void PID_Update(pid *p,uint8_t mode);
 void PID_Init(pid *p,
               float kp,float ki,float kd,

@@ -61,7 +61,6 @@ void RemoteDataProcess(uint8_t *pData)
     p_reg->rc_Data.mouse.press_l = RC_CtrlData.mouse.press_l;
     p_reg->rc_Data.mouse.press_r = RC_CtrlData.mouse.press_r;
     p_reg->rc_Data.key.v = RC_CtrlData.key.v;
-
 }
 
 //CT = 0: 当前使用Memory 0，下一个将使用Memory1。等于1则相反。

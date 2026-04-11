@@ -1,38 +1,28 @@
 
 
 
-Breakpoint=D:/CODE/CLionProjects/gimbal/Core/Src/main.c:175:1, State=BP_STATE_DISABLED
-GraphedExpression="((((reg).chassis).Speed_pid).inner).Target", Color=#e56a6f
-GraphedExpression="((((reg).chassis).Speed_pid).inner).Actual", Color=#35792b
-OpenDocument="tasks.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3630
-OpenDocument="main.c", FilePath="D:/CODE/CLionProjects/gimbal/Core/Src/main.c", Line=69
-OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=1279
-OpenDocument="startup_stm32f405xx.s", FilePath="D:/CODE/CLionProjects/gimbal/startup_stm32f405xx.s", Line=51
-OpenDocument="stm32f4xx_hal.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c", Line=315
-OpenDocument="BMI088Middleware.c", FilePath="D:/CODE/CLionProjects/gimbal/bsp/Src/BMI088Middleware.c", Line=3
-OpenDocument="Omni_wheel.c", FilePath="D:/CODE/CLionProjects/gimbal/App/wheel/Omni_wheel.c", Line=89
+
+Breakpoint=D:/CODE/CLionProjects/gimbal/Core/Src/main.c:176:36, State=BP_STATE_DISABLED
+GraphedExpression="(((reg).rc_Data).rc).ch2", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#e56a6f
+GraphedExpression="(((reg).rc_Data).rc).ch3", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#35792b, Show=0
+OpenDocument="main.c", FilePath="D:/CODE/CLionProjects/gimbal/Core/Src/main.c", Line=70
+OpenDocument="port.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c", Line=744
+OpenDocument="stm32f4xx_hal.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c", Line=317
+OpenDocument="startup_stm32f405xx.s", FilePath="D:/CODE/CLionProjects/gimbal/startup_stm32f405xx.s", Line=52
+OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=1280
+OpenDocument="Omni_wheel.c", FilePath="D:/CODE/CLionProjects/gimbal/App/wheel/Omni_wheel.c", Line=94
 OpenToolbar="Debug", Floating=0, x=0, y=0
-OpenWindow="Global Data", DockArea=BOTTOM, x=0, y=0, w=757, h=609, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Watched Data 1", DockArea=BOTTOM, x=1, y=0, w=1254, h=609, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=265, h=872, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Data Sampling", DockArea=BOTTOM, x=2, y=0, w=547, h=609, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
-OpenWindow="Timeline", DockArea=RIGHT, x=0, y=0, w=1380, h=872, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="801;0", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="770;0", CodeGraphLegendShown=0, CodeGraphLegendPosition="777;0"
+OpenWindow="Global Data", DockArea=RIGHT, x=1, y=0, w=486, h=794, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Watched Data 1", DockArea=RIGHT, x=0, y=0, w=987, h=794, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=265, h=794, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
+OpenWindow="Timeline", DockArea=BOTTOM, x=0, y=0, w=2560, h=687, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="1951;0", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="2287;0", CodeGraphLegendShown=0, CodeGraphLegendPosition="2308;0"
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
-TableHeader="Global Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[187;100;120;100;100;120]
+TableHeader="Global Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[187;100;120;100;100;100]
 TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[764;113;100;100;354]
-TableHeader="Data Sampling Table", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";" ((((reg).chassis).Speed_pid).inner).Target";" ((((reg).chassis).Speed_pid).inner).Actual"], ColWidths=[100;100;100;100]
-TableHeader="Data Sampling Setup", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[140;100;124;100;124;135;130;150;150]
 TableHeader="Power Sampling", SortCol="None", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Ch 0"], ColWidths=[100;100;100]
-TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[505;247;151;351]
+TableHeader="Watched Data 1", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Refresh"], ColWidths=[481;135;210;131]
 TableHeader="RegisterSelectionDialog", SortCol="None", SortOrder="ASCENDING", VisibleCols=[], ColWidths=[]
 TableHeader="TargetExceptionDialog", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Address";"Description"], ColWidths=[200;100;100;330]
-WatchedExpression="((((reg).chassis).Speed_pid).inner).kp", RefreshRate=5, Window=Watched Data 1
-WatchedExpression="((((reg).chassis).Speed_pid).inner).ki", RefreshRate=5, Window=Watched Data 1
-WatchedExpression="((((reg).chassis).Speed_pid).inner).Target", RefreshRate=5, Window=Watched Data 1
-WatchedExpression="((((reg).chassis).Speed_pid).inner).Actual", RefreshRate=5, Window=Watched Data 1
-WatchedExpression="((((reg).chassis).Speed_pid).inner).SunError", Window=Watched Data 1
-WatchedExpression="((((p_reg)->chassis).Speed_pid).inner).Out", RefreshRate=5, Window=Watched Data 1
-WatchedExpression="((((p_reg)->chassis).yaw_pid).outer).Actual", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="(p_reg)->speed_cal[0]", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="(p_reg)->speed_cal[1]", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="(p_reg)->speed_cal[2]", RefreshRate=5, Window=Watched Data 1
@@ -47,3 +37,18 @@ WatchedExpression="(((reg).rc_Data).rc).ch0", RefreshRate=5, Window=Watched Data
 WatchedExpression="(((reg).rc_Data).rc).ch1", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="(((reg).rc_Data).rc).ch2", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="(((reg).rc_Data).rc).ch3", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).yaw_pid).outer).Target", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).yaw_pid).outer).Actual", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).yaw_pid).outer).Out", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).yaw_pid).outer).kp", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).yaw_pid).outer).ki", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).Speed_X_PID).outer).Target", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).Speed_X_PID).outer).Actual", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).Speed_X_PID).outer).Out", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).Speed_X_PID).outer).kp", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).Speed_X_PID).outer).ki", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).Speed_Y_PID).outer).Target", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).Speed_Y_PID).outer).Actual", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).Speed_Y_PID).outer).Out", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).Speed_Y_PID).outer).kp", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((((p_reg)->chassis).Speed_Y_PID).outer).ki", RefreshRate=5, Window=Watched Data 1

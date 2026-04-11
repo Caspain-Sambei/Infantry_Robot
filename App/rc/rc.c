@@ -3,10 +3,8 @@
 //
 /* USER CODE END Header_StartSbusProcessor */
 #include <string.h>
-#include "cmsis_os.h"
 #include "cmsis_os2.h"
 #include "bsp_rc.h"
-#include "MyCAN.h"
 #include "reg.h"
 
 /********************************************************
@@ -29,7 +27,7 @@ void StartSbusTransTask(void *argument)
     {
         osMessageQueueGet(SbusFrameQueueHandle,RxData,0,20);
         RemoteDataProcess(RxData);
-        osDelay(5);
+        osDelay(1);
     }
     /* USER CODE END StartSbusProcessor */
 }

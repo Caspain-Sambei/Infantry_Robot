@@ -5,6 +5,7 @@
 #ifndef GIMBAL_REG_H
 #define GIMBAL_REG_H
 #include <stdint.h>
+#include "KalmanFilter.h"
 /***************************************************************
  *                     遥控器通信
  ***************************************************************/
@@ -13,11 +14,10 @@
 /***************************************************************
  *                     视觉通信
  ***************************************************************/
-typedef struct
-{
-    float yaw;
-    float pitch;
+typedef struct{
     float roll;
+    float pitch;
+    float yaw;
 }SENDPACKET;
 
 /***************************************************************
@@ -53,12 +53,16 @@ typedef struct{
  ***************************************************************/
 typedef struct
 {
-    PID_Structure pitch_pid,yaw_pid,roll_pid;
-    PID_Structure Speed_pid;
+    PID_Structure yaw_pid;
+    PID_Structure Speed_X_PID, Speed_Y_PID;
     float inverse_speed_X,inverse_speed_Y;
     float forward_speed_X,forward_speed_Y;
     float target_omega,actual_omega;
     CAN_Structure Motor_1_RxData,Motor_2_RxData,Motor_3_RxData,Motor_4_RxData;
+
+    //
+    Kalman_Filter Speed_X_KF;
+    Kalman_Filter Speed_Y_KF;
 }CHASSIS;
 
 typedef struct
@@ -88,6 +92,12 @@ typedef struct{
     // 用于各种测试
     float speed_cal[4];
 }TYPEDEF;
+
+//全局变量应包含这个结构体类型
+#define SENTRY_MODE     2
+#define TRACKING_MODE    3
+#define GIMBAL_MODE     1
+#define CHASSIS_MODE    1
 
 /***************************************************************
  *

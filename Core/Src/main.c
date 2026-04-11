@@ -114,11 +114,15 @@ int main(void)
   BMI088_init();
   // 注册UART5的DT7回调函数到drv_uart
   UART_Init(&huart3,UART3_DT7_Callback,RC_FRAME_LENGTH);
-
+  Kalman_Init(&p_reg->chassis.Speed_X_KF,0.0f,1.0f,0.1f,0.001f);
+  Kalman_Init(&p_reg->chassis.Speed_Y_KF,0.0f,1.0f,0.1f,0.001f);
   // 掉电PID清零
+  PID_Clear(&p_reg->gimbal.yaw_pid.outer);
   PID_Clear(&p_reg->gimbal.yaw_pid.inner);
+  PID_Clear(&p_reg->gimbal.pitch_pid.inner);
   PID_Clear(&p_reg->gimbal.pitch_pid.outer);
-  PID_Clear(&p_reg->chassis.Speed_pid.inner);
+  PID_Clear(&p_reg->chassis.Speed_X_PID.outer);
+  PID_Clear(&p_reg->chassis.Speed_Y_PID.outer);
 
   /*****************************************************************
    *                    底盘测试
@@ -128,7 +132,7 @@ int main(void)
    *                    云台测试
    *****************************************************************/
   // p_reg->gimbal.sentry_state == SENTRY_DISABLED;
-  p_reg->gimbal.sentry_state = SENTRY_ENABLED;
+  //p_reg->gimbal.sentry_state = SENTRY_ENABLED;
 
   /* USER CODE END 2 */
 

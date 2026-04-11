@@ -6,8 +6,8 @@
 #define GIMBAL_MYUSB_H
 
 #include "reg.h"
-#define USB_HEAD    0xFE
-#define USB_TAIL    0x00
+#define USB_HEAD    0xFF
+#define USB_TAIL    0xFE
 #define USB_RX_HEAD  0xFF
 #define USB_RX_TAIL  0xFE
 

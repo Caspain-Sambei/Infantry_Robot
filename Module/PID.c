@@ -5,9 +5,10 @@
 
 /**
  * @brief 积分：变速积分，积分限幅，死区冻结/清零积分
- *			微分：一阶低通滤波,前馈
+ *			微分：一阶低通滤波,静态/动态前馈
  * @param p	详参PID.h
  * @param mode gimbal_mode和chassis_mode两种
+ * @note 暂时关闭积分功能
  */
 void PID_Update(pid *p,uint8_t mode)
 {
@@ -20,13 +21,13 @@ void PID_Update(pid *p,uint8_t mode)
 	 **************************************************************************/
 	// ========================死区冻结积分/死区积分清零======================
 	// 死区积分冻结
-	if (mode == 1)
+	if (mode == I_FROZEN)
 	{
 		if(fabs(p->PreError) <= p->DEADZONE)
 			p->PreError = 0.0f;
 	}
 	// 死区积分清零
-	else if (mode == 2)
+	else if (mode == I_CLEAR)
 	{
 		if(fabs(p->PreError) <= p->DEADZONE)
 			p->SunError = 0.0f;
@@ -35,7 +36,8 @@ void PID_Update(pid *p,uint8_t mode)
 	// =======================变速积分======================
 	if(p->ki != 0.0f)
 	{
-		if (fabs(p->PreError) < p->I_L)
+		// if (fabs(p->PreError) < p->I_L)
+		if (1)
 		{
 			p->SunError += (p->PreError + p->LastError) / 2.0f;
 		}
@@ -61,10 +63,10 @@ void PID_Update(pid *p,uint8_t mode)
 	p->LAST_D_OUT = p->D_OUT;
 
 	/***************************************************************************
-	 *								前馈计算
+	 *						前馈计算：静态前馈 + 动态前馈
 	 **************************************************************************/
-	float FeedForward = p->k1 * p->Target
-						+ (1 - p->k1) * (p->Target - p->last_Target);
+	float FeedForward = (1 - p->k1) * p->Target
+						+ p->k1 * (p->Target - p->last_Target);
 
 	/***************************************************************************
 	 *								增量式PID计算

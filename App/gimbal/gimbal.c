@@ -29,15 +29,15 @@
 void StartUSB_RxTask(void *argument)
 {
     /* USER CODE BEGIN StartUSB_Rx */
-    uint8_t rx_data[2 * 4 + 2] = {0};
+    uint8_t rx_data[3 * 4 + 2] = {0};
     static uint32_t last_rx_tick = 0;          // 上次收到数据时的系统滴答
-    const uint32_t timeout_tick = 1000;         // 超时阈值，单位 ms（可调整）
+    const uint32_t timeout_tick = 500;         // 丢失目标超时阈值，单位 ms
 
     /* Infinite loop */
     for(;;)
     {
         osStatus_t status = osMessageQueueGet(USBRxQueueHandle,&rx_data,NULL,25);
-        uint32_t now = osKernelGetTickCount(); // 或 HAL_GetTick()
+        uint32_t now = osKernelGetTickCount();
 
         if (status == osOK)
         {
@@ -45,37 +45,21 @@ void StartUSB_RxTask(void *argument)
             uint8_t *p_byte;
             // 处理数据
             p_byte = &rx_data[1];
-            memcpy(&p_reg->gimbal.recvpacket.yaw,p_byte, 4);
+            memcpy(&p_reg->gimbal.recvpacket.roll,p_byte, 4);
             p_byte = &rx_data[5];
             memcpy(&p_reg->gimbal.recvpacket.pitch,p_byte, 4);
+            p_byte = &rx_data[9];
+            memcpy(&p_reg->gimbal.recvpacket.yaw,p_byte, 4);
             p_byte = NULL;
-        } 
-        else
+        }
+        else if (now - last_rx_tick >= timeout_tick)
         {
-            if ((now - last_rx_tick) >= timeout_tick)
-            {
-                p_reg->gimbal.sentry_state = SENTRY_ENABLED;
-                // 云台pitch内环
-                p_reg->gimbal.pitch_pid.inner.kp = 20.0f;
-                p_reg->gimbal.pitch_pid.inner.ki = 40.0f;
-                p_reg->gimbal.pitch_pid.inner.OUTMAX = 5000.0f;
-                p_reg->gimbal.pitch_pid.inner.IMAX = 5000.0F;
-                // 云台pitch外环
-                p_reg->gimbal.pitch_pid.outer.kp = 75.0f;
-                p_reg->gimbal.pitch_pid.outer.ki = 30.0f;
-                p_reg->gimbal.pitch_pid.outer.OUTMAX = 5000.0f;
-                p_reg->gimbal.pitch_pid.outer.IMAX = 5000.0F;
-                // 云台yaw内环
-                p_reg->gimbal.yaw_pid.inner.kp = 100.0f;
-                p_reg->gimbal.yaw_pid.inner.ki = 10.0f;
-                p_reg->gimbal.yaw_pid.inner.OUTMAX = 5000.0f;
-                p_reg->gimbal.yaw_pid.inner.IMAX = 5000.0F;
-                // 云台yaw外环
-                p_reg->gimbal.yaw_pid.outer.kp = 15.0f;
-                p_reg->gimbal.yaw_pid.outer.ki = 5.0f;
-                p_reg->gimbal.yaw_pid.outer.OUTMAX = 500.0f;
-                p_reg->gimbal.yaw_pid.outer.IMAX = 1000.0F;
-            }
+            p_reg->gimbal.sentry_state = SENTRY_ENABLED;
+            // 尝试瞬间积分清零
+            PID_Clear(&p_reg->gimbal.pitch_pid.inner);
+            PID_Clear(&p_reg->gimbal.pitch_pid.outer);
+            PID_Clear(&p_reg->gimbal.yaw_pid.inner);
+            PID_Clear(&p_reg->gimbal.yaw_pid.outer);
         }
         osDelay(1);
     }
@@ -106,18 +90,13 @@ void gimbal_inPIDTask(void *argument)
 
         p_reg->gimbal.yaw_pid.inner.Target = p_reg->gimbal.yaw_pid.outer.Out;
         p_reg->gimbal.yaw_pid.inner.Actual = p_reg->gimbal.yaw_RxData.data2;
-        uint32_t enter_time = HAL_GetTick();
-        PID_Update(&p_reg->gimbal.pitch_pid.inner,gimbal_mode);
-        PID_Update(&p_reg->gimbal.yaw_pid.inner,gimbal_mode);
-        uint32_t PID_finished_time = HAL_GetTick() - enter_time;
-        // ========================将PID结果放在对应ID位置
-        p_reg->gimbal.pitch_pid.inner.Out = -(int16_t)p_reg->gimbal.pitch_pid.inner.Out;
-        p_reg->TxData.data4 = p_reg->gimbal.pitch_pid.inner.Out;
+
+        PID_Update(&p_reg->gimbal.pitch_pid.inner,GIMBAL_MODE);
+        PID_Update(&p_reg->gimbal.yaw_pid.inner,GIMBAL_MODE);
+        p_reg->TxData.data4 = (int16_t)p_reg->gimbal.pitch_pid.inner.Out;
         p_reg->TxData.data2 = (int16_t)p_reg->gimbal.yaw_pid.inner.Out;
-        uint32_t begin_CAN_time = HAL_GetTick();
+
         CAN_Send(CAN_6020_1,&p_reg->TxData,4);
-        uint32_t end_CAN_time = HAL_GetTick() - begin_CAN_time;
-        // 每次发送完清零
         memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
 
         /***********************************************************************
@@ -125,23 +104,23 @@ void gimbal_inPIDTask(void *argument)
          ***********************************************************************/
         if (p_reg->gimbal.sentry_state == SENTRY_DISABLED)
         {
-          p_reg->gimbal.pitch_pid.outer.Target = p_reg->gimbal.recvpacket.pitch;
-          if (p_reg->gimbal.pitch_pid.outer.Target > 42)
-            p_reg->gimbal.pitch_pid.outer.Target = 42;
-          if (p_reg->gimbal.pitch_pid.outer.Target < -42)
-            p_reg->gimbal.pitch_pid.outer.Target = -42;
+            p_reg->gimbal.pitch_pid.outer.Target = p_reg->gimbal.recvpacket.pitch;
+            p_reg->gimbal.yaw_pid.outer.Target = p_reg->gimbal.recvpacket.yaw;         // 标记修改!!!!!
+            if (p_reg->gimbal.pitch_pid.outer.Target > 42)
+                p_reg->gimbal.pitch_pid.outer.Target = 42;
+            if (p_reg->gimbal.pitch_pid.outer.Target < -42)
+                p_reg->gimbal.pitch_pid.outer.Target = -42;
 
-          p_reg->gimbal.yaw_pid.outer.Target = p_reg->gimbal.recvpacket.yaw;
-          if (p_reg->gimbal.yaw_pid.outer.Target > 45)
-            p_reg->gimbal.yaw_pid.outer.Target = 45;
-          if (p_reg->gimbal.yaw_pid.outer.Target < -45)
-            p_reg->gimbal.yaw_pid.outer.Target = -45;
+            if (p_reg->gimbal.yaw_pid.outer.Target > 45)
+                p_reg->gimbal.yaw_pid.outer.Target = 45;
+            if (p_reg->gimbal.yaw_pid.outer.Target < -45)
+                p_reg->gimbal.yaw_pid.outer.Target = -45;
         }
         p_reg->gimbal.pitch_pid.outer.Actual = p_reg->gimbal.curr_angle.pitch;
         p_reg->gimbal.yaw_pid.outer.Actual = p_reg->gimbal.curr_angle.yaw;
 
-        PID_Update(&p_reg->gimbal.pitch_pid.outer, gimbal_mode);
-        PID_Update(&p_reg->gimbal.yaw_pid.outer, gimbal_mode);
+        PID_Update(&p_reg->gimbal.pitch_pid.outer, GIMBAL_MODE);
+        PID_Update(&p_reg->gimbal.yaw_pid.outer, GIMBAL_MODE);
 
         osDelay(1);
     }
@@ -182,7 +161,7 @@ void Startbmi088Task(void *argument)
         MahonyAHRSupdateIMU(q,bmi_data[0],bmi_data[1],bmi_data[2],
                                 bmi_data[3],bmi_data[4],bmi_data[5]);
         // /*********************************************************************
-        //  *                  云台数据
+        //  *                           云台数据
         //  ********************************************************************/
         p_reg->gimbal.curr_angle.yaw  = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]));
                                     //* 57.29578f;
@@ -192,18 +171,18 @@ void Startbmi088Task(void *argument)
                                     //* 57.29578f;
         INS_QuaternionToEuler(q, &p_reg->gimbal.curr_angle.pitch,
                               &p_reg->gimbal.curr_angle.roll, &p_reg->gimbal.curr_angle.yaw);
-        p_reg->gimbal.curr_angle.pitch = -p_reg->gimbal.curr_angle.pitch;
-       
+
         /*********************************************************************
          *                  底盘bmi088数据
          ********************************************************************/
-        // p_reg->chassis.actual_omega = p_bmi_data[2] * 57.3f;
+         // 实际角度苏由陀螺仪得到
+        // p_reg->chassis.actual_omega = p_bmi_data[2] * 57.29578f;
         // p_reg->chassis.yaw_pid.outer.Actual = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]))
-        //                             * 57.3f;
+        //                             * 57.29578f;
         // p_reg->chassis.pitch_pid.outer.Actual = asinf(2*(q[0]*q[2]-q[3]*q[1]))
-        //                             * 57.3f;
+        //                             * 57.29578f;
         // p_reg->chassis.roll_pid.outer.Actual  = atan2f(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1]*q[1]+q[2]*q[2]))
-        //                             * 57.3f;
+        //                             * 57.29578f;
         // INS_QuaternionToEuler(q, &p_reg->chassis.pitch_pid.outer.Actual,
         //                       &p_reg->chassis.roll_pid.outer.Actual, &p_reg->chassis.yaw_pid.outer.Actual);
 
@@ -337,4 +316,140 @@ void INS_QuaternionToEuler(const float q[4], float *roll_deg, float *pitch_deg, 
     *roll_deg = roll * 57.29578f;
     *pitch_deg = pitch * 57.29578f;
     *yaw_deg = yaw * 57.29578f;
+}
+
+/**
+ * @brief 切换三种PID模式
+ * @param mode SENTRY_MODE,EXCESSIVE_MODE,TRACKING_MODE
+ * @param switch_time 缓冲模式的时长
+ */
+void PID_Switch(uint8_t mode,uint16_t switch_time)
+{      
+    uint16_t time = 1;
+    if(mode == TRACKING_MODE)
+    {
+        time = switch_time;
+    }
+
+    typedef struct {
+        float pitch_inner_kp,pitch_inner_ki,pitch_outer_kp,pitch_outer_ki;
+        float yaw_inner_kp,yaw_inner_ki,yaw_outer_kp,yaw_outer_ki;
+    }temporary_PID;
+
+    temporary_PID sentry_pid ={
+        .pitch_inner_kp = 20.0f,.pitch_inner_ki = 40.0f,.pitch_outer_kp = 75.0f,.pitch_outer_ki = 30.0f,
+        .yaw_inner_kp = 100.0f,.yaw_inner_ki = 10.0f,.yaw_outer_kp = 15.0f,.yaw_outer_ki = 5.0f,
+    };
+    temporary_PID tracking_pid ={
+        .pitch_inner_kp = 35.0f,.pitch_inner_ki = 5.0f,.pitch_outer_kp = 15.0f,.pitch_outer_ki = 0.01f,
+        .yaw_inner_kp = 0.0f,.yaw_inner_ki = 0.0f,.yaw_outer_kp = 0.0f,.yaw_outer_ki = 0.0f,
+    };
+    if (mode == SENTRY_MODE)
+    {
+        p_reg->gimbal.pitch_pid = (PID_Structure){
+            .inner = {
+                .kp = sentry_pid.pitch_inner_kp,
+                .ki = sentry_pid.pitch_inner_ki,
+                .OUTMAX = 5000.0f,
+                .IMAX = 5000.0f,
+            },
+            .outer = {
+                .kp = sentry_pid.pitch_outer_kp,
+                .ki = sentry_pid.pitch_outer_ki,
+                .OUTMAX = 5000.0f,
+                .IMAX = 5000.0f,
+            },
+        };
+        p_reg->gimbal.yaw_pid = (PID_Structure){
+            .inner = {
+                .kp = sentry_pid.yaw_inner_kp,
+                .ki = sentry_pid.yaw_inner_ki,
+                .OUTMAX = 5000.0f,
+                .IMAX = 5000.0f,
+            },
+            .outer = {
+                .kp = sentry_pid.yaw_outer_kp,
+                .ki = sentry_pid.yaw_outer_ki,
+                .OUTMAX = 500.0f,
+                .IMAX = 500.0F
+            },
+        };
+    }
+    if (mode == TRACKING_MODE)
+    {
+        for (uint16_t i = 0; i < time; i++ )
+        {
+            // 云台pitch部分
+            if (p_reg->gimbal.pitch_pid.inner.kp < tracking_pid.pitch_inner_kp)
+            {
+                //p_reg->gimbal.pitch_pid.inner.kp += 0.1f;
+                p_reg->gimbal.pitch_pid.inner.kp += 
+                (tracking_pid.pitch_inner_kp - p_reg->gimbal.pitch_pid.inner.kp) / (float)time;
+            }
+            if (p_reg->gimbal.pitch_pid.inner.ki > tracking_pid.pitch_inner_ki)
+            {
+                //p_reg->gimbal.pitch_pid.inner.ki -= 0.1f;
+                p_reg->gimbal.pitch_pid.inner.ki -= 
+                (p_reg->gimbal.pitch_pid.inner.ki - tracking_pid.pitch_inner_ki) / (float)time;
+            }
+            if (p_reg->gimbal.pitch_pid.outer.kp > tracking_pid.pitch_outer_kp)
+            {
+                //p_reg->gimbal.pitch_pid.outer.kp -= 0.1f;
+                p_reg->gimbal.pitch_pid.outer.kp -= 
+                (p_reg->gimbal.pitch_pid.outer.kp - tracking_pid.pitch_outer_kp) / (float)time;
+            }
+            if (p_reg->gimbal.pitch_pid.outer.ki > tracking_pid.pitch_outer_ki)
+            {
+                //p_reg->gimbal.pitch_pid.outer.ki -= 0.1f;
+                p_reg->gimbal.pitch_pid.outer.ki -= 
+                (p_reg->gimbal.pitch_pid.outer.ki - tracking_pid.pitch_outer_ki) / (float)time;
+            }
+
+            // 云台yaw部分
+            // if (p_reg->gimbal.yaw_pid.inner.kp < tracking_pid.yaw_inner_kp)
+            // {
+            //     //p_reg->gimbal.yaw_pid.inner.kp += 0.1f;
+            //     p_reg->gimbal.yaw_pid.inner.kp +=
+            //     (tracking_pid.yaw_inner_kp - p_reg->gimbal.yaw_pid.inner.kp) / (float)switch_time;
+            // }
+            // if (p_reg->gimbal.yaw_pid.inner.ki > tracking_pid.yaw_inner_ki)
+            // {
+            //     //p_reg->gimbal.yaw_pid.inner.ki -= 0.1f;
+            //     p_reg->gimbal.yaw_pid.inner.ki -=
+            //     (p_reg->gimbal.yaw_pid.inner.ki - tracking_pid.yaw_inner_ki) / (float)switch_time;
+            // }
+            // if (p_reg->gimbal.yaw_pid.outer.kp > tracking_pid.yaw_outer_kp)
+            // {
+            //     //p_reg->gimbal.yaw_pid.outer.kp -= 0.1f;
+            //     p_reg->gimbal.yaw_pid.outer.kp -=
+            //     (p_reg->gimbal.yaw_pid.outer.kp - tracking_pid.yaw_outer_kp) / (float)switch_time;
+            // }
+            // if (p_reg->gimbal.yaw_pid.outer.ki > tracking_pid.yaw_outer_ki)
+            // {
+            //     //p_reg->gimbal.yaw_pid.outer.ki -= 0.1f;
+            //     p_reg->gimbal.yaw_pid.outer.ki -=
+            //     (p_reg->gimbal.yaw_pid.outer.ki - tracking_pid.yaw_outer_ki) / (float)switch_time;
+            // }
+        }
+        p_reg->gimbal.pitch_pid = (PID_Structure){
+            .inner = {
+                .OUTMAX = 5000.0f,
+                .IMAX = 5000.0f,
+            },
+            .outer = {
+                .OUTMAX = 5000.0f,
+                .IMAX = 5000.0F
+            },
+        };
+        p_reg->gimbal.yaw_pid = (PID_Structure){
+            .inner = {
+                .OUTMAX = 5000.0f,
+                .IMAX = 5000.0f,
+            },
+            .outer = {
+                .OUTMAX = 500.0f,
+                .IMAX = 500.0F
+            },
+        };
+    }
 }
