@@ -82,8 +82,6 @@ add_executable(${CMAKE_PROJECT_NAME}
         App/gimbal/gimbal.c
         bsp/Inc/bsp_rc.h
         bsp/Src/bsp_rc.c
-        App/rc/rc.h
-        App/rc/rc.c
         Module/KalmanFilter.h
         Module/KalmanFilter.c
         bsp/Src/bsp_uart.c

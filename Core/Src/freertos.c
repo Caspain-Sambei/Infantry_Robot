@@ -68,13 +68,6 @@ const osThreadAttr_t USB_RxTask_attributes = {
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal7,
 };
-/* Definitions for SbusTransTask */
-osThreadId_t SbusTransTaskHandle;
-const osThreadAttr_t SbusTransTask_attributes = {
-  .name = "SbusTransTask",
-  .stack_size = 512 * 4,
-  .priority = (osPriority_t) osPriorityNormal3,
-};
 /* Definitions for chassis_inPID */
 osThreadId_t chassis_inPIDHandle;
 const osThreadAttr_t chassis_inPID_attributes = {
@@ -94,11 +87,6 @@ osMessageQueueId_t USBRxQueueHandle;
 const osMessageQueueAttr_t USBRxQueue_attributes = {
   .name = "USBRxQueue"
 };
-/* Definitions for SbusFrameQueue */
-osMessageQueueId_t SbusFrameQueueHandle;
-const osMessageQueueAttr_t SbusFrameQueue_attributes = {
-  .name = "SbusFrameQueue"
-};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -108,7 +96,6 @@ const osMessageQueueAttr_t SbusFrameQueue_attributes = {
 void gimbal_inPIDTask(void *argument);
 void Startbmi088Task(void *argument);
 void StartUSB_RxTask(void *argument);
-void StartSbusTransTask(void *argument);
 void chassis_inPIDTask(void *argument);
 void StartSentry_modeTask(void *argument);
 
@@ -141,9 +128,6 @@ void MX_FREERTOS_Init(void) {
   /* creation of USBRxQueue */
   USBRxQueueHandle = osMessageQueueNew (16, 10, &USBRxQueue_attributes);
 
-  /* creation of SbusFrameQueue */
-  SbusFrameQueueHandle = osMessageQueueNew (16, 18, &SbusFrameQueue_attributes);
-
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -157,9 +141,6 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of USB_RxTask */
   USB_RxTaskHandle = osThreadNew(StartUSB_RxTask, NULL, &USB_RxTask_attributes);
-
-  /* creation of SbusTransTask */
-  SbusTransTaskHandle = osThreadNew(StartSbusTransTask, NULL, &SbusTransTask_attributes);
 
   /* creation of chassis_inPID */
   chassis_inPIDHandle = osThreadNew(chassis_inPIDTask, NULL, &chassis_inPID_attributes);
@@ -231,24 +212,6 @@ __weak void StartUSB_RxTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END StartUSB_RxTask */
-}
-
-/* USER CODE BEGIN Header_StartSbusTransTask */
-/**
-* @brief Function implementing the SbusTransTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartSbusTransTask */
-__weak void StartSbusTransTask(void *argument)
-{
-  /* USER CODE BEGIN StartSbusTransTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END StartSbusTransTask */
 }
 
 /* USER CODE BEGIN Header_chassis_inPIDTask */

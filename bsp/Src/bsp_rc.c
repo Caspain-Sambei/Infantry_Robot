@@ -3,7 +3,6 @@
 //
 #include "bsp_rc.h"
 #include <string.h>
-#include "cmsis_os2.h"
 #include "usart.h"
 #include "reg.h"
 #include "../../App/wheel/Omni_wheel.h"
@@ -69,15 +68,14 @@ void UART3_DT7_Callback(uint8_t *Buffer, uint16_t Length)
     if (huart3.hdmarx->Instance->CR &DMA_SxCR_CT)    // 判断当前DMA使用的是哪个内存缓冲区
     {
         // 当前使用的是 Memory 1 (缓冲区1)，那么收到数据的是缓冲区0，应处理缓冲区0的数据
-        //RemoteDataProcess(sbus_rx_buffer[0]);
+        RemoteDataProcess(sbus_rx_buffer[0]);
         uint8_t temp[RC_FRAME_LENGTH];
         // 手动拷贝，明确指定volatile源
         for (int i = 0; i < RC_FRAME_LENGTH; i++)
         {
             temp[i] = sbus_rx_buffer[0][i]; // 这里受volatile保护
         }
-        osMessageQueuePut(SbusFrameQueueHandle,temp,0,0);
-
+        RemoteDataProcess(temp);
         // 准备下一次接收：重新配置DMA目标为 缓冲区1
         // 先停止DMA（HAL提供了原子操作）
         HAL_UART_DMAStop(&huart3);
@@ -101,8 +99,7 @@ void UART3_DT7_Callback(uint8_t *Buffer, uint16_t Length)
         {
             temp[i] = sbus_rx_buffer[1][i]; // 这里受volatile保护
         }
-        osMessageQueuePut(SbusFrameQueueHandle,temp,0,0);
-
+        RemoteDataProcess(temp);
         // 切换回缓冲区0
         HAL_UART_DMAStop(&huart3);
         huart3.hdmarx->Instance->M0AR = (uint32_t)sbus_rx_buffer[0];

@@ -31,7 +31,7 @@ void StartUSB_RxTask(void *argument)
     /* USER CODE BEGIN StartUSB_Rx */
     uint8_t rx_data[3 * 4 + 2] = {0};
     static uint32_t last_rx_tick = 0;          // 上次收到数据时的系统滴答
-    const uint32_t timeout_tick = 500;         // 丢失目标超时阈值，单位 ms
+    const uint32_t timeout_tick = 1000;         // 丢失目标超时阈值，单位 ms
 
     /* Infinite loop */
     for(;;)
@@ -45,12 +45,18 @@ void StartUSB_RxTask(void *argument)
             uint8_t *p_byte;
             // 处理数据
             p_byte = &rx_data[1];
-            memcpy(&p_reg->gimbal.recvpacket.roll,p_byte, 4);
-            p_byte = &rx_data[5];
             memcpy(&p_reg->gimbal.recvpacket.pitch,p_byte, 4);
-            p_byte = &rx_data[9];
+            p_byte = &rx_data[5];
             memcpy(&p_reg->gimbal.recvpacket.yaw,p_byte, 4);
             p_byte = NULL;
+            
+            // 尝试瞬间积分清零
+            PID_Clear(&p_reg->gimbal.pitch_pid.inner);
+            PID_Clear(&p_reg->gimbal.pitch_pid.outer);
+            PID_Clear(&p_reg->gimbal.yaw_pid.inner);
+            PID_Clear(&p_reg->gimbal.yaw_pid.outer);
+            
+            last_rx_tick = now;
         }
         else if (now - last_rx_tick >= timeout_tick)
         {
@@ -60,6 +66,9 @@ void StartUSB_RxTask(void *argument)
             PID_Clear(&p_reg->gimbal.pitch_pid.outer);
             PID_Clear(&p_reg->gimbal.yaw_pid.inner);
             PID_Clear(&p_reg->gimbal.yaw_pid.outer);
+            // 判断是否是重复数据
+            p_reg->gimbal.recvpacket.pitch = 0.0f;
+            p_reg->gimbal.recvpacket.yaw = 0.0f;
         }
         osDelay(1);
     }
@@ -141,6 +150,8 @@ void gimbal_inPIDTask(void *argument)
 void Startbmi088Task(void *argument)
 {
     /* USER CODE BEGIN Startbmi088Task */
+
+    uint16_t cnt = 0;
     float temper = 0;
     float bmi_data[6] = {0};        // AX,AY,AZ,GX,GY,GZ
     float q[4] = {1.0f, 0.0f, 0.0f, 0.0f};
@@ -192,8 +203,12 @@ void Startbmi088Task(void *argument)
         p_reg->gimbal.sendpacket.pitch = p_reg->gimbal.curr_angle.pitch;
         p_reg->gimbal.sendpacket.yaw = p_reg->gimbal.curr_angle.yaw;
         p_reg->gimbal.sendpacket.roll = p_reg->gimbal.curr_angle.roll;
-
-        USB_Send(&p_reg->gimbal.sendpacket);
+        cnt ++;
+        if (cnt >= 5)
+        {
+            cnt = 0;
+            USB_Send(&p_reg->gimbal.sendpacket);
+        }
         osDelay(1);
     }
     /* USER CODE END Startbmi088Task */
