@@ -14,7 +14,7 @@
 #include "MyCAN.h"
 #include <math.h>
 #include "bsp_Motor.h"
-
+#include "Filter.h"
 /***************************************************************************
  *								USB通信
  **************************************************************************/
@@ -31,7 +31,7 @@ void StartUSB_RxTask(void *argument)
     /* USER CODE BEGIN StartUSB_Rx */
     uint8_t rx_data[3 * 4 + 2] = {0};
     static uint32_t last_rx_tick = 0;          // 上次收到数据时的系统滴答
-    const uint32_t timeout_tick = 1000;         // 丢失目标超时阈值，单位 ms
+    const uint32_t timeout_tick = 200;         // 丢失目标超时阈值，单位 ms
 
     /* Infinite loop */
     for(;;)
@@ -49,6 +49,10 @@ void StartUSB_RxTask(void *argument)
             p_byte = &rx_data[5];
             memcpy(&p_reg->gimbal.recvpacket.yaw,p_byte, 4);
             p_byte = NULL;
+            // 新增一阶低通滤波
+            Low_Pass_Filter(&p_reg->gimbal.recvpacket.pitch,0.5f);
+            Low_Pass_Filter(&p_reg->gimbal.recvpacket.yaw,0.5f);
+
             
             // 尝试瞬间积分清零
             PID_Clear(&p_reg->gimbal.pitch_pid.inner);
@@ -114,7 +118,7 @@ void gimbal_inPIDTask(void *argument)
         if (p_reg->gimbal.sentry_state == SENTRY_DISABLED)
         {
             p_reg->gimbal.pitch_pid.outer.Target = p_reg->gimbal.recvpacket.pitch;
-            p_reg->gimbal.yaw_pid.outer.Target = p_reg->gimbal.recvpacket.yaw;         // 标记修改!!!!!
+            p_reg->gimbal.yaw_pid.outer.Target = p_reg->gimbal.recvpacket.yaw;
             if (p_reg->gimbal.pitch_pid.outer.Target > 42)
                 p_reg->gimbal.pitch_pid.outer.Target = 42;
             if (p_reg->gimbal.pitch_pid.outer.Target < -42)
@@ -175,25 +179,21 @@ void Startbmi088Task(void *argument)
         //  *                           云台数据
         //  ********************************************************************/
         p_reg->gimbal.curr_angle.yaw  = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]));
-                                    //* 57.29578f;
         p_reg->gimbal.curr_angle.roll = asinf(2*(q[0]*q[2]-q[3]*q[1]));
-                                    //* 57.29578f;
         p_reg->gimbal.curr_angle.pitch = atan2f(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1]*q[1]+q[2]*q[2]));
-                                    //* 57.29578f;
+
         INS_QuaternionToEuler(q, &p_reg->gimbal.curr_angle.pitch,
                               &p_reg->gimbal.curr_angle.roll, &p_reg->gimbal.curr_angle.yaw);
 
         /*********************************************************************
          *                  底盘bmi088数据
          ********************************************************************/
-         // 实际角度苏由陀螺仪得到
+         // 实际角度由陀螺仪得到
         // p_reg->chassis.actual_omega = p_bmi_data[2] * 57.29578f;
         // p_reg->chassis.yaw_pid.outer.Actual = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]))
-        //                             * 57.29578f;
         // p_reg->chassis.pitch_pid.outer.Actual = asinf(2*(q[0]*q[2]-q[3]*q[1]))
-        //                             * 57.29578f;
         // p_reg->chassis.roll_pid.outer.Actual  = atan2f(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1]*q[1]+q[2]*q[2]))
-        //                             * 57.29578f;
+        //
         // INS_QuaternionToEuler(q, &p_reg->chassis.pitch_pid.outer.Actual,
         //                       &p_reg->chassis.roll_pid.outer.Actual, &p_reg->chassis.yaw_pid.outer.Actual);
 
@@ -234,7 +234,7 @@ void StartSentry_modeTask(void* argument)
     const float PITCH_CENTER = 0.0f;
     const float PITCH_AMPLITUDE = 41.0f;
 
-    const float FREQ_YAW_K = 1.0f;      // 0.5f为慢速，1.0f为快速
+    const float FREQ_YAW_K = 2.0f;      // 0.5f为慢速，1.0f为快速
     const float FREQ_PITCH_K = 2.0f;    // 1.0f为慢速，2.0f为快速
     const float FREQ = 0.2f;            // 摆动频率（Hz），即每秒摆多少个周期
 

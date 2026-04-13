@@ -71,14 +71,14 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
 
   // 底盘世界坐标系速度逆解算
   // 除以轮子到底盘中心的距离是计算单个电机对底盘旋转的角速度贡献 (rad/s)
-  float Motor_1_Speed = (float)chassis->Motor_1_RxData.data2 * (2 * PI / 60.0f)
-                        * WHEEL_RADIUS;
-  float Motor_2_Speed = (float)chassis->Motor_2_RxData.data2 * (2 * PI / 60.0f)
-                        * WHEEL_RADIUS;
-  float Motor_3_Speed = (float)chassis->Motor_3_RxData.data2 * (2 * PI / 60.0f)
-                        * WHEEL_RADIUS;
-  float Motor_4_Speed = (float)chassis->Motor_4_RxData.data2 * (2 * PI / 60.0f)
-                        * WHEEL_RADIUS;
+  float Motor_1_Speed =
+      (float)chassis->Motor_1_RxData.data2 * (2 * PI / 60.0f) * WHEEL_RADIUS;
+  float Motor_2_Speed =
+      (float)chassis->Motor_2_RxData.data2 * (2 * PI / 60.0f) * WHEEL_RADIUS;
+  float Motor_3_Speed =
+      (float)chassis->Motor_3_RxData.data2 * (2 * PI / 60.0f) * WHEEL_RADIUS;
+  float Motor_4_Speed =
+      (float)chassis->Motor_4_RxData.data2 * (2 * PI / 60.0f) * WHEEL_RADIUS;
 
   chassis->forward_speed_X =
       sqrtf(2.0f) / 4.0f *
@@ -96,7 +96,7 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
   chassis->forward_speed_Y = Kalman_update(&chassis->Speed_Y_KF, chassis->forward_speed_Y);
 
   /************************************************************
-   *              【核心修改1】航向角位置环控制
+   *                航向角位置环控制
    ************************************************************/
   // 1. 计算拨杆的目标角度（绝对航向角，单位 rad）
   chassis->yaw_pid.outer.Target = atan2f(dt7_y, dt7_x);
@@ -108,9 +108,14 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
     // 摇杆归中，保持当前航向
     chassis->yaw_pid.outer.Target = chassis->yaw_pid.outer.Actual;
     chassis->target_omega = 0.0f;
+    // 摇杆归中时，仍需运行航向 PID 闭环，让底盘自动抵抗外界扰动，维持当前朝向
+    PID_Update(&chassis->yaw_pid.outer, CHASSIS_MODE);
+    chassis->target_omega = chassis->yaw_pid.outer.Out;
   }
   else
   {
+    // 角度平滑阶跃
+
     PID_Update(&chassis->yaw_pid.outer, CHASSIS_MODE);
     // 4. PID输出就是目标自转角速度 (rad/s)
     chassis->target_omega = chassis->yaw_pid.outer.Out;
@@ -118,10 +123,11 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
   // 3. 平动速度环PID（X/Y方向分别闭环）
   chassis->Speed_X_PID.outer.Target = chassis->inverse_speed_X;
   chassis->Speed_X_PID.outer.Actual = chassis->forward_speed_X;
-  PID_Update(&chassis->Speed_X_PID.outer, CHASSIS_MODE);
-
+  
   chassis->Speed_Y_PID.outer.Target = chassis->inverse_speed_Y;
   chassis->Speed_Y_PID.outer.Actual = chassis->forward_speed_Y;
+
+  PID_Update(&chassis->Speed_X_PID.outer, CHASSIS_MODE);
   PID_Update(&chassis->Speed_Y_PID.outer, CHASSIS_MODE);
 
   /************************************************************
@@ -146,6 +152,7 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
   for(uint8_t i = 0 ;i < 4;i++)
   {
     speed_cal[i] = speed_cal[i] / (2 * PI / 60.0f) / WHEEL_RADIUS;
+    
     if(speed_cal[i] > OMNI_3508_CAL_MAX)
     {
       speed_cal[i] = OMNI_3508_CAL_MAX;
@@ -157,6 +164,7 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
   }
 }
 
+// 小陀螺
 void Chassis_AutoRotate()
 {
   if (p_reg->rc_Data.rc.s2 == 2)

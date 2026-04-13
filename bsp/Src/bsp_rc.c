@@ -1,6 +1,7 @@
 //
 // Created by 18796 on 2026/2/27.
 //
+#include "stm32f4xx_hal.h"
 #include "bsp_rc.h"
 #include <string.h>
 #include "usart.h"
@@ -15,7 +16,7 @@ static RC_Ctl_t RC_CtrlData;
  * @fn      RemoteDataProcess
  *
  * @brief   resolution rc protocol data.
- * @pData   a point to rc receive buffer.
+ * @param pData   a point to rc receive buffer.
  * @return  None.
  * @note    RC_CtrlData is a global variable.you can deal with it in other place.
  */
@@ -65,97 +66,67 @@ void RemoteDataProcess(uint8_t *pData)
 //CT = 0: 当前使用Memory 0，下一个将使用Memory1。等于1则相反。
 void UART3_DT7_Callback(uint8_t *Buffer, uint16_t Length)
 {
-    if (huart3.hdmarx->Instance->CR &DMA_SxCR_CT)    // 判断当前DMA使用的是哪个内存缓冲区
+    if(Length != RC_FRAME_LENGTH)
     {
-        // 当前使用的是 Memory 1 (缓冲区1)，那么收到数据的是缓冲区0，应处理缓冲区0的数据
-        RemoteDataProcess(sbus_rx_buffer[0]);
-        uint8_t temp[RC_FRAME_LENGTH];
-        // 手动拷贝，明确指定volatile源
-        for (int i = 0; i < RC_FRAME_LENGTH; i++)
-        {
-            temp[i] = sbus_rx_buffer[0][i]; // 这里受volatile保护
-        }
-        RemoteDataProcess(temp);
-        // 准备下一次接收：重新配置DMA目标为 缓冲区1
-        // 先停止DMA（HAL提供了原子操作）
-        HAL_UART_DMAStop(&huart3);
-        // 重新设置接收缓冲区为另一个缓冲
-        huart3.hdmarx->Instance->PAR = (uint32_t)&huart3.Instance->DR; // 外设地址不变
-        huart3.hdmarx->Instance->M0AR = (uint32_t)sbus_rx_buffer[1];   // 切换到另一个内存
-        huart3.hdmarx->Instance->NDTR = RC_FRAME_LENGTH;               // 重置长度
-        // 清除切换标志位，确保下一次从新的内存开始
-        huart3.hdmarx->Instance->CR &= ~(DMA_SxCR_CT);
-        // 重新使能DMA和串口空闲中断
-        HAL_UARTEx_ReceiveToIdle_DMA(&huart3, sbus_rx_buffer[1], RC_FRAME_LENGTH);
+        // 错误帧直接重启DMA，不处理
+        HAL_UARTEx_ReceiveToIdle_DMA(&huart3, Buffer, RC_FRAME_LENGTH);
+        return;
     }
-    else
-    {
-        // 当前使用的是 Memory 0，则处理缓冲区1的数据
-        //RemoteDataProcess(sbus_rx_buffer[1]);
 
-        uint8_t temp[RC_FRAME_LENGTH];
-        // 手动拷贝，明确指定volatile源
-        for (int i = 0; i < RC_FRAME_LENGTH; i++)
-        {
-            temp[i] = sbus_rx_buffer[1][i]; // 这里受volatile保护
-        }
-        RemoteDataProcess(temp);
-        // 切换回缓冲区0
-        HAL_UART_DMAStop(&huart3);
-        huart3.hdmarx->Instance->M0AR = (uint32_t)sbus_rx_buffer[0];
-        huart3.hdmarx->Instance->NDTR = RC_FRAME_LENGTH;
-        huart3.hdmarx->Instance->CR |= DMA_SxCR_CT; // 设置标志，表示下一次使用Memory1
-        HAL_UARTEx_ReceiveToIdle_DMA(&huart3, sbus_rx_buffer[0], RC_FRAME_LENGTH);
+    // 判断当前DMA正在用哪个缓冲区 → 处理另一个已经接收完成的缓冲区
+    uint8_t* ready_buf = NULL;
+    if (huart3.hdmarx->Instance->CR & DMA_SxCR_CT)
+        ready_buf = sbus_rx_buffer[0]; // 当前用 Memory1 → 处理 Memory0
+    else
+        ready_buf = sbus_rx_buffer[1];
+
+    // 拷贝到临时数组
+    uint8_t temp[RC_FRAME_LENGTH];
+    for (int i = 0; i < RC_FRAME_LENGTH; i++)
+    {
+        temp[i] = ready_buf[i];
     }
+    // 队列发送或者中断中处理数据
+    //osMessageQueuePut(RCQueueHandle, temp, 0, 5);
+    RemoteDataProcess(temp);
+
+    // ==================== 关键修改 ====================
+    // 【删除你原来的：手动停DMA、手动改M0AR、手动改NDTR、手动改CR】
+    // 这些全部是造成丢帧/死机/中断异常的原因
+
+    // 直接重启DMA到当前Buffer即可（硬件自动双缓冲）
+    HAL_UARTEx_ReceiveToIdle_DMA(&huart3, Buffer, RC_FRAME_LENGTH);
 }
+// //CT = 0: 当前使用Memory 0，下一个将使用Memory1。等于1则相反。
+// void UART3_DT7_Callback(uint8_t *Buffer, uint16_t Length)
+// {
+//     if (huart3.hdmarx->Instance->CR &DMA_SxCR_CT)    // 判断当前DMA使用的是哪个内存缓冲区
+//     {
+//         // 当前使用的是 Memory 1 (缓冲区1)，那么收到数据的是缓冲区0，应处理缓冲区0的数据
+//         uint8_t temp[RC_FRAME_LENGTH];
+//         // for (int i = 0; i < RC_FRAME_LENGTH; i++)
+//         // {
+//         //     temp[i] = sbus_rx_buffer[0][i]; // 这里受volatile保护
+//         // }
+//         memcpy(temp, (void *)sbus_rx_buffer[0], RC_FRAME_LENGTH);
+//         RemoteDataProcess(temp);
+//         // 重新使能DMA和串口空闲中断
+//         HAL_UARTEx_ReceiveToIdle_DMA(&huart3, sbus_rx_buffer[1], RC_FRAME_LENGTH);
+//     }
+//     else
+//     {
+//         // 当前使用的是 Memory 0，则处理缓冲区1的数据
+//         uint8_t temp[RC_FRAME_LENGTH];
+//         memcpy(temp, (void *)sbus_rx_buffer[1], RC_FRAME_LENGTH);
+//         RemoteDataProcess(temp);
+//         HAL_UARTEx_ReceiveToIdle_DMA(&huart3, sbus_rx_buffer[0], RC_FRAME_LENGTH);
+//     }
+// }
 
 //void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart,uint16_t Size)
 //{
 //    if (huart->Instance == USART2)
 //    {
-         // if (huart->hdmarx->Instance->CR &DMA_SxCR_CT)    // 判断当前DMA使用的是哪个内存缓冲区
-         // {
-         //     // 当前使用的是 Memory 1 (缓冲区1)，那么收到数据的是缓冲区0，应处理缓冲区0的数据
-         //     //RemoteDataProcess(sbus_rx_buffer[0]);
-         //     uint8_t temp[RC_FRAME_LENGTH];
-         //         // 手动拷贝，明确指定volatile源
-         //     for (int i = 0; i < RC_FRAME_LENGTH; i++)
-         //     {
-         //          temp[i] = sbus_rx_buffer[0][i]; // 这里受volatile保护
-         //      }
-         //      osMessageQueuePut(&SbusFrameQueue,temp,0,0);
-         //
-         //      // 准备下一次接收：重新配置DMA目标为 缓冲区1
-         //      // 先停止DMA（HAL提供了原子操作）
-         //     HAL_UART_DMAStop(huart);
-         //     // 重新设置接收缓冲区为另一个缓冲
-         //     huart->hdmarx->Instance->PAR = (uint32_t)&huart->Instance->DR; // 外设地址不变
-         //     huart->hdmarx->Instance->M0AR = (uint32_t)sbus_rx_buffer[1];   // 切换到另一个内存
-         //     huart->hdmarx->Instance->NDTR = RC_FRAME_LENGTH;               // 重置长度
-         //     // 清除切换标志位，确保下一次从新的内存开始
-         //     huart->hdmarx->Instance->CR &= ~(DMA_SxCR_CT);
-         //     // 重新使能DMA和串口空闲中断
-         //     HAL_UARTEx_ReceiveToIdle_DMA(&huart3, sbus_rx_buffer[1], RC_FRAME_LENGTH);
-         // }
-        // else
-        //  {
-        //      // 当前使用的是 Memory 0，则处理缓冲区1的数据
-        //      //RemoteDataProcess(sbus_rx_buffer[1]);
-        //
-        //     uint8_t temp[RC_FRAME_LENGTH];
-        //     // 手动拷贝，明确指定volatile源
-        //     for (int i = 0; i < RC_FRAME_LENGTH; i++)
-        //     {
-        //         temp[i] = sbus_rx_buffer[1][i]; // 这里受volatile保护
-        //     }
-        //     osMessageQueuePut(&SbusFrameQueue,temp,0,0);
-        //
-        //     // 切换回缓冲区0
-        //     HAL_UART_DMAStop(huart);
-        //     huart->hdmarx->Instance->M0AR = (uint32_t)sbus_rx_buffer[0];
-        //     huart->hdmarx->Instance->NDTR = RC_FRAME_LENGTH;
-        //     huart->hdmarx->Instance->CR |= DMA_SxCR_CT; // 设置标志，表示下一次使用Memory1
-        //     HAL_UARTEx_ReceiveToIdle_DMA(&huart3, sbus_rx_buffer[0], RC_FRAME_LENGTH);
-        // }
+         
 //    }
 //}

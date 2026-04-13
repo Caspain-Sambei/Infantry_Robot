@@ -94,7 +94,10 @@ add_executable(${CMAKE_PROJECT_NAME}
         App/wheel/Mecanum_wheel.c
         App/wheel/Omni_wheel.h
         App/wheel/Omni_wheel.c
-    
+        Module/Filter.h
+        Module/Filter.c
+        bsp/Inc/module_remote.h
+        bsp/Src/module_remote.c
 )
 
 # 禁用共享库

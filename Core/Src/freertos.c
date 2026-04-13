@@ -82,10 +82,22 @@ const osThreadAttr_t sentry_mode_attributes = {
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for RC_Task */
+osThreadId_t RC_TaskHandle;
+const osThreadAttr_t RC_Task_attributes = {
+  .name = "RC_Task",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityNormal4,
+};
 /* Definitions for USBRxQueue */
 osMessageQueueId_t USBRxQueueHandle;
 const osMessageQueueAttr_t USBRxQueue_attributes = {
   .name = "USBRxQueue"
+};
+/* Definitions for RCQueue */
+osMessageQueueId_t RCQueueHandle;
+const osMessageQueueAttr_t RCQueue_attributes = {
+  .name = "RCQueue"
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -98,6 +110,7 @@ void Startbmi088Task(void *argument);
 void StartUSB_RxTask(void *argument);
 void chassis_inPIDTask(void *argument);
 void StartSentry_modeTask(void *argument);
+void StartRC_Task(void *argument);
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -128,6 +141,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of USBRxQueue */
   USBRxQueueHandle = osMessageQueueNew (16, 10, &USBRxQueue_attributes);
 
+  /* creation of RCQueue */
+  RCQueueHandle = osMessageQueueNew (16, 18, &RCQueue_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -147,6 +163,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of sentry_mode */
   sentry_modeHandle = osThreadNew(StartSentry_modeTask, NULL, &sentry_mode_attributes);
+
+  /* creation of RC_Task */
+  RC_TaskHandle = osThreadNew(StartRC_Task, NULL, &RC_Task_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -248,6 +267,24 @@ __weak void StartSentry_modeTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END StartSentry_modeTask */
+}
+
+/* USER CODE BEGIN Header_StartRC_Task */
+/**
+* @brief Function implementing the RC_Task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartRC_Task */
+__weak void StartRC_Task(void *argument)
+{
+  /* USER CODE BEGIN StartRC_Task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartRC_Task */
 }
 
 /* Private application code --------------------------------------------------*/

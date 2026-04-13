@@ -6,7 +6,6 @@
 
 #include "stm32f4xx_hal.h"
 #include <stdint.h>
-
 #include "cmsis_os2.h"
 
 /* ----------------------- RC Channel Definition---------------------------- */
@@ -58,10 +57,7 @@ typedef __packed struct
       }key;
   }RC_Ctl_t;
 
-
-
 void RemoteDataProcess(uint8_t *pData);
-
 // 声明DT7的回调函数（注册到drv_uart）
 void UART3_DT7_Callback(uint8_t *Buffer, uint16_t Length);
 

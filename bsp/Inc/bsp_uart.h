@@ -2,6 +2,9 @@
 #ifndef GIMBAL_BSP_UART_H
 #define GIMBAL_BSP_UART_H
 
+#include <stdint.h>
+
+#include "stm32f4xx_hal_uart.h"
 #include "usart.h"
 // 缓冲区字节长度
 #define UART_BUFFER_SIZE 256

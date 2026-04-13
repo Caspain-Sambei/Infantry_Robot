@@ -36,3 +36,26 @@ void chassis_inPIDTask(void *argument)
     }
     /* USER CODE END chassis_inPIDTask */
 }
+
+/* USER CODE BEGIN Header_StartRC_Task */
+/**
+* @brief Function implementing the RC_Task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartRC_Task */
+// void StartRC_Task(void *argument)
+// {
+//     /* USER CODE BEGIN StartRC_Task */
+//     /* Infinite loop */
+//     for(;;)
+//     {
+//         uint8_t temp_data[RC_FRAME_LENGTH];
+//         if (osMessageQueueGet(RCQueueHandle, temp_data, NULL, 20) == osOK)
+//         {
+//             RemoteDataProcess(temp_data);
+//         }
+//         osDelay(5);
+//     }
+//     /* USER CODE END StartRC_Task */
+// }

@@ -1,4 +1,14 @@
 D:\DevEnv\STM32CubeCLT_1.18.0\CMake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=D:/CLion 2025.3.2/bin/ninja/win/x64/ninja.exe" -DCMAKE_C_COMPILER=D:/DevEnv/New_OpenOCD/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe -DCMAKE_CXX_COMPILER=D:/DevEnv/New_OpenOCD/GNU-tools-for-STM32/bin/arm-none-eabi-g++.exe -G Ninja -S D:\CODE\CLionProjects\gimbal -B D:\CODE\CLionProjects\gimbal\build
+Build type: Debug
+-- Configuring done (0.1s)
+You have changed variables that require your cache to be deleted.
+Configure will be re-run and you may have to reset some variables.
+The following variables have changed:
+CMAKE_C_COMPILER= D:/DevEnv/New_OpenOCD/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe
+CMAKE_CXX_COMPILER= D:/DevEnv/New_OpenOCD/GNU-tools-for-STM32/bin/arm-none-eabi-g++.exe
+CMAKE_C_COMPILER= D:/DevEnv/New_OpenOCD/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe
+CMAKE_C_COMPILER= D:/DevEnv/New_OpenOCD/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe
+
 -- The C compiler identification is GNU 13.3.0
 -- The CXX compiler identification is GNU 13.3.0
 -- Detecting C compiler ABI info
@@ -14,6 +24,6 @@ D:\DevEnv\STM32CubeCLT_1.18.0\CMake\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug "-DCM
 Build type: Debug
 -- The ASM compiler identification is GNU
 -- Found assembler: D:/DevEnv/msys64/ucrt64/bin/arm-none-eabi-gcc.exe
--- Configuring done (2.0s)
--- Generating done (0.1s)
+-- Configuring done (2.1s)
+-- Generating done (0.0s)
 -- Build files have been written to: D:/CODE/CLionProjects/gimbal/build

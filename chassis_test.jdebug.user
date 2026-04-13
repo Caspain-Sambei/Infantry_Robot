@@ -5,18 +5,19 @@
 Breakpoint=D:/CODE/CLionProjects/gimbal/Core/Src/main.c:176:36, State=BP_STATE_DISABLED
 GraphedExpression="(((reg).rc_Data).rc).ch2", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#e56a6f
 GraphedExpression="(((reg).rc_Data).rc).ch3", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#35792b, Show=0
+OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=1280
 OpenDocument="startup_stm32f405xx.s", FilePath="D:/CODE/CLionProjects/gimbal/startup_stm32f405xx.s", Line=52
 OpenDocument="main.c", FilePath="D:/CODE/CLionProjects/gimbal/Core/Src/main.c", Line=70
-OpenDocument="port.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c", Line=744
+OpenDocument="tasks.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3624
+OpenDocument="stm32f4xx_hal_can.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c", Line=1268
 OpenDocument="stm32f4xx_hal.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c", Line=317
-OpenDocument="tasks.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3656
-OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=1280
+OpenDocument="port.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c", Line=744
 OpenDocument="Omni_wheel.c", FilePath="D:/CODE/CLionProjects/gimbal/App/wheel/Omni_wheel.c", Line=94
 OpenToolbar="Debug", Floating=0, x=0, y=0
 OpenWindow="Global Data", DockArea=RIGHT, x=1, y=0, w=486, h=794, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Watched Data 1", DockArea=RIGHT, x=0, y=0, w=987, h=794, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=265, h=794, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Timeline", DockArea=BOTTOM, x=0, y=0, w=2560, h=687, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="1951;0", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="2287;0", CodeGraphLegendShown=0, CodeGraphLegendPosition="2308;0"
+OpenWindow="Timeline", DockArea=BOTTOM, x=0, y=0, w=2560, h=687, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="1951;0", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1965;-75", CodeGraphLegendShown=0, CodeGraphLegendPosition="1972;0"
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
 TableHeader="Global Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[187;100;120;100;100;100]
 TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[764;113;100;100;354]

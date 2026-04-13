@@ -1,20 +1,21 @@
 
 
 GraphedExpression="(((reg).gimbal).recvpacket).pitch", Color=#e56a6f, Show=0
-GraphedExpression="(((reg).gimbal).recvpacket).yaw", Color=#35792b, Show=0
+GraphedExpression="(((reg).gimbal).recvpacket).yaw", Color=#35792b
+OpenDocument="tasks.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3424
+OpenDocument="list.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/list.c", Line=142
 OpenDocument="main.c", FilePath="D:/CODE/CLionProjects/gimbal/Core/Src/main.c", Line=71
-OpenDocument="tasks.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3642
 OpenDocument="startup_stm32f405xx.s", FilePath="D:/CODE/CLionProjects/gimbal/startup_stm32f405xx.s", Line=53
-OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=3500
-OpenDocument="stm32f4xx_hal.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c", Line=317
-OpenDocument="BMI088Middleware.c", FilePath="D:/CODE/CLionProjects/gimbal/bsp/Src/BMI088Middleware.c", Line=12
+OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=1281
+OpenDocument="MahonyAHRS.c", FilePath="D:/CODE/CLionProjects/gimbal/Module/MahonyAHRS.c", Line=212
+OpenDocument="PID.c", FilePath="D:/CODE/CLionProjects/gimbal/Module/PID.c", Line=68
 OpenDocument="gimbal.c", FilePath="D:/CODE/CLionProjects/gimbal/App/gimbal/gimbal.c", Line=382
 OpenToolbar="Debug", Floating=0, x=0, y=0
 OpenWindow="Global Data", DockArea=RIGHT, x=1, y=0, w=423, h=719, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Watched Data 1", DockArea=RIGHT, x=0, y=0, w=966, h=719, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
 OpenWindow="Functions", DockArea=LEFT, x=0, y=0, w=265, h=719, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
-OpenWindow="Data Sampling", DockArea=BOTTOM, x=0, y=0, w=451, h=762, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
-OpenWindow="Timeline", DockArea=BOTTOM, x=1, y=0, w=2108, h=762, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="62;0", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1854;-75", CodeGraphLegendShown=0, CodeGraphLegendPosition="1861;0"
+OpenWindow="Data Sampling", DockArea=BOTTOM, x=0, y=0, w=334, h=762, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0, VisibleTab=0, UniformSampleSpacing=0
+OpenWindow="Timeline", DockArea=BOTTOM, x=1, y=0, w=2225, h=762, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=1, DataPaneShown=1, PowerPaneShown=0, CodePaneShown=0, PinCursor="Cursor Movable", TimePerDiv="1 s / Div", TimeStampFormat="Time", DataGraphDrawAsPoints=0, DataGraphLegendShown=1, DataGraphUniformSampleSpacing=0, DataGraphLegendPosition="0;0", DataGraphShowNamesAtCursor=0, PowerGraphDrawAsPoints=0, PowerGraphLegendShown=0, PowerGraphAvgFilterTime=Off, PowerGraphAvgFilterLen=Off, PowerGraphUniformSampleSpacing=0, PowerGraphLegendPosition="1965;-75", CodeGraphLegendShown=0, CodeGraphLegendPosition="1972;0"
 SmartViewPlugin="", Page="", Toolbar="Hidden", Window="SmartView 1"
 TableHeader="Global Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type";"Scope"], ColWidths=[187;100;120;76;147;454]
 TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[764;113;100;100;354]

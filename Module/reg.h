@@ -95,7 +95,7 @@ typedef struct{
 
 //全局变量应包含这个结构体类型
 #define SENTRY_MODE     2
-#define TRACKING_MODE    3
+#define TRACKING_MODE   3
 #define GIMBAL_MODE     1
 #define CHASSIS_MODE    1
 
@@ -106,7 +106,6 @@ extern TYPEDEF reg;
 extern TYPEDEF *p_reg;
 
 extern osMessageQueueId_t USBRxQueueHandle;
-extern osMessageQueueId_t CAN_2RxQueueHandle;
-extern osMessageQueueId_t SbusFrameQueueHandle;
+extern osMessageQueueId_t RCQueueHandle;
 
 #endif //GIMBAL_REG_H
