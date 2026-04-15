@@ -9,12 +9,14 @@
 #include "MyUSB.h"
 #include "usb_device.h"
 #include "PID.h"
-#include "BMI088driver.h"
-#include "MahonyAHRS.h"
+#include "../bmi088/BMI088driver.h"
+#include "../bmi088/MahonyAHRS.h"
 #include "MyCAN.h"
 #include <math.h>
 #include "bsp_Motor.h"
 #include "Filter.h"
+#include "INS.h"
+#include "KalmanFilter.h"
 /***************************************************************************
  *								USB通信
  **************************************************************************/
@@ -49,11 +51,19 @@ void StartUSB_RxTask(void *argument)
             p_byte = &rx_data[5];
             memcpy(&p_reg->gimbal.recvpacket.yaw,p_byte, 4);
             p_byte = NULL;
+            // 保护
+            if (p_reg->gimbal.recvpacket.pitch > 42)
+                p_reg->gimbal.recvpacket.pitch = 42;
+            if (p_reg->gimbal.recvpacket.pitch < -42)
+                p_reg->gimbal.recvpacket.pitch = -42;
+            if (p_reg->gimbal.recvpacket.yaw > 45)
+                p_reg->gimbal.recvpacket.yaw = 45;
+            if (p_reg->gimbal.recvpacket.yaw < -45)
+                p_reg->gimbal.recvpacket.yaw = -45;
             // 新增一阶低通滤波
-            Low_Pass_Filter(&p_reg->gimbal.recvpacket.pitch,0.5f);
-            Low_Pass_Filter(&p_reg->gimbal.recvpacket.yaw,0.5f);
+            Low_Pass_Filter(&p_reg->gimbal.gimbal_Receive_KF,p_reg->gimbal.recvpacket.pitch);
+            Low_Pass_Filter(&p_reg->gimbal.gimbal_Receive_KF,p_reg->gimbal.recvpacket.yaw);
 
-            
             // 尝试瞬间积分清零
             PID_Clear(&p_reg->gimbal.pitch_pid.inner);
             PID_Clear(&p_reg->gimbal.pitch_pid.outer);
@@ -164,23 +174,22 @@ void Startbmi088Task(void *argument)
      *************************************************************/
     twoKp = 2.0f * 0.35f;//比例增益  Kp 大：修正更快，但可能抖
     twoKi = 2.0f * 0.02f;//积分增益  Ki 大：能消除长期漂移，但太大可能积累误差过多
-    /*************************************************************
-     *                  测试
-     *************************************************************/
+
     float *p_bmi_data = bmi_data;
     float *p_temp = &temper;
     /* Infinite loop */
     for(;;)
     {
         BMI088_read(&p_bmi_data[0], &p_bmi_data[3],p_temp);
+        // 更新四元数
         MahonyAHRSupdateIMU(q,bmi_data[0],bmi_data[1],bmi_data[2],
                                 bmi_data[3],bmi_data[4],bmi_data[5]);
-        // /*********************************************************************
-        //  *                           云台数据
-        //  ********************************************************************/
-        p_reg->gimbal.curr_angle.yaw  = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]));
-        p_reg->gimbal.curr_angle.roll = asinf(2*(q[0]*q[2]-q[3]*q[1]));
-        p_reg->gimbal.curr_angle.pitch = atan2f(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1]*q[1]+q[2]*q[2]));
+        /*********************************************************************
+         *                           云台数据
+         ********************************************************************/
+        p_reg->gimbal.curr_angle.yaw = atan2f(2 * (q[0] * q[3] + q[1] * q[2]), 1 - 2 * (q[2] * q[2] + q[3] * q[3]));
+        p_reg->gimbal.curr_angle.roll = asinf(2 * (q[0] * q[2] - q[3] * q[1]));
+        p_reg->gimbal.curr_angle.pitch = atan2f(2 * (q[0] * q[1] + q[2] * q[3]), 1 - 2 * (q[1] * q[1] + q[2] * q[2]));
 
         INS_QuaternionToEuler(q, &p_reg->gimbal.curr_angle.pitch,
                               &p_reg->gimbal.curr_angle.roll, &p_reg->gimbal.curr_angle.yaw);
@@ -188,14 +197,10 @@ void Startbmi088Task(void *argument)
         /*********************************************************************
          *                  底盘bmi088数据
          ********************************************************************/
-         // 实际角度由陀螺仪得到
         // p_reg->chassis.actual_omega = p_bmi_data[2] * 57.29578f;
-        // p_reg->chassis.yaw_pid.outer.Actual = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]))
-        // p_reg->chassis.pitch_pid.outer.Actual = asinf(2*(q[0]*q[2]-q[3]*q[1]))
-        // p_reg->chassis.roll_pid.outer.Actual  = atan2f(2*(q[0]*q[1]+q[2]*q[3]), 1-2*(q[1]*q[1]+q[2]*q[2]))
+        // p_reg->chassis.yaw_pid.outer.Actual = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]));
         //
-        // INS_QuaternionToEuler(q, &p_reg->chassis.pitch_pid.outer.Actual,
-        //                       &p_reg->chassis.roll_pid.outer.Actual, &p_reg->chassis.yaw_pid.outer.Actual);
+        // INS_QuaternionToEuler(q, NULL,NULL, &p_reg->chassis.yaw_pid.outer.Actual);
 
         /*********************************************************************
          *                  向视觉发送数据
@@ -203,12 +208,8 @@ void Startbmi088Task(void *argument)
         p_reg->gimbal.sendpacket.pitch = p_reg->gimbal.curr_angle.pitch;
         p_reg->gimbal.sendpacket.yaw = p_reg->gimbal.curr_angle.yaw;
         p_reg->gimbal.sendpacket.roll = p_reg->gimbal.curr_angle.roll;
-        cnt ++;
-        if (cnt >= 5)
-        {
-            cnt = 0;
-            USB_Send(&p_reg->gimbal.sendpacket);
-        }
+
+        USB_Send(&p_reg->gimbal.sendpacket);
         osDelay(1);
     }
     /* USER CODE END Startbmi088Task */
@@ -234,8 +235,8 @@ void StartSentry_modeTask(void* argument)
     const float PITCH_CENTER = 0.0f;
     const float PITCH_AMPLITUDE = 41.0f;
 
-    const float FREQ_YAW_K = 2.0f;      // 0.5f为慢速，1.0f为快速
-    const float FREQ_PITCH_K = 2.0f;    // 1.0f为慢速，2.0f为快速
+    const float FREQ_YAW_K = 3.0f;      // 0.5f为慢速，1.0f为快速
+    const float FREQ_PITCH_K = 6.0f;    // 1.0f为慢速，2.0f为快速
     const float FREQ = 0.2f;            // 摆动频率（Hz），即每秒摆多少个周期
 
     uint32_t start_time = HAL_GetTick();
@@ -304,34 +305,6 @@ void StartSentry_modeTask(void* argument)
 /*********************************************************************************
  *                          工具函数
  *********************************************************************************/
-
-/**
- * @brief 四元数转欧拉角：供上层模块直接读取更直观的 ROLL/PITCH/YAW。
- * @param q
- * @param roll_deg
- * @param pitch_deg
- * @param yaw_deg
- */
-void INS_QuaternionToEuler(const float q[4], float *roll_deg, float *pitch_deg, float *yaw_deg)
-{
-    float roll = atan2f(2.0f * (q[0] * q[1] + q[2] * q[3]), 1.0f - 2.0f * (q[1] * q[1] + q[2] * q[2]));
-    float sinp = 2.0f * (q[0] * q[2] - q[3] * q[1]);
-    float pitch;
-    if (fabsf(sinp) >= 1.0f)
-    {
-        pitch = copysignf((float)M_PI / 2.0f, sinp);
-    }
-    else
-    {
-        pitch = asinf(sinp);
-    }
-    float yaw = atan2f(2.0f * (q[0] * q[3] + q[1] * q[2]), 1.0f - 2.0f * (q[2] * q[2] + q[3] * q[3]));
-
-    //弧度转角度
-    *roll_deg = roll * 57.29578f;
-    *pitch_deg = pitch * 57.29578f;
-    *yaw_deg = yaw * 57.29578f;
-}
 
 /**
  * @brief 切换三种PID模式

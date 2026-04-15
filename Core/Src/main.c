@@ -28,14 +28,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "BMI088driver.h"
+#include "../../App/bmi088/BMI088driver.h"
 #include "bsp_Motor.h"
 #include "reg.h"
 #include "bsp_rc.h"
 #include "bsp_uart.h"
 #include "MyCAN.h"
 #include "PID.h"
-#include "gimbal.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -114,8 +113,8 @@ int main(void)
   BMI088_init();
   // 注册UART5的DT7回调函数到drv_uart
   UART_Init(&huart3,UART3_DT7_Callback,RC_FRAME_LENGTH);
-  Kalman_Init(&p_reg->chassis.Speed_X_KF,0.0f,1.0f,0.1f,0.001f);
-  Kalman_Init(&p_reg->chassis.Speed_Y_KF,0.0f,1.0f,0.1f,0.001f);
+  Low_Pass_Filter_Init(&p_reg->chassis.Speed_X_KF,0.0f,1.0f,0.1f,0.001f);
+  Low_Pass_Filter_Init(&p_reg->chassis.Speed_Y_KF,0.0f,1.0f,0.1f,0.001f);
   // 掉电PID清零
   PID_Clear(&p_reg->gimbal.yaw_pid.outer);
   PID_Clear(&p_reg->gimbal.yaw_pid.inner);

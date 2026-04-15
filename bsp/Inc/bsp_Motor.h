@@ -23,9 +23,13 @@ enum Enum_CAN_Motor_Status
 #define WHEEL_RADIUS            0.0815f     // 单位：m
 #define GEAR_RATIO_3508         15.764f     // 268.0f/17.0f。区别于3508P19电机
 #define PI                      3.1415926f
-#define CHASSIS_MAX_SPEED       5.0f
-#define SPEED_TO_CURRENT 1.0f
+
+#define SPEED_TO_CURRENT        1.0f
 // 3508:-16384~16384 RC:364~1024~1684
-#define RC_TO_3508_Current 24.8242424f // 通道数值转化为电流值
+// #define RC_TO_3508_Current 24.8242424f // 通道数值转化为电流值
+#define RC_TO_3508_Current      1.0f // 通道数值转化为电流值
+
+#define CHASSIS_MAX_SPEED       7.5f
+#define OMNI_3508_CAL_MAX       2000.0f
 
 #endif //GIMBAL_BSP_MOTOR_H

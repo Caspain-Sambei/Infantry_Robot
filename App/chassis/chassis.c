@@ -44,18 +44,28 @@ void chassis_inPIDTask(void *argument)
 * @retval None
 */
 /* USER CODE END Header_StartRC_Task */
-// void StartRC_Task(void *argument)
-// {
-//     /* USER CODE BEGIN StartRC_Task */
-//     /* Infinite loop */
-//     for(;;)
-//     {
-//         uint8_t temp_data[RC_FRAME_LENGTH];
-//         if (osMessageQueueGet(RCQueueHandle, temp_data, NULL, 20) == osOK)
-//         {
-//             RemoteDataProcess(temp_data);
-//         }
-//         osDelay(5);
-//     }
-//     /* USER CODE END StartRC_Task */
-// }
+ void StartRC_Task(void *argument)
+ {
+     /* USER CODE BEGIN StartRC_Task */
+    static RC_Ctl_t temp_RC_Data;
+    static uint32_t last_recv_time = 0;
+    uint32_t drop_time = 1;
+     /* Infinite loop */
+     for (;;)
+     {
+         uint8_t temp_data[RC_FRAME_LENGTH];
+         if (osMessageQueueGet(RCQueueHandle, temp_data, 0, 5) == osOK)
+         {
+             // 获取新数据
+             RemoteDataProcess(temp_data);
+             // 数据备份
+             temp_RC_Data = p_reg->rc_Data;
+         }
+         else
+         {
+             p_reg->rc_Data = temp_RC_Data;
+         }
+         osDelay(5);
+     }
+     /* USER CODE END StartRC_Task */
+ }

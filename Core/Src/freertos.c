@@ -58,7 +58,7 @@ const osThreadAttr_t gimbal_inPID_attributes = {
 osThreadId_t bmi088TaskHandle;
 const osThreadAttr_t bmi088Task_attributes = {
   .name = "bmi088Task",
-  .stack_size = 512 * 4,
+  .stack_size = 1024 * 4,
   .priority = (osPriority_t) osPriorityNormal2,
 };
 /* Definitions for USB_RxTask */

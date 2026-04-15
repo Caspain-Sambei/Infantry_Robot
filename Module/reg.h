@@ -5,7 +5,7 @@
 #ifndef GIMBAL_REG_H
 #define GIMBAL_REG_H
 #include <stdint.h>
-#include "KalmanFilter.h"
+#include "Filter.h"
 /***************************************************************
  *                     遥控器通信
  ***************************************************************/
@@ -61,8 +61,8 @@ typedef struct
     CAN_Structure Motor_1_RxData,Motor_2_RxData,Motor_3_RxData,Motor_4_RxData;
 
     //
-    Kalman_Filter Speed_X_KF;
-    Kalman_Filter Speed_Y_KF;
+    Low_Pass_Filter_Structure Speed_X_KF;
+    Low_Pass_Filter_Structure Speed_Y_KF;
 }CHASSIS;
 
 typedef struct
@@ -74,6 +74,7 @@ typedef struct
     SENDPACKET curr_angle;
 
     uint8_t sentry_state;
+    Low_Pass_Filter_Structure gimbal_Receive_KF;
 }GIMBAL;
 /***************************************************************
  *                      主结构体

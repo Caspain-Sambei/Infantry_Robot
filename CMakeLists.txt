@@ -98,6 +98,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Module/Filter.c
         bsp/Inc/module_remote.h
         bsp/Src/module_remote.c
+        App/bmi088/INS.c
+        App/bmi088/INS.h
 )
 
 # 禁用共享库
@@ -135,12 +137,14 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
         Module/PID.c
         Module/PID.h
-        bsp/Src/BMI088driver.c
-        bsp/Src/BMI088Middleware.c
-        bsp/Src/bsp_delay.c
+        App/bmi088/BMI088driver.c
+        App/bmi088/BMI088Middleware.c
+        App/bmi088/bsp_delay.c
         bsp/Src/bsp_spi.c
-        Module/MahonyAHRS.c
-        Module/MahonyAHRS.h
+        App/bmi088/MahonyAHRS.c
+        App/bmi088/MahonyAHRS.h
+        App/bmi088/INS.c
+        App/bmi088/INS.h
 )
 
 # Add include paths
@@ -149,12 +153,13 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}Core/Inc/                    # 添加核心外设寄存器定义和HAL配置
     ${CMAKE_CURRENT_SOURCE_DIR}Drivers/CMSIS/Include/       # 添加CMSIS核心头文件
     ${CMAKE_CURRENT_SOURCE_DIR}/Drivers/STM32F4xx_HAL_Driver/Inc/  # 添加HAL驱动库头文件
-    bsp/Inc/
+        bsp/Inc/
     bsp/Src/
     Module/
     App/rc/
     App/gimbal/
     App/wheel/
+        App/bmi088/
 )
 
 # Add project symbols (macros)

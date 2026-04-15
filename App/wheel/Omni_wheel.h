@@ -13,8 +13,7 @@
 #include "PID.h"
 #include <math.h>
 
-#define OMNI_SPEED_MAX  2.0f
-#define OMNI_3508_CAL_MAX    400.0f
+
 void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_cal[4]);
 
 #endif //GIMBAL_OMNI_WHEEL_H
