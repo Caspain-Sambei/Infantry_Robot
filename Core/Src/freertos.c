@@ -51,35 +51,35 @@
 osThreadId_t gimbal_inPIDHandle;
 const osThreadAttr_t gimbal_inPID_attributes = {
   .name = "gimbal_inPID",
-  .stack_size = 1024 * 4,
+  .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityAboveNormal1,
 };
 /* Definitions for bmi088Task */
 osThreadId_t bmi088TaskHandle;
 const osThreadAttr_t bmi088Task_attributes = {
   .name = "bmi088Task",
-  .stack_size = 1024 * 4,
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal2,
 };
 /* Definitions for USB_RxTask */
 osThreadId_t USB_RxTaskHandle;
 const osThreadAttr_t USB_RxTask_attributes = {
   .name = "USB_RxTask",
-  .stack_size = 512 * 4,
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal7,
 };
 /* Definitions for chassis_inPID */
 osThreadId_t chassis_inPIDHandle;
 const osThreadAttr_t chassis_inPID_attributes = {
   .name = "chassis_inPID",
-  .stack_size = 512 * 4,
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityAboveNormal,
 };
 /* Definitions for sentry_mode */
 osThreadId_t sentry_modeHandle;
 const osThreadAttr_t sentry_mode_attributes = {
   .name = "sentry_mode",
-  .stack_size = 512 * 4,
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for RC_Task */
@@ -87,7 +87,7 @@ osThreadId_t RC_TaskHandle;
 const osThreadAttr_t RC_Task_attributes = {
   .name = "RC_Task",
   .stack_size = 256 * 4,
-  .priority = (osPriority_t) osPriorityNormal4,
+  .priority = (osPriority_t) osPriorityAboveNormal3,
 };
 /* Definitions for USBRxQueue */
 osMessageQueueId_t USBRxQueueHandle;

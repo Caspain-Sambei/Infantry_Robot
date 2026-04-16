@@ -49,23 +49,48 @@ void chassis_inPIDTask(void *argument)
      /* USER CODE BEGIN StartRC_Task */
     static RC_Ctl_t temp_RC_Data;
     static uint32_t last_recv_time = 0;
-    uint32_t drop_time = 1;
+    uint32_t drop_time = 100;
      /* Infinite loop */
      for (;;)
      {
          uint8_t temp_data[RC_FRAME_LENGTH];
          if (osMessageQueueGet(RCQueueHandle, temp_data, 0, 5) == osOK)
          {
+             last_recv_time = HAL_GetTick();
              // 获取新数据
              RemoteDataProcess(temp_data);
              // 数据备份
              temp_RC_Data = p_reg->rc_Data;
          }
-         else
+         else if (HAL_GetTick() - last_recv_time < drop_time)
          {
              p_reg->rc_Data = temp_RC_Data;
          }
-         osDelay(5);
+         /*****************************************************************************
+          **                            遥控断联保护
+          *****************************************************************************/
+         else
+         {
+             // 掉电PID清零
+             PID_Clear(&p_reg->gimbal.yaw_pid.outer);
+             PID_Clear(&p_reg->gimbal.yaw_pid.inner);
+             PID_Clear(&p_reg->gimbal.pitch_pid.inner);
+             PID_Clear(&p_reg->gimbal.pitch_pid.outer);
+             PID_Clear(&p_reg->chassis.Speed_X_PID.outer);
+             PID_Clear(&p_reg->chassis.Speed_X_PID.inner);
+             PID_Clear(&p_reg->chassis.Speed_Y_PID.outer);
+             PID_Clear(&p_reg->chassis.Speed_Y_PID.inner);
+
+             p_reg->TxData.data1 = 0;
+             p_reg->TxData.data2 = 0;
+             p_reg->TxData.data3 = 0;
+             p_reg->TxData.data4 = 0;
+
+             CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
+             memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+             return;
+         }
+         osDelay(1);
      }
      /* USER CODE END StartRC_Task */
  }

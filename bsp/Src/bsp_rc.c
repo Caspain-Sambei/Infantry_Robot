@@ -49,15 +49,24 @@ void RemoteDataProcess(uint8_t *pData)
     /****************************************************************
      *                 对全局变量进行赋值
      ****************************************************************/
-    p_reg->rc_Data.rc.ch0 = RC_CtrlData.rc.ch0;
-    p_reg->rc_Data.rc.ch1 = RC_CtrlData.rc.ch1;
-    p_reg->rc_Data.rc.ch2 = RC_CtrlData.rc.ch2;
-    p_reg->rc_Data.rc.ch3 = RC_CtrlData.rc.ch3;
-    p_reg->rc_Data.rc.s1 = RC_CtrlData.rc.s1;
-    p_reg->rc_Data.rc.s2 = RC_CtrlData.rc.s2;
-    p_reg->rc_Data.mouse.x = RC_CtrlData.mouse.x;
-    p_reg->rc_Data.mouse.y = RC_CtrlData.mouse.y;
-    p_reg->rc_Data.mouse.z = RC_CtrlData.mouse.z;
+    if (RC_CtrlData.rc.ch0 >= 364 && RC_CtrlData.rc.ch0 <= 1648)
+    {p_reg->rc_Data.rc.ch0 = RC_CtrlData.rc.ch0;}
+    if (RC_CtrlData.rc.ch1 >= 364 && RC_CtrlData.rc.ch1 <= 1648)
+    {p_reg->rc_Data.rc.ch1 = RC_CtrlData.rc.ch1;}
+    if (RC_CtrlData.rc.ch2 >= 364 && RC_CtrlData.rc.ch2 <= 1648)
+    {p_reg->rc_Data.rc.ch2 = RC_CtrlData.rc.ch2;}
+    if (RC_CtrlData.rc.ch3 >= 364 && RC_CtrlData.rc.ch3 <= 1648)
+    {p_reg->rc_Data.rc.ch3 = RC_CtrlData.rc.ch3;}
+    if (RC_CtrlData.mouse.x >= -32768 && RC_CtrlData.mouse.x <= 32767)
+    {p_reg->rc_Data.mouse.x = RC_CtrlData.mouse.x;}
+    if (RC_CtrlData.mouse.y >= -32768 && RC_CtrlData.mouse.y <= 32767)
+    {p_reg->rc_Data.mouse.y = RC_CtrlData.mouse.y;}
+    if (RC_CtrlData.mouse.z >= -32768 && RC_CtrlData.mouse.z <= 32767)
+    {p_reg->rc_Data.mouse.z = RC_CtrlData.mouse.z;}
+    if (RC_CtrlData.rc.s1 >= 1 && RC_CtrlData.rc.s1 <= 3)
+    {p_reg->rc_Data.rc.s1 = RC_CtrlData.rc.s1;}
+    if (RC_CtrlData.rc.s2 >= 1 && RC_CtrlData.rc.s2 <= 3)
+    {p_reg->rc_Data.rc.s2 = RC_CtrlData.rc.s2;}
     p_reg->rc_Data.mouse.press_l = RC_CtrlData.mouse.press_l;
     p_reg->rc_Data.mouse.press_r = RC_CtrlData.mouse.press_r;
     p_reg->rc_Data.key.v = RC_CtrlData.key.v;
@@ -70,15 +79,13 @@ void UART3_DT7_Callback(uint8_t *Buffer, uint16_t Length)
     {
         // 当前使用的是 Memory 1 (缓冲区1)，那么收到数据的是缓冲区0，应处理缓冲区0的数据
         // RemoteDataProcess(sbus_rx_buffer[0]);
-        //osMessageQueuePut(RCQueueHandle,sbus_rx_buffer[0],0,0);
         uint8_t temp[RC_FRAME_LENGTH];
         // 手动拷贝，明确指定volatile源
-        for (int i = 0; i < RC_FRAME_LENGTH; i++)
-        {
-
-                temp[i] = sbus_rx_buffer[0][i]; // 这里受volatile保护
-
-        }
+        // for (int i = 0; i < RC_FRAME_LENGTH; i++)
+        // {
+        //     temp[i] = sbus_rx_buffer[0][i]; // 这里受volatile保护
+        // }
+        memcpy(temp,sbus_rx_buffer[0],RC_FRAME_LENGTH);
         osMessageQueuePut(RCQueueHandle,temp,0,0);
 
         // 准备下一次接收：重新配置DMA目标为 缓冲区1
@@ -97,15 +104,13 @@ void UART3_DT7_Callback(uint8_t *Buffer, uint16_t Length)
     {
         // 当前使用的是 Memory 0，则处理缓冲区1的数据
         //RemoteDataProcess(sbus_rx_buffer[1]);
-        //osMessageQueuePut(RCQueueHandle,sbus_rx_buffer[1],0,0);
         uint8_t temp[RC_FRAME_LENGTH];
         // 手动拷贝，明确指定volatile源
-        for (int i = 0; i < RC_FRAME_LENGTH; i++)
-        {
-
-                temp[i] = sbus_rx_buffer[1][i]; // 这里受volatile保护
-
-        }
+        // for (int i = 0; i < RC_FRAME_LENGTH; i++)
+        // {
+        //     temp[i] = sbus_rx_buffer[1][i]; // 这里受volatile保护
+        // }
+        memcpy(temp,sbus_rx_buffer[1],RC_FRAME_LENGTH);
         osMessageQueuePut(RCQueueHandle,temp,0,0);
         // 切换回缓冲区0
         HAL_UART_DMAStop(&huart3);

@@ -61,8 +61,8 @@ void StartUSB_RxTask(void *argument)
             if (p_reg->gimbal.recvpacket.yaw < -45)
                 p_reg->gimbal.recvpacket.yaw = -45;
             // 新增一阶低通滤波
-            Low_Pass_Filter(&p_reg->gimbal.gimbal_Receive_KF,p_reg->gimbal.recvpacket.pitch);
-            Low_Pass_Filter(&p_reg->gimbal.gimbal_Receive_KF,p_reg->gimbal.recvpacket.yaw);
+            Pass_Filter(&p_reg->gimbal.recvpacket.pitch,0.5f);
+            Pass_Filter(&p_reg->gimbal.recvpacket.yaw,0.5f);
 
             // 尝试瞬间积分清零
             PID_Clear(&p_reg->gimbal.pitch_pid.inner);
@@ -187,20 +187,20 @@ void Startbmi088Task(void *argument)
         /*********************************************************************
          *                           云台数据
          ********************************************************************/
-        p_reg->gimbal.curr_angle.yaw = atan2f(2 * (q[0] * q[3] + q[1] * q[2]), 1 - 2 * (q[2] * q[2] + q[3] * q[3]));
-        p_reg->gimbal.curr_angle.roll = asinf(2 * (q[0] * q[2] - q[3] * q[1]));
-        p_reg->gimbal.curr_angle.pitch = atan2f(2 * (q[0] * q[1] + q[2] * q[3]), 1 - 2 * (q[1] * q[1] + q[2] * q[2]));
-
-        INS_QuaternionToEuler(q, &p_reg->gimbal.curr_angle.pitch,
-                              &p_reg->gimbal.curr_angle.roll, &p_reg->gimbal.curr_angle.yaw);
+        // p_reg->gimbal.curr_angle.yaw = atan2f(2 * (q[0] * q[3] + q[1] * q[2]), 1 - 2 * (q[2] * q[2] + q[3] * q[3]));
+        // p_reg->gimbal.curr_angle.roll = asinf(2 * (q[0] * q[2] - q[3] * q[1]));
+        // p_reg->gimbal.curr_angle.pitch = atan2f(2 * (q[0] * q[1] + q[2] * q[3]), 1 - 2 * (q[1] * q[1] + q[2] * q[2]));
+        //
+        // INS_QuaternionToEuler(q, &p_reg->gimbal.curr_angle.pitch,
+        //                       &p_reg->gimbal.curr_angle.roll, &p_reg->gimbal.curr_angle.yaw);
 
         /*********************************************************************
          *                  底盘bmi088数据
          ********************************************************************/
-        // p_reg->chassis.actual_omega = p_bmi_data[2] * 57.29578f;
-        // p_reg->chassis.yaw_pid.outer.Actual = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]));
-        //
-        // INS_QuaternionToEuler(q, NULL,NULL, &p_reg->chassis.yaw_pid.outer.Actual);
+        // // p_reg->chassis.actual_omega = p_bmi_data[2] * 57.29578f;
+        p_reg->chassis.yaw_pid.outer.Actual = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]));
+
+        INS_QuaternionToEuler(q, NULL,NULL, &p_reg->chassis.yaw_pid.outer.Actual);
 
         /*********************************************************************
          *                  向视觉发送数据
