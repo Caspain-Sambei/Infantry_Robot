@@ -1,13 +1,16 @@
 
 
 
-GraphedExpression="(((reg).gimbal).recvpacket).pitch", Color=#e56a6f, Show=0
-GraphedExpression="(((reg).gimbal).recvpacket).yaw", Color=#35792b
-OpenDocument="tasks.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3031
+GraphedExpression="(((reg).gimbal).recvpacket).pitch", Color=#e56a6f
+GraphedExpression="(((reg).gimbal).recvpacket).yaw", Color=#35792b, Show=0
+GraphedExpression="((((p_reg)->gimbal).pitch_pid).outer).Actual", Color=#769dda
+OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=1279
+OpenDocument="main.c", FilePath="D:/CODE/CLionProjects/gimbal/Core/Src/main.c", Line=68
+OpenDocument="tasks.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3422
 OpenDocument="stm32f4xx_hal.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c", Line=316
 OpenDocument="startup_stm32f405xx.s", FilePath="D:/CODE/CLionProjects/gimbal/startup_stm32f405xx.s", Line=51
-OpenDocument="Omni_wheel.c", FilePath="D:/CODE/CLionProjects/gimbal/App/wheel/Omni_wheel.c", Line=150
-OpenDocument="main.c", FilePath="D:/CODE/CLionProjects/gimbal/Core/Src/main.c", Line=68
+OpenDocument="Omni_wheel.c", FilePath="D:/CODE/CLionProjects/gimbal/App/wheel/Omni_wheel.c", Line=84
+OpenDocument="PID.c", FilePath="D:/CODE/CLionProjects/gimbal/Module/PID.c", Line=16
 OpenDocument="gimbal.c", FilePath="D:/CODE/CLionProjects/gimbal/App/gimbal/gimbal.c", Line=382
 OpenToolbar="Debug", Floating=0, x=0, y=0
 OpenWindow="Global Data", DockArea=RIGHT, x=1, y=0, w=423, h=779, FilterBarShown=0, TotalValueBarShown=0, ToolBarShown=0
@@ -46,3 +49,7 @@ WatchedExpression="(((reg).gimbal).recvpacket).yaw", RefreshRate=5, Window=Watch
 WatchedExpression="status", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="Buf", RefreshRate=5, Window=Watched Data 1
 WatchedExpression="temp_Buf", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((p_reg)->TxData).data2", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((p_reg)->TxData).data4", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((p_reg)->TxData).data1", RefreshRate=5, Window=Watched Data 1
+WatchedExpression="((p_reg)->TxData).data3", RefreshRate=5, Window=Watched Data 1

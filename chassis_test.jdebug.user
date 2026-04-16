@@ -5,15 +5,16 @@
 Breakpoint=D:/CODE/CLionProjects/gimbal/Core/Src/main.c:176:36, State=BP_STATE_DISABLED
 GraphedExpression="(((reg).rc_Data).rc).ch2", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#e56a6f, Show=0
 GraphedExpression="(((reg).rc_Data).rc).ch3", DisplayFormat=DISPLAY_FORMAT_DEC, Color=#35792b, Show=0
-GraphedExpression="((((p_reg)->chassis).Speed_X_PID).outer).Target", Color=#769dda
-GraphedExpression="((((p_reg)->chassis).Speed_X_PID).outer).Actual", Color=#b14f0d
-GraphedExpression="((((p_reg)->chassis).Speed_Y_PID).outer).Target", Color=#b3c38e, Show=0
+GraphedExpression="((((p_reg)->chassis).Speed_X_PID).outer).Target", Color=#769dda, Show=0
+GraphedExpression="((((p_reg)->chassis).Speed_X_PID).outer).Actual", Color=#b14f0d, Show=0
+GraphedExpression="((((p_reg)->chassis).Speed_Y_PID).outer).Target", Color=#b3c38e
 GraphedExpression="((((p_reg)->chassis).Speed_Y_PID).outer).Actual", Color=#ab7b05, Show=0
+OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=1275
 OpenDocument="stm32f4xx_hal.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c", Line=313
-OpenDocument="tasks.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3421
+OpenDocument="tasks.c", FilePath="D:/CODE/CLionProjects/gimbal/Middlewares/Third_Party/FreeRTOS/Source/tasks.c", Line=3629
 OpenDocument="main.c", FilePath="D:/CODE/CLionProjects/gimbal/Core/Src/main.c", Line=67
 OpenDocument="startup_stm32f405xx.s", FilePath="D:/CODE/CLionProjects/gimbal/startup_stm32f405xx.s", Line=50
-OpenDocument="stm32f4xx_hal_spi.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c", Line=1296
+OpenDocument="stm32f4xx_hal_gpio.c", FilePath="D:/CODE/CLionProjects/gimbal/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c", Line=411
 OpenDocument="gimbal.c", FilePath="D:/CODE/CLionProjects/gimbal/App/gimbal/gimbal.c", Line=222
 OpenDocument="Omni_wheel.c", FilePath="D:/CODE/CLionProjects/gimbal/App/wheel/Omni_wheel.c", Line=98
 OpenToolbar="Debug", Floating=0, x=0, y=0
