@@ -24,6 +24,6 @@ CMAKE_C_COMPILER= D:/DevEnv/New_OpenOCD/GNU-tools-for-STM32/bin/arm-none-eabi-gc
 Build type: Debug
 -- The ASM compiler identification is GNU
 -- Found assembler: D:/DevEnv/msys64/ucrt64/bin/arm-none-eabi-gcc.exe
--- Configuring done (4.4s)
--- Generating done (0.1s)
+-- Configuring done (2.1s)
+-- Generating done (0.0s)
 -- Build files have been written to: D:/CODE/CLionProjects/gimbal/build

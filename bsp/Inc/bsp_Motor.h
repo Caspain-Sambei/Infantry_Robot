@@ -19,9 +19,6 @@ enum Enum_CAN_Motor_Status
 #define CAN_C620_2
 
 #define C620_ANGLE_RESOLUTION   0.0439f     // C620电调-电机机械角度-分辨率（单位：度/LSB）
-#define CHASSIS_DIAGONAL_DISTANCE          0.425f      // 单位：m
-#define WHEEL_RADIUS            0.0815f     // 单位：m
-#define REDUCTION_RATIO_3508    15.76470588235294118f     // 268.0f/17.0f。区别于3508P19电机
 #define PI                      3.1415926f
 
 #define SPEED_TO_CURRENT        1.0f

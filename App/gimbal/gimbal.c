@@ -13,10 +13,9 @@
 #include "../bmi088/MahonyAHRS.h"
 #include "MyCAN.h"
 #include <math.h>
+#include "bsp_delay.h"
 #include "bsp_Motor.h"
 #include "Filter.h"
-#include "INS.h"
-#include "KalmanFilter.h"
 /***************************************************************************
  *								USB通信
  **************************************************************************/
@@ -72,7 +71,7 @@ void StartUSB_RxTask(void *argument)
             
             last_rx_tick = now;
         }
-        else if (now - last_rx_tick >= timeout_tick)
+        else if (now - last_rx_tick >= timeout_tick )
         {
             p_reg->gimbal.sentry_state = SENTRY_ENABLED;
             // 尝试瞬间积分清零
@@ -165,51 +164,71 @@ void Startbmi088Task(void *argument)
 {
     /* USER CODE BEGIN Startbmi088Task */
 
-    uint16_t cnt = 0;
+    // BMI088_TaskHandle = xTaskGetCurrentTaskHandle();
+
     float temper = 0;
     float bmi_data[6] = {0};        // AX,AY,AZ,GX,GY,GZ
     float q[4] = {1.0f, 0.0f, 0.0f, 0.0f};
+
     /*************************************************************
      *                  测试
      *************************************************************/
-    twoKp = 2.0f * 0.35f;//比例增益  Kp 大：修正更快，但可能抖
-    twoKi = 2.0f * 0.02f;//积分增益  Ki 大：能消除长期漂移，但太大可能积累误差过多
+    // twoKp = 2.0f * 0.5f;//比例增益  Kp 大：修正更快，但可能抖
+    // twoKi = 2.0f * 0.0f;//积分增益  Ki 大：能消除长期漂移，但太大可能积累误差过多
 
     float *p_bmi_data = bmi_data;
     float *p_temp = &temper;
+
     /* Infinite loop */
     for(;;)
     {
-        BMI088_read(&p_bmi_data[0], &p_bmi_data[3],p_temp);
-        // 更新四元数
-        MahonyAHRSupdateIMU(q,bmi_data[0],bmi_data[1],bmi_data[2],
-                                bmi_data[3],bmi_data[4],bmi_data[5]);
-        /*********************************************************************
-         *                           云台数据
-         ********************************************************************/
-        // p_reg->gimbal.curr_angle.yaw = atan2f(2 * (q[0] * q[3] + q[1] * q[2]), 1 - 2 * (q[2] * q[2] + q[3] * q[3]));
-        // p_reg->gimbal.curr_angle.roll = asinf(2 * (q[0] * q[2] - q[3] * q[1]));
-        // p_reg->gimbal.curr_angle.pitch = atan2f(2 * (q[0] * q[1] + q[2] * q[3]), 1 - 2 * (q[1] * q[1] + q[2] * q[2]));
-        //
-        // INS_QuaternionToEuler(q, &p_reg->gimbal.curr_angle.pitch,
-        //                       &p_reg->gimbal.curr_angle.roll, &p_reg->gimbal.curr_angle.yaw);
+        // BMI088_read(&p_bmi_data[0], &p_bmi_data[3],p_temp);
+        if (p_reg->bmi_flag)
+        {
+            p_reg->bmi_flag = 0;
+            // 减去零偏，得到校准数据
+            for (uint8_t i = 0; i < 3; i++)
+            {
+                p_bmi_data[i] -= p_reg->gyro_bias[i];
 
-        /*********************************************************************
-         *                  底盘bmi088数据
-         ********************************************************************/
-        // // p_reg->chassis.actual_omega = p_bmi_data[2] * 57.29578f;
-        p_reg->chassis.yaw_pid.outer.Actual = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]));
+            }
+            // for(uint8_t i = 0; i < 2; i++)
+            // {
+            //     p_bmi_data[i + 3] -= p_reg->accel_bias[i];
+            // }
 
-        INS_QuaternionToEuler(q, NULL,NULL, &p_reg->chassis.yaw_pid.outer.Actual);
+            // 低通滤波
+            // for (uint8_t i = 0; i < 3; i++)
+            // {
+            //     Pass_Filter(&p_bmi_data[i],0.5f);
+            // }
+            // 更新四元数
+            MahonyAHRSupdateIMU(q,bmi_data[0],bmi_data[1],bmi_data[2],
+                                    bmi_data[3],bmi_data[4],bmi_data[5]);
+            /*********************************************************************
+             *                           云台数据
+             ********************************************************************/
+            p_reg->gimbal.curr_angle.yaw = atan2f(2 * (q[0] * q[3] + q[1] * q[2]), 1 - 2 * (q[2] * q[2] + q[3] * q[3]));
+            p_reg->gimbal.curr_angle.roll = asinf(2 * (q[0] * q[2] - q[3] * q[1]));
+            p_reg->gimbal.curr_angle.pitch = atan2f(2 * (q[0] * q[1] + q[2] * q[3]), 1 - 2 * (q[1] * q[1] + q[2] * q[2]));
 
-        /*********************************************************************
-         *                  向视觉发送数据
-         ********************************************************************/
-        p_reg->gimbal.sendpacket.pitch = p_reg->gimbal.curr_angle.pitch;
-        p_reg->gimbal.sendpacket.yaw = p_reg->gimbal.curr_angle.yaw;
-        p_reg->gimbal.sendpacket.roll = p_reg->gimbal.curr_angle.roll;
+            INS_QuaternionToEuler(q, &p_reg->gimbal.curr_angle.pitch,
+                                  &p_reg->gimbal.curr_angle.roll, &p_reg->gimbal.curr_angle.yaw);
 
-        USB_Send(&p_reg->gimbal.sendpacket);
+            /*********************************************************************
+             *                  底盘bmi088数据
+             ********************************************************************/
+            // p_reg->chassis.yaw_pid.outer.Actual = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]));
+            // INS_QuaternionToEuler(q, NULL,NULL, &p_reg->chassis.yaw_pid.outer.Actual);
+        }
+            /*********************************************************************
+             *                  向视觉发送数据
+             ********************************************************************/
+            p_reg->gimbal.sendpacket.pitch = p_reg->gimbal.curr_angle.pitch;
+            p_reg->gimbal.sendpacket.yaw = p_reg->gimbal.curr_angle.yaw;
+            p_reg->gimbal.sendpacket.roll = p_reg->gimbal.curr_angle.roll;
+
+            USB_Send(&p_reg->gimbal.sendpacket);
         osDelay(1);
     }
     /* USER CODE END Startbmi088Task */
@@ -222,7 +241,7 @@ void StartSentry_modeTask(void* argument)
 {
     const uint16_t SCAN_DELAY = 10;
     #define F_EPSILON   0.3f // 放宽阈值，避免浮点误差
-    float YAW_MIN = -45.0f, YAW_MAX = 45.0f, PITCH_MIN = -40.0f, PITCH_MAX = 40.0f;
+    float YAW_MIN = -25.0f, YAW_MAX = 25.0f, PITCH_MIN = -40.0f, PITCH_MAX = 40.0f;
     const float YAW_INIT = 1.0f, PITCH_INIT = 1.0f;
 
     float start_yaw = YAW_INIT;
@@ -235,8 +254,8 @@ void StartSentry_modeTask(void* argument)
     const float PITCH_CENTER = 0.0f;
     const float PITCH_AMPLITUDE = 41.0f;
 
-    const float FREQ_YAW_K = 3.0f;      // 0.5f为慢速，1.0f为快速
-    const float FREQ_PITCH_K = 6.0f;    // 1.0f为慢速，2.0f为快速
+    const float FREQ_YAW_K = 1.0f;      // 0.5f为慢速，1.0f为快速
+    const float FREQ_PITCH_K = 3.0f;    // 1.0f为慢速，2.0f为快速
     const float FREQ = 0.2f;            // 摆动频率（Hz），即每秒摆多少个周期
 
     uint32_t start_time = HAL_GetTick();
@@ -263,10 +282,10 @@ void StartSentry_modeTask(void* argument)
             p_reg->gimbal.pitch_pid.outer.Target = pitch_target;
 
             // 全局变量的边界保护
-            if (p_reg->gimbal.yaw_pid.outer.Target < YAW_MIN) p_reg->gimbal.yaw_pid.outer.Target = YAW_MIN;
-            if (p_reg->gimbal.yaw_pid.outer.Target > YAW_MAX) p_reg->gimbal.yaw_pid.outer.Target = YAW_MAX;
-            if (p_reg->gimbal.pitch_pid.outer.Target < PITCH_MIN) p_reg->gimbal.pitch_pid.outer.Target = PITCH_MIN;
-            if (p_reg->gimbal.pitch_pid.outer.Target > PITCH_MAX) p_reg->gimbal.pitch_pid.outer.Target = PITCH_MAX;
+            if (p_reg->gimbal.yaw_pid.outer.Target < YAW_MIN) {p_reg->gimbal.yaw_pid.outer.Target = YAW_MIN;}
+            if (p_reg->gimbal.yaw_pid.outer.Target > YAW_MAX) {p_reg->gimbal.yaw_pid.outer.Target = YAW_MAX;}
+            if (p_reg->gimbal.pitch_pid.outer.Target < PITCH_MIN) {p_reg->gimbal.pitch_pid.outer.Target = PITCH_MIN;}
+            if (p_reg->gimbal.pitch_pid.outer.Target > PITCH_MAX) {p_reg->gimbal.pitch_pid.outer.Target = PITCH_MAX;}
 
             // 发送数据
             p_reg->TxData.data1 = (int16_t)(p_reg->gimbal.yaw_pid.outer.Target);
@@ -283,10 +302,10 @@ void StartSentry_modeTask(void* argument)
             start_pitch = p_reg->gimbal.pitch_pid.outer.Target;
 
             // 边界保护
-            if (start_yaw < YAW_MIN) start_yaw = YAW_MIN;
-            if (start_yaw > YAW_MAX) start_yaw = YAW_MAX;
-            if (start_pitch < PITCH_MIN) start_pitch = PITCH_MIN;
-            if (start_pitch > PITCH_MAX) start_pitch = PITCH_MAX;
+            if (start_yaw < YAW_MIN) {start_yaw = YAW_MIN;}
+            if (start_yaw > YAW_MAX) {start_yaw = YAW_MAX;}
+            if (start_pitch < PITCH_MIN) {start_pitch = PITCH_MIN;}
+            if (start_pitch > PITCH_MAX) {start_pitch = PITCH_MAX;}
 
             start_time = HAL_GetTick();  // 重置时间，确保下次扫描从头开始
 
@@ -305,6 +324,48 @@ void StartSentry_modeTask(void* argument)
 /*********************************************************************************
  *                          工具函数
  *********************************************************************************/
+/**
+ * @brief 计算陀螺仪零偏
+ *
+ * 通过采集多个样本数据并计算平均值来确定陀螺仪的零偏值。
+ * 在采集前会丢弃部分不稳定的初始读数以提高校准精度。
+ *
+ * @param samples 采集的样本数量，用于计算平均值
+ * @param gyro_bias 输出参数，指向包含三个元素的数组，分别存储X、Y、Z轴的零偏值
+ */
+void calibrate_gyro_bias(uint16_t samples,float *gyro_bias,float *accel_bias)
+{
+    float sum_x = 0, sum_y = 0, sum_z = 0;
+    float sum_accel_x = 0,sum_accel_y = 0,sum_accel_z = 0;
+    float temp_data[3],temp_accel_date[3]; // 临时存储单次读取数据
+    // 丢弃前几次可能不稳定的读数
+    for (int i = 0; i < 50; i++)
+    {
+        delay_ms(1);
+    }
+
+    // 采集 samples 个样本并求平均
+    for (int i = 0; i < samples; i++)
+    {
+        BMI088_read(temp_data, temp_accel_date, NULL);
+        sum_x += temp_data[0];
+        sum_y += temp_data[1];
+        sum_z += temp_data[2];
+
+        sum_accel_x += temp_accel_date[0];
+        sum_accel_y += temp_accel_date[1];
+        sum_accel_z += temp_accel_date[2];
+        // delay_ms(1); // 根据采样率调整延时
+    }
+
+    gyro_bias[0] = sum_x / (float)samples;
+    gyro_bias[1] = sum_y / (float)samples;
+    gyro_bias[2] = sum_z / (float)samples;
+
+    accel_bias[0] = (sum_accel_x / (float)samples);
+    accel_bias[1] = sum_accel_y / (float)samples;
+    accel_bias[2] = (sum_accel_z / (float)samples) - 0.1f;
+}
 
 /**
  * @brief 切换三种PID模式

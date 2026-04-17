@@ -62,33 +62,39 @@ void chassis_inPIDTask(void *argument)
              // 数据备份
              temp_RC_Data = p_reg->rc_Data;
          }
-         else if (HAL_GetTick() - last_recv_time < drop_time)
-         {
-             p_reg->rc_Data = temp_RC_Data;
-         }
-         /*****************************************************************************
-          **                            遥控断联保护
-          *****************************************************************************/
          else
          {
-             // 掉电PID清零
-             PID_Clear(&p_reg->gimbal.yaw_pid.outer);
-             PID_Clear(&p_reg->gimbal.yaw_pid.inner);
-             PID_Clear(&p_reg->gimbal.pitch_pid.inner);
-             PID_Clear(&p_reg->gimbal.pitch_pid.outer);
-             PID_Clear(&p_reg->chassis.Speed_X_PID.outer);
-             PID_Clear(&p_reg->chassis.Speed_X_PID.inner);
-             PID_Clear(&p_reg->chassis.Speed_Y_PID.outer);
-             PID_Clear(&p_reg->chassis.Speed_Y_PID.inner);
+             if (HAL_GetTick() - last_recv_time < drop_time)
+             {
+                 p_reg->rc_Data = temp_RC_Data;
+             }
+             /*****************************************************************************
+              **                            遥控断联保护
+              *****************************************************************************/
+             else if (HAL_GetTick() - last_recv_time >= drop_time)
+             {
+                 // 掉电PID清零
+                 PID_Clear(&p_reg->gimbal.yaw_pid.outer);
+                 PID_Clear(&p_reg->gimbal.yaw_pid.inner);
+                 PID_Clear(&p_reg->gimbal.pitch_pid.inner);
+                 PID_Clear(&p_reg->gimbal.pitch_pid.outer);
+                 PID_Clear(&p_reg->chassis.Speed_X_PID.outer);
+                 PID_Clear(&p_reg->chassis.Speed_X_PID.inner);
+                 PID_Clear(&p_reg->chassis.Speed_Y_PID.outer);
+                 PID_Clear(&p_reg->chassis.Speed_Y_PID.inner);
 
-             p_reg->TxData.data1 = 0;
-             p_reg->TxData.data2 = 0;
-             p_reg->TxData.data3 = 0;
-             p_reg->TxData.data4 = 0;
+                 p_reg->TxData.data1 = 0;
+                 p_reg->TxData.data2 = 0;
+                 p_reg->TxData.data3 = 0;
+                 p_reg->TxData.data4 = 0;
 
-             CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
-             memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
-             return;
+                 CAN_Send(CAN_C620_1, &p_reg->TxData, 4);
+                 memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
+                 p_reg->speed_cal[0] = 0;
+                 p_reg->speed_cal[1] = 0;
+                 p_reg->speed_cal[2] = 0;
+                 p_reg->speed_cal[3] = 0;
+             }
          }
          osDelay(1);
      }

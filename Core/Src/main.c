@@ -33,6 +33,7 @@
 #include "reg.h"
 #include "bsp_rc.h"
 #include "bsp_uart.h"
+#include "gimbal.h"
 #include "MyCAN.h"
 #include "PID.h"
 /* USER CODE END Includes */
@@ -123,15 +124,7 @@ int main(void)
   PID_Clear(&p_reg->chassis.Speed_X_PID.outer);
   PID_Clear(&p_reg->chassis.Speed_Y_PID.outer);
 
-  /*****************************************************************
-   *                    底盘测试
-   *****************************************************************/
-  
-  /*****************************************************************
-   *                    云台测试
-   *****************************************************************/
-  // p_reg->gimbal.sentry_state == SENTRY_DISABLED;
-  //p_reg->gimbal.sentry_state = SENTRY_ENABLED;
+  calibrate_gyro_bias(1000,p_reg->gyro_bias,p_reg->accel_bias);
 
   /* USER CODE END 2 */
 

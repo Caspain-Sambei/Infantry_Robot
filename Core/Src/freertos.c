@@ -59,7 +59,7 @@ osThreadId_t bmi088TaskHandle;
 const osThreadAttr_t bmi088Task_attributes = {
   .name = "bmi088Task",
   .stack_size = 256 * 4,
-  .priority = (osPriority_t) osPriorityNormal2,
+  .priority = (osPriority_t) osPriorityHigh,
 };
 /* Definitions for USB_RxTask */
 osThreadId_t USB_RxTaskHandle;
@@ -87,7 +87,7 @@ osThreadId_t RC_TaskHandle;
 const osThreadAttr_t RC_Task_attributes = {
   .name = "RC_Task",
   .stack_size = 256 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal3,
+  .priority = (osPriority_t) osPriorityAboveNormal,
 };
 /* Definitions for USBRxQueue */
 osMessageQueueId_t USBRxQueueHandle;

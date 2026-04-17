@@ -14,9 +14,9 @@
 //---------------------------------------------------------------------------------------------------
 // Definitions
 
-#define sampleFreq	1000.0f			// sample frequency in Hz    //采样频率
+#define sampleFreq	800.0f			// sample frequency in Hz    //采样频率
 #define twoKpDef	(2.0f * 0.5f)	// 2 * proportional gain     //比例增益(纠正力度)
-#define twoKiDef	(2.0f * 0.0f)	// 2 * integral gain	     //积分增益（用于消除长期偏置）积分增益（用于消除长期偏置）
+#define twoKiDef	(2.0f * 0.5f)	// 2 * integral gain	     //积分增益（用于消除长期偏置）
 
 //---------------------------------------------------------------------------------------------------
 // Variable definitions

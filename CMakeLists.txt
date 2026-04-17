@@ -100,6 +100,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         bsp/Src/module_remote.c
         App/bmi088/INS.c
         App/bmi088/INS.h
+        bsp/Inc/bsp_bmi088.h
+        bsp/Src/bsp_bmi088.c
 )
 
 # 禁用共享库
@@ -160,6 +162,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     App/gimbal/
     App/wheel/
         App/bmi088/
+        App/chassis/
 )
 
 # Add project symbols (macros)

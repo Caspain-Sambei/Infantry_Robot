@@ -3,7 +3,7 @@
 #include "BMI088Middleware.h"
 
 float BMI088_ACCEL_SEN = BMI088_ACCEL_3G_SEN;
-float BMI088_GYRO_SEN = BMI088_GYRO_2000_SEN;
+float BMI088_GYRO_SEN = BMI088_GYRO_1000_SEN;
 
 #if defined(BMI088_USE_SPI)
 // 写操作 直接发送数据寄存器地址

@@ -146,6 +146,17 @@ TYPEDEF reg ={
     .speed_cal[1] = 0,
     .speed_cal[2] = 0,
     .speed_cal[3] = 0,
+
+    .gyro_bias[0] = 0.0f,
+    .gyro_bias[1] = 0.0f,
+    .gyro_bias[2] = 0.0f,
+
+    .accel_bias[0] = 0.0f,
+    .accel_bias[1] = 0.0f,
+    .accel_bias[2] = 0.0f,
+
+    .exti_bmi_data = {0},
+    .bmi_flag = 0,
 };
 
 TYPEDEF *p_reg = &reg;

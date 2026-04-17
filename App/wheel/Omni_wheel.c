@@ -4,6 +4,7 @@
 #include "Omni_wheel.h"
 #include "reg.h"
 #include "KalmanFilter.h"
+#include "chassis.h"
 /**
  * @brief 全向轮底盘/云台解算，23通道实现水平平动，01通道对应云台yaw,pitch
  * @param rc_Data 结构体由dr16手册提供
@@ -52,16 +53,17 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
   chassis->Speed_X_PID.outer.Target = chassis->inverse_speed_X;
   chassis->Speed_Y_PID.outer.Target = chassis->inverse_speed_Y;
 
-  // chassis->yaw_pid.inner.Target = atan2f(dt7_x, dt7_y);
+  // 左拨杆同时控制旋转
+  // chassis->yaw_pid.outer.Target = atan2f(dt7_x, dt7_y);
+  // 右拨杆控制旋转
   chassis->yaw_pid.outer.Target = atan2f(rotate_x, rotate_y) * 57.32f;
   chassis->yaw_pid.outer.Target =-chassis->yaw_pid.outer.Target;
 
-  //chassis->yaw_pid.inner.Actual已经在bmi088RTOS中赋值
+  //chassis->yaw_pid.outer.Actual已经在bmi088RTOS中赋值
 
   /************************************************************
    *              底盘正解算，判断角度和速度，自身坐标系！！！
    ************************************************************/
-  // 除以轮子到底盘中心的距离是计算单个电机对底盘旋转的角速度贡献 (rad/s)
   float Motor_1_Speed =
     (float)chassis->Motor_1_RxData.data2 / REDUCTION_RATIO_3508
     * (2 * PI / 60.0f) * WHEEL_RADIUS;
@@ -76,22 +78,6 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
     * (2 * PI / 60.0f) * WHEEL_RADIUS;
 
   /************************************************************
-   *                  世界坐标系
-   ************************************************************/
-  // chassis->forward_speed_X =
-  //     sqrtf(2.0f) / 4.0f *
-  //     ((Motor_1_Speed - Motor_3_Speed) * (cosf(chassis->yaw_pid.inner.Actual) +
-  //                                         sinf(chassis->yaw_pid.inner.Actual)) -
-  //      (Motor_2_Speed - Motor_4_Speed) * (cosf(chassis->yaw_pid.inner.Actual) -
-  //                                         sinf(chassis->yaw_pid.inner.Actual)));
-  // chassis->forward_speed_Y =
-  //     sqrtf(2.0f) / 4.0f *
-  //     ((Motor_1_Speed - Motor_3_Speed) * (sinf(chassis->yaw_pid.inner.Actual) -
-  //                                         cosf(chassis->yaw_pid.inner.Actual)) +
-  //      (Motor_2_Speed - Motor_4_Speed) * (cosf(chassis->yaw_pid.inner.Actual) +
-  //                                         sinf(chassis->yaw_pid.inner.Actual)));
-
-  /************************************************************
    *                  底盘自身坐标系在的速度和目标角度
    ************************************************************/
   chassis->forward_speed_X =
@@ -102,16 +88,16 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
   Pass_Filter(&chassis->forward_speed_X,0.5f);
   Pass_Filter(&chassis->forward_speed_Y,0.5f);
 
-  chassis->Speed_X_PID.inner.Actual = chassis->forward_speed_X;
-  chassis->Speed_Y_PID.inner.Actual = chassis->forward_speed_Y;
+  chassis->Speed_X_PID.outer.Actual = chassis->forward_speed_X;
+  chassis->Speed_Y_PID.outer.Actual = chassis->forward_speed_Y;
 
-  PID_Update(&chassis->Speed_X_PID.inner, CHASSIS_MODE);
-  PID_Update(&chassis->Speed_Y_PID.inner, CHASSIS_MODE);
+  PID_Update(&chassis->Speed_X_PID.outer, CHASSIS_MODE);
+  PID_Update(&chassis->Speed_Y_PID.outer, CHASSIS_MODE);
 
   /************************************************************
    *                  限速保护
    ************************************************************/
-  if (fabs(chassis->Speed_X_PID.inner.Actual) > LIMIT_SPEED || fabs(chassis->Speed_Y_PID.inner.Actual) > LIMIT_SPEED
+  if (fabs(chassis->Speed_X_PID.outer.Actual) > LIMIT_SPEED || fabs(chassis->Speed_Y_PID.outer.Actual) > LIMIT_SPEED
     || fabs(Motor_1_Speed) > LIMIT_SPEED || fabs(Motor_2_Speed) > LIMIT_SPEED
     || fabs(Motor_3_Speed) > LIMIT_SPEED || fabs(Motor_4_Speed) > LIMIT_SPEED)
   {
@@ -120,42 +106,31 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
   }
 
   float stick_magnitude = sqrtf(rotate_x * rotate_x + rotate_y * rotate_y);
-  if (stick_magnitude < 1.0f)
+  if (stick_magnitude < 0.1f)
   {
-    chassis->yaw_pid.inner.Target = chassis->yaw_pid.inner.Actual;
+    chassis->yaw_pid.outer.Target = chassis->yaw_pid.outer.Actual;
     // 摇杆归中时，仍需运行航向 PID 闭环，让底盘自动抵抗外界扰动，维持当前朝向
   }
-  // PID_Update(&chassis->yaw_pid.inner, CHASSIS_MODE);
-  // chassis->target_omega = chassis->yaw_pid.inner.Out;
+  /************************************************************
+   *                    目标角速度+PID
+   ************************************************************/
+  // PID_Update(&chassis->yaw_pid.outer, CHASSIS_MODE);
+  // chassis->target_omega = chassis->yaw_pid.outer.Out;
 
   /************************************************************
    *                  底盘速度解算为通道值
    ************************************************************/
-  float sin_ang = sinf(chassis->yaw_pid.inner.Actual);
-  float cos_ang = cosf(chassis->yaw_pid.inner.Actual);
-  // speed_cal[0] =
-  //   ((-cos_ang - sin_ang) * chassis->Speed_X_PID.inner.Out + (-sin_ang + cos_ang) * chassis->Speed_Y_PID.inner.Out
-  //     + CHASSIS_RADIUS * chassis->target_omega) * sqrtf(2) / 2;
-  // speed_cal[1] =
-  //   ((-cos_ang + sin_ang) * chassis->Speed_X_PID.inner.Out + (-sin_ang - cos_ang) * chassis->Speed_Y_PID.inner.Out
-  //     + CHASSIS_RADIUS * chassis->target_omega) * sqrtf(2) / 2;
-  // speed_cal[2] =
-  //   ((cos_ang + sin_ang) * chassis->Speed_X_PID.inner.Out + (sin_ang - cos_ang) * chassis->Speed_Y_PID.inner.Out
-  //     + CHASSIS_RADIUS * chassis->target_omega) * sqrtf(2) / 2;
-  // speed_cal[3] =
-  //   ((cos_ang - sin_ang) * chassis->Speed_X_PID.inner.Out + (sin_ang + cos_ang) * chassis->Speed_Y_PID.inner.Out
-  //     + CHASSIS_RADIUS * chassis->target_omega) * sqrtf(2) / 2;
   speed_cal[0] =
-  (chassis->Speed_X_PID.inner.Out + chassis->Speed_Y_PID.inner.Out
+  (chassis->Speed_X_PID.outer.Out + chassis->Speed_Y_PID.outer.Out
     + CHASSIS_DIAGONAL_DISTANCE * chassis->target_omega) * sqrtf(2) / 2;
   speed_cal[1] =
-  (-chassis->Speed_X_PID.inner.Out + chassis->Speed_Y_PID.inner.Out
+  (-chassis->Speed_X_PID.outer.Out + chassis->Speed_Y_PID.outer.Out
     + CHASSIS_DIAGONAL_DISTANCE * chassis->target_omega) * sqrtf(2) / 2;
   speed_cal[2] =
-  (-chassis->Speed_X_PID.inner.Out - chassis->Speed_Y_PID.inner.Out
+  (-chassis->Speed_X_PID.outer.Out - chassis->Speed_Y_PID.outer.Out
     + CHASSIS_DIAGONAL_DISTANCE * chassis->target_omega) * sqrtf(2) / 2;
   speed_cal[3] =
-  (chassis->Speed_X_PID.inner.Out - chassis->Speed_Y_PID.inner.Out
+  (chassis->Speed_X_PID.outer.Out - chassis->Speed_Y_PID.outer.Out
     + CHASSIS_DIAGONAL_DISTANCE * chassis->target_omega) * sqrtf(2) / 2;
 
   /************************************************************
@@ -163,7 +138,7 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
   ************************************************************/
   for(uint8_t i = 0 ;i < 4;i++)
   {
-    speed_cal[i] = speed_cal[i] / (2 * PI / 60.0f) / WHEEL_RADIUS * REDUCTION_RATIO_3508;
+    speed_cal[i] = speed_cal[i] / WHEEL_RADIUS * REDUCTION_RATIO_3508 / (2 * PI / 60.0f);
     
     if(speed_cal[i] > OMNI_3508_CAL_MAX)
     {
@@ -177,7 +152,7 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
   /************************************************************
   *                  死区保护
   ************************************************************/
-  // if (fabsf(chassis->Speed_X_PID.inner.Target) <= 0.01f || fabsf(chassis->Speed_Y_PID.inner.Target) <= 0.01f)
+  // if (fabsf(chassis->Speed_X_PID.outer.Target) <= 0.01f || fabsf(chassis->Speed_Y_PID.outer.Target) <= 0.01f)
   // {
   //   for(uint8_t i = 0 ;i < 4;i++)
   //   {

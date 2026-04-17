@@ -92,6 +92,12 @@ typedef struct{
 
     // 用于各种测试
     float speed_cal[4];
+    // 存放校准偏差
+    float gyro_bias[3];
+    float accel_bias[3];
+
+    float exti_bmi_data[6];
+    uint8_t bmi_flag;
 }TYPEDEF;
 
 //全局变量应包含这个结构体类型

@@ -17,4 +17,5 @@ typedef struct
 extern void Low_Pass_Filter_Init(Low_Pass_Filter_Structure *kf, float init_value, float init_error, float R, float Q);
 extern float Low_Pass_Filter(Low_Pass_Filter_Structure *reg, float current_measure);
 void Pass_Filter(float *curr_data, float k);
+
 #endif //GIMBAL_FILTER_H
