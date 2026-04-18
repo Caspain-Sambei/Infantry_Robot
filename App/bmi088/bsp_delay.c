@@ -56,9 +56,23 @@ void delay_us(uint16_t nus)
     uint32_t start_tick = SysTick->VAL;
 
     // 忙等延时（短时间占用CPU，对系统影响小）
-    while ((start_tick - SysTick->VAL) < ticks)
+    // while ((start_tick - SysTick->VAL) < ticks)
+    // {
+    //     __NOP(); // 空操作，减少CPU消耗
+    // }
+    if (start_tick < ticks)
     {
-        __NOP(); // 空操作，减少CPU消耗
+        while (SysTick->VAL > (start_tick + fac_us - ticks))
+        {
+            __NOP(); // 空操作，减少CPU消耗
+        }
+    }
+    else
+    {
+        while ((start_tick - SysTick->VAL) < ticks)
+        {
+            __NOP(); // 空操作，减少CPU消耗
+        }
     }
 }
 

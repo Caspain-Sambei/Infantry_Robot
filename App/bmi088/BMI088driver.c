@@ -2,18 +2,17 @@
 #include "BMI088reg.h"
 #include "BMI088Middleware.h"
 
-float BMI088_ACCEL_SEN = BMI088_ACCEL_3G_SEN;
-float BMI088_GYRO_SEN = BMI088_GYRO_1000_SEN;
+fp32 BMI088_ACCEL_SEN = BMI088_ACCEL_3G_SEN;
+fp32 BMI088_GYRO_SEN = BMI088_GYRO_2000_SEN;
 
 #if defined(BMI088_USE_SPI)
-// 写操作 直接发送数据寄存器地址
+
 #define BMI088_accel_write_single_reg(reg, data) \
     {                                            \
         BMI088_ACCEL_NS_L();                     \
         BMI088_write_single_reg((reg), (data));  \
         BMI088_ACCEL_NS_H();                     \
     }
-// 先发送读命令（"寄存器地址 | 0x80"是SPI读标志），再发送dummy字节（SPI必须双向通信，触发MISO输出）
 #define BMI088_accel_read_single_reg(reg, data) \
     {                                           \
         BMI088_ACCEL_NS_L();                    \
@@ -60,7 +59,7 @@ static void BMI088_read_muli_reg(uint8_t reg, uint8_t* buf, uint8_t len);
 
 
 #endif
-// 二维数组，通过循环遍历数组，批量配置寄存器，并在配置失败时返回对应的错误码。
+
 static uint8_t write_BMI088_accel_reg_data_error[BMI088_WRITE_ACCEL_REG_NUM][3] =
 {
     {BMI088_ACC_PWR_CTRL, BMI088_ACC_ENABLE_ACC_ON, BMI088_ACC_PWR_CTRL_ERROR},
@@ -89,7 +88,6 @@ uint8_t BMI088_init(void)
     // self test pass and init
     if(bmi088_accel_self_test() != BMI088_NO_ERROR)
     {
-		// 把错误码的第 7 位（0x80）置 1
         error |= BMI088_SELF_TEST_ACCEL_ERROR;
     }
     else
@@ -140,8 +138,7 @@ bool_t bmi088_accel_init(void)
     for(write_reg_num = 0; write_reg_num < BMI088_WRITE_ACCEL_REG_NUM; write_reg_num++)
     {
 
-        BMI088_accel_write_single_reg(write_BMI088_accel_reg_data_error[write_reg_num][0],
-										write_BMI088_accel_reg_data_error[write_reg_num][1]);
+        BMI088_accel_write_single_reg(write_BMI088_accel_reg_data_error[write_reg_num][0], write_BMI088_accel_reg_data_error[write_reg_num][1]);
         BMI088_delay_us(BMI088_COM_WAIT_SENSOR_TIME);
 
         BMI088_accel_read_single_reg(write_BMI088_accel_reg_data_error[write_reg_num][0], res);
@@ -246,8 +243,7 @@ bool_t bmi088_accel_self_test(void)
     for(write_reg_num = 0; write_reg_num < 4; write_reg_num++)
     {
 
-        BMI088_accel_write_single_reg(write_BMI088_ACCEL_self_test_Reg_Data_Error[write_reg_num][0],
-										write_BMI088_ACCEL_self_test_Reg_Data_Error[write_reg_num][1]);
+        BMI088_accel_write_single_reg(write_BMI088_ACCEL_self_test_Reg_Data_Error[write_reg_num][0], write_BMI088_ACCEL_self_test_Reg_Data_Error[write_reg_num][1]);
         BMI088_delay_us(BMI088_COM_WAIT_SENSOR_TIME);
 
         BMI088_accel_read_single_reg(write_BMI088_ACCEL_self_test_Reg_Data_Error[write_reg_num][0], res);
@@ -265,8 +261,7 @@ bool_t bmi088_accel_self_test(void)
     for(write_reg_num = 0; write_reg_num < 2; write_reg_num++)
     {
 
-        BMI088_accel_write_single_reg(write_BMI088_ACCEL_self_test_Reg_Data_Error[write_reg_num + 4][0],
-										write_BMI088_ACCEL_self_test_Reg_Data_Error[write_reg_num + 4][1]);
+        BMI088_accel_write_single_reg(write_BMI088_ACCEL_self_test_Reg_Data_Error[write_reg_num + 4][0], write_BMI088_ACCEL_self_test_Reg_Data_Error[write_reg_num + 4][1]);
         BMI088_delay_us(BMI088_COM_WAIT_SENSOR_TIME);
 
         BMI088_accel_read_single_reg(write_BMI088_ACCEL_self_test_Reg_Data_Error[write_reg_num + 4][0], res);
@@ -301,10 +296,8 @@ bool_t bmi088_accel_self_test(void)
     //reset the accel sensor
     BMI088_accel_write_single_reg(BMI088_ACC_SOFTRESET, BMI088_ACC_SOFTRESET_VALUE);
     BMI088_delay_ms(BMI088_LONG_DELAY_TIME);
-	// 验证 MEMS 敏感结构的偏移量是否达标
-    if((self_test_accel[0][0] - self_test_accel[1][0] < 1365)
-		|| (self_test_accel[0][1] - self_test_accel[1][1] < 1365)
-		|| (self_test_accel[0][2] - self_test_accel[1][2] < 680))
+
+    if((self_test_accel[0][0] - self_test_accel[1][0] < 1365) || (self_test_accel[0][1] - self_test_accel[1][1] < 1365) || (self_test_accel[0][2] - self_test_accel[1][2] < 680))
     {
         return BMI088_SELF_TEST_ACCEL_ERROR;
     }
@@ -425,7 +418,6 @@ void BMI088_read(fp32 gyro[3], fp32 accel[3], fp32* temperate)
     bmi088_raw_temp = (int16_t)((buf[5]) << 8) | buf[4];
     accel[2] = bmi088_raw_temp * BMI088_ACCEL_SEN;
 
-	// 读取陀螺仪的 ID + 三轴角速度数据
     BMI088_gyro_read_muli_reg(BMI088_GYRO_CHIP_ID, buf, 8);
     if(buf[0] == BMI088_GYRO_CHIP_ID_VALUE)
     {
@@ -437,7 +429,7 @@ void BMI088_read(fp32 gyro[3], fp32 accel[3], fp32* temperate)
         gyro[2] = bmi088_raw_temp * BMI088_GYRO_SEN;
     }
     BMI088_accel_read_muli_reg(BMI088_TEMP_M, buf, 2);
-	// 低字节右移5位，提取3位有效值；高字节左移3位，腾出3个空位，8+3=11，温度值为11位有效字节
+
     bmi088_raw_temp = (int16_t)((buf[0] << 3) | (buf[1] >> 5));
 
     if(bmi088_raw_temp > 1023)
@@ -542,7 +534,7 @@ static void BMI088_read_muli_reg(uint8_t reg, uint8_t* buf, uint8_t len)
 
     while(len != 0)
     {
-		// 0x55是无效字节
+
         *buf = BMI088_read_write_byte(0x55);
         buf++;
         len--;

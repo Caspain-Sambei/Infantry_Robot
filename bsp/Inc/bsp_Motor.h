@@ -26,8 +26,8 @@ enum Enum_CAN_Motor_Status
 // #define RC_TO_3508_Current 24.8242424f // 通道数值转化为电流值
 #define RC_TO_3508_Current      1.0f // 通道数值转化为电流值
 
-#define CHASSIS_MAX_SPEED       4.0f
-#define LIMIT_SPEED             4.0F
+#define CHASSIS_MAX_SPEED       1.0f
+#define LIMIT_SPEED             1.0F
 #define OMNI_3508_CAL_MAX       750.0f
 
 #endif //GIMBAL_BSP_MOTOR_H

@@ -15,9 +15,9 @@
  */
 void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_cal[4])
 {
-
   float dt7_x = 0.0f, dt7_y = 0.0f;
   float rotate_x= 0.0f, rotate_y = 0.0f;
+  uint32_t now = 0;
   /************************************************************
    *                   小陀螺
    ************************************************************/
@@ -58,7 +58,7 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
   // 右拨杆控制旋转
   chassis->yaw_pid.outer.Target = atan2f(rotate_x, rotate_y) * 57.32f;
   chassis->yaw_pid.outer.Target =-chassis->yaw_pid.outer.Target;
-
+  chassis->target_omega = chassis->yaw_pid.outer.Target * 0.02f;
   //chassis->yaw_pid.outer.Actual已经在bmi088RTOS中赋值
 
   /************************************************************
@@ -152,12 +152,17 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
   /************************************************************
   *                  死区保护
   ************************************************************/
-  // if (fabsf(chassis->Speed_X_PID.outer.Target) <= 0.01f || fabsf(chassis->Speed_Y_PID.outer.Target) <= 0.01f)
-  // {
-  //   for(uint8_t i = 0 ;i < 4;i++)
-  //   {
-  //     speed_cal[i] = 0.0f;
-  //   }
-  // }
-
+  if (fabsf(chassis->Speed_X_PID.outer.Target) == 0.0f || fabsf(chassis->Speed_Y_PID.outer.Target) == 0.0f)
+  {
+    now ++;
+    if (now >= 1000)
+    {
+      now = 0;
+      for (uint8_t i = 0; i < 4; i++)
+      {
+        speed_cal[0] = 0.0f;  speed_cal[1] = 0.0f;  speed_cal[2] = 0.0f;  speed_cal[3] = 0.0f;
+        return;
+      }
+    }
+  }
 }

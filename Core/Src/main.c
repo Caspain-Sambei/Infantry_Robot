@@ -28,12 +28,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "bsp_delay.h"
 #include "../../App/bmi088/BMI088driver.h"
 #include "bsp_Motor.h"
 #include "reg.h"
 #include "bsp_rc.h"
 #include "bsp_uart.h"
 #include "gimbal.h"
+#include "INS_task.h"
 #include "MyCAN.h"
 #include "PID.h"
 /* USER CODE END Includes */
@@ -126,6 +128,9 @@ int main(void)
 
   calibrate_gyro_bias(1000,p_reg->gyro_bias,p_reg->accel_bias);
 
+  // delay_init();
+  // INS_task_Init();
+
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -144,6 +149,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    // INS_task();
+    // HAL_Delay(50);
   }
   /* USER CODE END 3 */
 }

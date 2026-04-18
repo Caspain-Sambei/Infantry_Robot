@@ -13,9 +13,13 @@
 #include "../bmi088/MahonyAHRS.h"
 #include "MyCAN.h"
 #include <math.h>
+
+#include "BMI088Middleware.h"
+#include "BMI088reg.h"
 #include "bsp_delay.h"
 #include "bsp_Motor.h"
 #include "Filter.h"
+#include "spi.h"
 /***************************************************************************
  *								USB通信
  **************************************************************************/
@@ -160,80 +164,100 @@ void gimbal_inPIDTask(void *argument)
 * @retval None
 */
 /* USER CODE END Header_Startbmi088Task */
-void Startbmi088Task(void *argument)
+void Startbmi088Task(void* argument)
 {
     /* USER CODE BEGIN Startbmi088Task */
-
-    // BMI088_TaskHandle = xTaskGetCurrentTaskHandle();
-
     float temper = 0;
-    float bmi_data[6] = {0};        // AX,AY,AZ,GX,GY,GZ
+    float bmi_data[6] = {0}; // AX,AY,AZ,GX,GY,GZ
     float q[4] = {1.0f, 0.0f, 0.0f, 0.0f};
-
     /*************************************************************
      *                  测试
      *************************************************************/
     // twoKp = 2.0f * 0.5f;//比例增益  Kp 大：修正更快，但可能抖
     // twoKi = 2.0f * 0.0f;//积分增益  Ki 大：能消除长期漂移，但太大可能积累误差过多
 
-    float *p_bmi_data = bmi_data;
-    float *p_temp = &temper;
-
+    float* p_bmi_data = bmi_data;
+    float* p_temp = &temper;
+    uint32_t last_tick = 0;
+    float Mahony_sampleFreq = 1000.0f;
     /* Infinite loop */
-    for(;;)
+    for (;;)
     {
-        // BMI088_read(&p_bmi_data[0], &p_bmi_data[3],p_temp);
-        if (p_reg->bmi_flag)
+        BMI088_read(&p_reg->bmi088_real_data.gyro[0], &p_reg->bmi088_real_data.accel[0], p_temp);
+        // 计算实际时间间隔 dt（秒）
+        uint32_t now = HAL_GetTick();
+
+        if (last_tick != 0)
         {
-            p_reg->bmi_flag = 0;
-            // 减去零偏，得到校准数据
-            for (uint8_t i = 0; i < 3; i++)
-            {
-                p_bmi_data[i] -= p_reg->gyro_bias[i];
-
-            }
-            // for(uint8_t i = 0; i < 2; i++)
-            // {
-            //     p_bmi_data[i + 3] -= p_reg->accel_bias[i];
-            // }
-
-            // 低通滤波
-            // for (uint8_t i = 0; i < 3; i++)
-            // {
-            //     Pass_Filter(&p_bmi_data[i],0.5f);
-            // }
-            // 更新四元数
-            MahonyAHRSupdateIMU(q,bmi_data[0],bmi_data[1],bmi_data[2],
-                                    bmi_data[3],bmi_data[4],bmi_data[5]);
-            /*********************************************************************
-             *                           云台数据
-             ********************************************************************/
-            p_reg->gimbal.curr_angle.yaw = atan2f(2 * (q[0] * q[3] + q[1] * q[2]), 1 - 2 * (q[2] * q[2] + q[3] * q[3]));
-            p_reg->gimbal.curr_angle.roll = asinf(2 * (q[0] * q[2] - q[3] * q[1]));
-            p_reg->gimbal.curr_angle.pitch = atan2f(2 * (q[0] * q[1] + q[2] * q[3]), 1 - 2 * (q[1] * q[1] + q[2] * q[2]));
-
-            INS_QuaternionToEuler(q, &p_reg->gimbal.curr_angle.pitch,
-                                  &p_reg->gimbal.curr_angle.roll, &p_reg->gimbal.curr_angle.yaw);
-
-            /*********************************************************************
-             *                  底盘bmi088数据
-             ********************************************************************/
-            // p_reg->chassis.yaw_pid.outer.Actual = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]));
-            // INS_QuaternionToEuler(q, NULL,NULL, &p_reg->chassis.yaw_pid.outer.Actual);
+            // Mahony_sampleFreq = (float)(now - last_tick) / 1000.0f;
+            Mahony_sampleFreq = 1000.0f / (float)(now - last_tick);
+            // 限幅防止异常值
+            if (Mahony_sampleFreq > 2000.0f) Mahony_sampleFreq = 2000.0f;
+            if (Mahony_sampleFreq < 500.0f) Mahony_sampleFreq = 500.0f;
         }
-            /*********************************************************************
-             *                  向视觉发送数据
-             ********************************************************************/
-            p_reg->gimbal.sendpacket.pitch = p_reg->gimbal.curr_angle.pitch;
-            p_reg->gimbal.sendpacket.yaw = p_reg->gimbal.curr_angle.yaw;
-            p_reg->gimbal.sendpacket.roll = p_reg->gimbal.curr_angle.roll;
+        else
+        {
+            Mahony_sampleFreq = 1000.0f;
+        }
+        last_tick = now;
 
-            USB_Send(&p_reg->gimbal.sendpacket);
+        p_reg->bmi_flag = 0;
+        // 减去零偏，得到校准数据
+        for (uint8_t i = 0; i < 3; i++)
+        {
+            p_reg->bmi088_real_data.gyro[i] -= p_reg->gyro_bias[i];
+        }
+        // for (uint8_t i = 0; i < 2; i++)
+        // {
+        //     p_reg->bmi088_real_data.accel[i] -= p_reg->accel_bias[i];
+        // }
+        // 低通滤波
+        // if (1)
+        // {
+        //     for (uint8_t i = 0; i < 3; i++)
+        //     {
+        //         Pass_Filter(&p_reg->bmi088_real_data.gyro[i],0.25f);
+        //         Pass_Filter(&p_reg->bmi088_real_data.accel[i],0.5f);
+        //     }
+        // }
+
+        // 更新四元数
+        // MahonyAHRSupdateIMU(q,bmi_data[0],bmi_data[1],bmi_data[2],
+        //                         bmi_data[3],bmi_data[4],bmi_data[5]);
+        MahonyAHRSupdateIMU(q, p_reg->bmi088_real_data.gyro[0], p_reg->bmi088_real_data.gyro[1],
+                            p_reg->bmi088_real_data.gyro[2],
+                            p_reg->bmi088_real_data.accel[0], p_reg->bmi088_real_data.accel[1],
+                            p_reg->bmi088_real_data.accel[2]
+                            , Mahony_sampleFreq);
+        /*********************************************************************
+         *                           云台数据
+         ********************************************************************/
+        // p_reg->gimbal.curr_angle.yaw = atan2f(2 * (q[0] * q[3] + q[1] * q[2]), 1 - 2 * (q[2] * q[2] + q[3] * q[3]));
+        // p_reg->gimbal.curr_angle.roll = asinf(2 * (q[0] * q[2] - q[3] * q[1]));
+        // p_reg->gimbal.curr_angle.pitch = atan2f(2 * (q[0] * q[1] + q[2] * q[3]), 1 - 2 * (q[1] * q[1] + q[2] * q[2]));
+        //
+        // INS_QuaternionToEuler(q, &p_reg->gimbal.curr_angle.pitch,
+        //                       &p_reg->gimbal.curr_angle.roll, &p_reg->gimbal.curr_angle.yaw);
+
+        /*********************************************************************
+         *                  底盘bmi088数据
+         ********************************************************************/
+        p_reg->chassis.yaw_pid.outer.Actual = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]));
+        INS_QuaternionToEuler(q, NULL,NULL, &p_reg->chassis.yaw_pid.outer.Actual);
+
+        /*********************************************************************
+         *                  向视觉发送数据
+         ********************************************************************/
+        p_reg->gimbal.sendpacket.pitch = p_reg->gimbal.curr_angle.pitch;
+        p_reg->gimbal.sendpacket.yaw = p_reg->gimbal.curr_angle.yaw;
+        p_reg->gimbal.sendpacket.roll = p_reg->gimbal.curr_angle.roll;
+
+        USB_Send(&p_reg->gimbal.sendpacket);
         osDelay(1);
-    }
-    /* USER CODE END Startbmi088Task */
-}
 
+        /* USER CODE END Startbmi088Task */
+    }
+}
 /***************************************************************************
  *			哨兵模式:云台扫描正前方上下左右90°的正方形平面,假定没检测到时视觉不发送消息
  **************************************************************************/
@@ -241,7 +265,7 @@ void StartSentry_modeTask(void* argument)
 {
     const uint16_t SCAN_DELAY = 10;
     #define F_EPSILON   0.3f // 放宽阈值，避免浮点误差
-    float YAW_MIN = -25.0f, YAW_MAX = 25.0f, PITCH_MIN = -40.0f, PITCH_MAX = 40.0f;
+    float YAW_MIN = -41.0f, YAW_MAX = 41.0f, PITCH_MIN = -40.0f, PITCH_MAX = 40.0f;
     const float YAW_INIT = 1.0f, PITCH_INIT = 1.0f;
 
     float start_yaw = YAW_INIT;
@@ -352,19 +376,19 @@ void calibrate_gyro_bias(uint16_t samples,float *gyro_bias,float *accel_bias)
         sum_y += temp_data[1];
         sum_z += temp_data[2];
 
-        sum_accel_x += temp_accel_date[0];
-        sum_accel_y += temp_accel_date[1];
-        sum_accel_z += temp_accel_date[2];
-        // delay_ms(1); // 根据采样率调整延时
+        // sum_accel_x += temp_accel_date[0];
+        // sum_accel_y += temp_accel_date[1];
+        // sum_accel_z += temp_accel_date[2];
+        delay_ms(1); // 根据采样率调整延时
     }
 
     gyro_bias[0] = sum_x / (float)samples;
     gyro_bias[1] = sum_y / (float)samples;
     gyro_bias[2] = sum_z / (float)samples;
 
-    accel_bias[0] = (sum_accel_x / (float)samples);
-    accel_bias[1] = sum_accel_y / (float)samples;
-    accel_bias[2] = (sum_accel_z / (float)samples) - 0.1f;
+    // accel_bias[0] = (sum_accel_x / (float)samples);
+    // accel_bias[1] = sum_accel_y / (float)samples;
+    // accel_bias[2] = (sum_accel_z / (float)samples) - 0.1f;
 }
 
 /**
