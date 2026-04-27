@@ -1,9 +1,7 @@
 //
 // Created by 18796 on 2026/2/24.
 //
-#include <string.h>
 #include "MyUSB.h"
-#include <stdlib.h>
 #include "cmsis_os2.h"
 #include "reg.h"
 #include "usbd_cdc_if.h"

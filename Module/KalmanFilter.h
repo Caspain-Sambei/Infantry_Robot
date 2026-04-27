@@ -17,7 +17,7 @@ typedef struct {
 } EKF_IMU;
 
 // 初始化 EKF，传入初始四元数(通常为{1,0,0,0})和过程噪声/观测噪声配置
-void EKF_IMU_Init(EKF_IMU *ekf, float init_q[4]);
+void EKF_IMU_Init(EKF_IMU *ekf, float init_q[4], float init_bias[3]);
 
 // 核心更新函数，每收到一组 IMU 数据调用一次
 // gyro: 三轴角速度 (rad/s)
@@ -26,6 +26,6 @@ void EKF_IMU_Init(EKF_IMU *ekf, float init_q[4]);
 void EKF_IMU_Update(EKF_IMU *ekf, float gyro[3], float acc[3], float dt);
 
 // 从四元数计算欧拉角 (弧度)
-void EKF_IMU_GetEuler(EKF_IMU *ekf, float *roll, float *pitch, float *yaw);
+void EKF_IMU_GetEuler(const EKF_IMU *ekf, float *roll, float *pitch, float *yaw);
 
 #endif //GIMBAL_KALMANFILTER_H

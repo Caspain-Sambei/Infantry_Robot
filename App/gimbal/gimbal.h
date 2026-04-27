@@ -22,7 +22,6 @@ typedef enum {
 } sentry_state;
 
 void INS_QuaternionToEuler(const float q[4], float *roll_deg, float *pitch_deg, float *yaw_deg);
-void PID_Switch(uint8_t mode,uint16_t switch_time);
 void calibrate_gyro_bias(uint16_t samples,float *gyro_bias,float *accel_bias);
 
 #endif //GIMBAL_GIMBAL_H

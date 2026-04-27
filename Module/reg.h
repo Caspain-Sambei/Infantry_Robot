@@ -62,8 +62,7 @@ typedef struct
     CAN_Structure Motor_1_RxData,Motor_2_RxData,Motor_3_RxData,Motor_4_RxData;
 
     //
-    Low_Pass_Filter_Structure Speed_X_KF;
-    Low_Pass_Filter_Structure Speed_Y_KF;
+    Kalman_Filter_Structure Speed_X_KF,Speed_Y_KF;
 }CHASSIS;
 
 typedef struct
@@ -75,7 +74,7 @@ typedef struct
     SENDPACKET curr_angle;
 
     uint8_t sentry_state;
-    Low_Pass_Filter_Structure gimbal_Receive_KF;
+    Kalman_Filter_Structure gimbal_pitch_KF,gimbal_yaw_KF;
 }GIMBAL;
 /***************************************************************
  *                      主结构体
@@ -93,16 +92,17 @@ typedef struct{
 
     // 用于各种测试
     float speed_cal[4];
+    // BMI088
     // 存放校准偏差
     float gyro_bias[3];
     float accel_bias[3];
-
     float exti_bmi_data[6];
     uint8_t bmi_flag;
-
     bmi088_real_data_t bmi088_real_data;
 
-    float Mahony_sample;
+    uint8_t gyro_int_status;
+    uint8_t accel_int_status;
+    uint8_t bmi088_selftest_status;
 }TYPEDEF;
 
 //全局变量应包含这个结构体类型

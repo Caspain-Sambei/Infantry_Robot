@@ -2,6 +2,8 @@
 // Created by 18796 on 2026/4/13.
 //
 #include "Filter.h"
+
+#include <stdbool.h>
 #include <stdint.h>
 
 /**
@@ -16,7 +18,7 @@
  * @note 函数内部使用静态变量维护历史状态，不支持多线程安全调用
  * @note 首次调用时会自动初始化历史数据为当前输入值
  */
-// void Low_Pass_Filter(float *curr_data, float k)
+// void Kalman_Filter(float *curr_data, float k)
 // {
 //     static float last_data = 0.0f;
 //     static uint8_t first_call = 1;
@@ -47,7 +49,7 @@
  *       - R/Q 比值决定滤波器的平滑程度和响应速度
  *       - R 较大时滤波效果好但响应慢，Q 较大时响应快但噪声抑制差
  */
-void Low_Pass_Filter_Init(Low_Pass_Filter_Structure *kf, float init_value, float init_error, float R, float Q)
+void Kalman_Filter_Init(Kalman_Filter_Structure *kf, float init_value, float init_error, float R, float Q)
 {
     kf->last_aveData = init_value;
     kf->est_error = init_error;
@@ -56,19 +58,59 @@ void Low_Pass_Filter_Init(Low_Pass_Filter_Structure *kf, float init_value, float
     kf->k = 0.0f;
 }
 
-float Low_Pass_Filter(Low_Pass_Filter_Structure *reg, float current_measure)
+
+float Kalman_Filter(Kalman_Filter_Structure *reg, float current_measure)
 {
-    // 0,更新测量值
+    // 0,更新测量值 : 当前测量值,上一次滤波输出值
     reg->pre_menData = current_measure;
-    // 1，更新增益K
+    // 1，更新增益K = 估计误差方差 / (估计误差方差 + 测量噪声方差)
     reg->k = reg->est_error / (reg->est_error + reg->pre_error);
-    // 2,计算本轮平均值
+    // 2,计算本轮平均值 = 估计值 + 增益 * (当前测量值 - 估计值)
     reg->pre_aveData = reg->last_aveData + reg->k *(reg->pre_menData - reg->last_aveData);
-    // 3，更新预估误差
+    // 3，更新预估误差 = (1 - 增益) * 预估误差
     reg->est_error = (1 - reg->k) * reg->est_error + reg->Q;
 
     reg->last_aveData = reg->pre_aveData;
     return reg->pre_aveData;
+}
+
+/**
+ * @brief 一维卡尔曼滤波器
+ * @note 每次调用都重新初始化，没起到滤波的作用
+ * @param Z_Measure 测量值
+ * @param Q_Input 预测过程协方差
+ * @param R_Input 测量过程协方差
+ * @param x0 初始状态最优值。一般取0
+ * @param p0 初始状态最优值协方差值。一般取1，不可为0
+ * @return 返回最优估计值
+ */
+float kalman_filter_1D(float Z_Measure, float Q_Input, float R_Input, float x0, float p0)
+{
+    float X_Predict;	//预测值
+    float X_Optimal;	//最优值
+    float P_Predict;	//预测值协方差矩阵
+    float P_Optimal;	//最优质协方差矩阵
+    float K;			//卡尔曼增益
+    float Q;			//预测过程协方差
+    float R;			//测量过程协方差
+    bool IsInit = true;	//初始化标志位
+    if(IsInit == true)	//初始化操作
+    {
+        IsInit = false;	//清除标志位
+        X_Optimal = x0;	//初始化
+        P_Optimal = p0;
+        Q = Q_Input;
+        R = R_Input;
+    }
+    //预测过程
+    X_Predict = X_Optimal;		//预测值更新
+    P_Predict = P_Optimal + Q;	//预测值协方差矩阵更新
+	
+    //更新过程
+    K = P_Predict / (P_Predict + R);	//更新卡尔曼滤波增益	
+    X_Optimal = X_Predict + K*(Z_Measure - X_Predict);	//更新最优估计值
+    P_Optimal = (1-K)*P_Predict;		//更新最优估计值的协方差矩阵
+    return X_Optimal;			//返回最优估计值
 }
 
 /**

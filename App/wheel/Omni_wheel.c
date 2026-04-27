@@ -53,12 +53,11 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
   chassis->Speed_X_PID.outer.Target = chassis->inverse_speed_X;
   chassis->Speed_Y_PID.outer.Target = chassis->inverse_speed_Y;
 
-  // 左拨杆同时控制旋转
   // chassis->yaw_pid.outer.Target = atan2f(dt7_x, dt7_y);
   // 右拨杆控制旋转
   chassis->yaw_pid.outer.Target = atan2f(rotate_x, rotate_y) * 57.32f;
   chassis->yaw_pid.outer.Target =-chassis->yaw_pid.outer.Target;
-  chassis->target_omega = chassis->yaw_pid.outer.Target * 0.02f;
+  // chassis->target_omega = chassis->yaw_pid.outer.Target * 0.02f;
   //chassis->yaw_pid.outer.Actual已经在bmi088RTOS中赋值
 
   /************************************************************
@@ -78,7 +77,7 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
     * (2 * PI / 60.0f) * WHEEL_RADIUS;
 
   /************************************************************
-   *                  底盘自身坐标系在的速度和目标角度
+   *               底盘自身坐标系在的速度和目标角度
    ************************************************************/
   chassis->forward_speed_X =
     sqrtf(2.0f) / 4.0f * (Motor_1_Speed - Motor_3_Speed - Motor_2_Speed + Motor_4_Speed);
@@ -105,17 +104,22 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
     return;
   }
 
+  /************************************************************
+   *                  死区保护
+   ************************************************************/
   float stick_magnitude = sqrtf(rotate_x * rotate_x + rotate_y * rotate_y);
-  if (stick_magnitude < 0.1f)
+  if (stick_magnitude < 1.0f)
   {
     chassis->yaw_pid.outer.Target = chassis->yaw_pid.outer.Actual;
+    speed_cal[0] = 0.0f;  speed_cal[1] = 0.0f;  speed_cal[2] = 0.0f;  speed_cal[3] = 0.0f;
     // 摇杆归中时，仍需运行航向 PID 闭环，让底盘自动抵抗外界扰动，维持当前朝向
   }
+
   /************************************************************
    *                    目标角速度+PID
    ************************************************************/
-  // PID_Update(&chassis->yaw_pid.outer, CHASSIS_MODE);
-  // chassis->target_omega = chassis->yaw_pid.outer.Out;
+  PID_Update(&chassis->yaw_pid.outer, CHASSIS_MODE);
+  chassis->target_omega = chassis->yaw_pid.outer.Out;
 
   /************************************************************
    *                  底盘速度解算为通道值
@@ -147,22 +151,6 @@ void Omni_wheel_calculate(const RC_Ctl_t *rc_Data,CHASSIS *chassis,float speed_c
     if(speed_cal[i] < -OMNI_3508_CAL_MAX)
     {
       speed_cal[i] = -OMNI_3508_CAL_MAX;
-    }
-  }
-  /************************************************************
-  *                  死区保护
-  ************************************************************/
-  if (fabsf(chassis->Speed_X_PID.outer.Target) == 0.0f || fabsf(chassis->Speed_Y_PID.outer.Target) == 0.0f)
-  {
-    now ++;
-    if (now >= 1000)
-    {
-      now = 0;
-      for (uint8_t i = 0; i < 4; i++)
-      {
-        speed_cal[0] = 0.0f;  speed_cal[1] = 0.0f;  speed_cal[2] = 0.0f;  speed_cal[3] = 0.0f;
-        return;
-      }
     }
   }
 }

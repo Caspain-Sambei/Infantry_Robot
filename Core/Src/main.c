@@ -28,16 +28,16 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bsp_delay.h"
-#include "../../App/bmi088/BMI088driver.h"
+#include "BMI088driver.h"
 #include "bsp_Motor.h"
 #include "reg.h"
 #include "bsp_rc.h"
 #include "bsp_uart.h"
 #include "gimbal.h"
-#include "INS_task.h"
 #include "MyCAN.h"
 #include "PID.h"
+#include "bsp_bmi088.h"
+#include "bsp_delay.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,6 +52,10 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+
+uint8_t bmi_088_accel_id = 0,bmi_088_gyro_id = 0;
+uint8_t *p_bmi_088_accel_id = &bmi_088_accel_id;
+uint8_t *p_bmi_088_gyro_id = &bmi_088_gyro_id;
 
 /* USER CODE END PM */
 
@@ -111,25 +115,26 @@ int main(void)
   /*****************************************************************
    *                    各种初始化
    *****************************************************************/
+  delay_init();
   CAN_Init(&hcan1);
   CAN_Init(&hcan2);
   BMI088_init();
   // 注册UART5的DT7回调函数到drv_uart
   UART_Init(&huart3,UART3_DT7_Callback,RC_FRAME_LENGTH);
-  Low_Pass_Filter_Init(&p_reg->chassis.Speed_X_KF,0.0f,1.0f,0.1f,0.001f);
-  Low_Pass_Filter_Init(&p_reg->chassis.Speed_Y_KF,0.0f,1.0f,0.1f,0.001f);
-  // 掉电PID清零
+  // Kalman_Filter_Init(&p_reg->chassis.Speed_X_KF,0.0f,1.0f,0.1f,0.001f);
+  // Kalman_Filter_Init(&p_reg->chassis.Speed_Y_KF,0.0f,1.0f,0.1f,0.001f);
+  // Kalman_Filter_Init(&p_reg->gimbal.gimbal_pitch_KF,0.0f,1.0f,1.0f,1.0f);
+  // Kalman_Filter_Init(&p_reg->gimbal.gimbal_yaw_KF,0.0f,1.0f,1.0f,1.0f);
+
+  // 上电PID清零
   PID_Clear(&p_reg->gimbal.yaw_pid.outer);
   PID_Clear(&p_reg->gimbal.yaw_pid.inner);
   PID_Clear(&p_reg->gimbal.pitch_pid.inner);
   PID_Clear(&p_reg->gimbal.pitch_pid.outer);
   PID_Clear(&p_reg->chassis.Speed_X_PID.outer);
   PID_Clear(&p_reg->chassis.Speed_Y_PID.outer);
-
-  calibrate_gyro_bias(1000,p_reg->gyro_bias,p_reg->accel_bias);
-
-  // delay_init();
-  // INS_task_Init();
+  // 偏置清零
+  calibrate_gyro_bias(10000,p_reg->gyro_bias,p_reg->accel_bias);
 
   /* USER CODE END 2 */
 
@@ -149,8 +154,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    // INS_task();
-    // HAL_Delay(50);
   }
   /* USER CODE END 3 */
 }

@@ -88,37 +88,25 @@ enum
 
 
 
-//  初始化整个BMI088传感器
+
+
 extern uint8_t BMI088_init(void);
-//  执行加速度计自检，返回bool值
 extern bool_t bmi088_accel_self_test(void);
-//  执行陀螺仪自检，返回bool值
 extern bool_t bmi088_gyro_self_test(void);
-// 初始化加速度计部分，返回bool值
 extern bool_t bmi088_accel_init(void);
-// 初始化陀螺仪部分，返回bool值
 extern bool_t bmi088_gyro_init(void);
 
-// 根据接收缓冲区数据解析出加速度值和时间信息
 extern void BMI088_accel_read_over(uint8_t *rx_buf, fp32 accel[3], fp32 *time);
-// 根据接收缓冲区数据解析出陀螺仪值
 extern void BMI088_gyro_read_over(uint8_t *rx_buf, fp32 gyro[3]);
-// 根据接收缓冲区数据解析出温度值
 extern void BMI088_temperature_read_over(uint8_t *rx_buf, fp32 *temperate);
-// 一次性读取陀螺仪、加速度和温度数据
 extern void BMI088_read(fp32 gyro[3], fp32 accel[3], fp32 *temperate);
-// 获取传感器时间戳(单位:微秒)
 extern uint32_t get_BMI088_sensor_time(void);
-// 获取当前温度值
 extern fp32 get_BMI088_temperate(void);
-// 获取原始陀螺仪数据(16位整型数组)
 extern void get_BMI088_gyro(int16_t gyro[3]);
-// 获取加速度数据(浮点数组)
 extern void get_BMI088_accel(fp32 accel[3]);
 
-// 读取陀螺仪的WHO_AM_I寄存器以确认设备ID
+
 extern void BMI088_read_gyro_who_am_i(void);
-// 读取加速度计的WHO_AM_I寄存器以确认设备ID
 extern void BMI088_read_accel_who_am_i(void);
 
 #endif

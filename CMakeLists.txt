@@ -96,10 +96,10 @@ add_executable(${CMAKE_PROJECT_NAME}
         App/wheel/Omni_wheel.c
         Module/Filter.h
         Module/Filter.c
-        App/bmi088/INS.c
-        App/bmi088/INS.h
-        bsp/Inc/bsp_bmi088.h
+        Module/bmi088/INS.c
+        Module/bmi088/INS.h
         bsp/Src/bsp_bmi088.c
+        bsp/Inc/bsp_bmi088.h
 )
 
 # 禁用共享库
@@ -137,21 +137,14 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
         Module/PID.c
         Module/PID.h
-        App/bmi088/BMI088driver.c
-        App/bmi088/BMI088Middleware.c
-        App/bmi088/bsp_delay.c
-        App/bmi088/MahonyAHRS.c
-        App/bmi088/MahonyAHRS.h
-        App/bmi088/INS.c
-        App/bmi088/INS.h
-        App/bmi088/INS_task.c
-        App/bmi088/INS_task.h
-        App/bmi088/pid.c
-        App/bmi088/pid.h
-        bsp/Inc/bsp_spi.h
-        bsp/Src/bsp_spi.c
+        Module/bmi088/BMI088driver.c
+        Module/bmi088/BMI088Middleware.c
+        Module/bmi088/bsp_delay.c
+        Module/bmi088/MahonyAHRS.c
+        Module/bmi088/MahonyAHRS.h
+        Module/bmi088/INS.c
+        Module/bmi088/INS.h
 )
-
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
@@ -162,10 +155,11 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     App/rc/
     App/gimbal/
     App/wheel/
-        App/bmi088/
+        Module/bmi088/
         App/chassis/
         bsp/Inc/
         bsp/Src/
+        App/imu/
 )
 
 # Add project symbols (macros)

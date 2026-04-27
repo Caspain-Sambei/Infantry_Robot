@@ -53,6 +53,8 @@ void BusFault_Handler(void);
 void UsageFault_Handler(void);
 void DebugMon_Handler(void);
 void PVD_IRQHandler(void);
+void FLASH_IRQHandler(void);
+void RCC_IRQHandler(void);
 void EXTI0_IRQHandler(void);
 void DMA1_Stream1_IRQHandler(void);
 void CAN1_TX_IRQHandler(void);
@@ -61,11 +63,12 @@ void EXTI9_5_IRQHandler(void);
 void SPI1_IRQHandler(void);
 void USART3_IRQHandler(void);
 void TIM8_TRG_COM_TIM14_IRQHandler(void);
-void DMA2_Stream2_IRQHandler(void);
+void DMA2_Stream0_IRQHandler(void);
 void DMA2_Stream3_IRQHandler(void);
 void CAN2_TX_IRQHandler(void);
 void CAN2_RX0_IRQHandler(void);
 void OTG_FS_IRQHandler(void);
+void FPU_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
