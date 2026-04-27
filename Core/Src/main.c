@@ -121,10 +121,6 @@ int main(void)
   BMI088_init();
   // 注册UART5的DT7回调函数到drv_uart
   UART_Init(&huart3,UART3_DT7_Callback,RC_FRAME_LENGTH);
-  // Kalman_Filter_Init(&p_reg->chassis.Speed_X_KF,0.0f,1.0f,0.1f,0.001f);
-  // Kalman_Filter_Init(&p_reg->chassis.Speed_Y_KF,0.0f,1.0f,0.1f,0.001f);
-  // Kalman_Filter_Init(&p_reg->gimbal.gimbal_pitch_KF,0.0f,1.0f,1.0f,1.0f);
-  // Kalman_Filter_Init(&p_reg->gimbal.gimbal_yaw_KF,0.0f,1.0f,1.0f,1.0f);
 
   // 上电PID清零
   PID_Clear(&p_reg->gimbal.yaw_pid.outer);

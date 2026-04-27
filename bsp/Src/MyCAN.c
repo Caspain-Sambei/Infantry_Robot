@@ -6,6 +6,7 @@
 #include "can.h"
 #include "bsp_Motor.h"
 #include "stm32f4xx_hal_can.h"
+#include "stm32f4xx_hal_def.h"
 
 /**
  * @brief HAL_CAN_Start，使能接收中断，配置过滤器
@@ -128,12 +129,12 @@ uint8_t CAN_bsp_Send(CAN_HandleTypeDef *hcanx,uint16_t ID,uint8_t *Data,uint8_t 
     {
         return HAL_ERROR;
     }
-    //检查CAN状态
-    if (HAL_CAN_GetState(hcanx)  != HAL_CAN_STATE_READY &&
-       HAL_CAN_GetState(hcanx) != HAL_CAN_STATE_LISTENING)
-    {
-        return HAL_ERROR;
-    }
+    // //检查CAN状态
+    // if (HAL_CAN_GetState(hcanx)  != HAL_CAN_STATE_READY &&
+    //    HAL_CAN_GetState(hcanx) != HAL_CAN_STATE_LISTENING)
+    // {
+    //     return HAL_ERROR;
+    // }
     // 存储发送邮箱编号（HAL 需传入该变量接收邮箱号）
     uint32_t TxMailbox;
     CAN_TxHeaderTypeDef TxMessage = {0};

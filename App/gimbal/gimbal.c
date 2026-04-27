@@ -73,8 +73,8 @@ void StartUSB_RxTask(void *argument)
             if (p_reg->gimbal.recvpacket.yaw < -45)
                 p_reg->gimbal.recvpacket.yaw = -45;
             // 新增一阶低通滤波
-            Pass_Filter(&p_reg->gimbal.recvpacket.pitch,0.5f);
-            Pass_Filter(&p_reg->gimbal.recvpacket.yaw,0.5f);
+            // Pass_Filter(&p_reg->gimbal.recvpacket.pitch,0.5f);
+            // Pass_Filter(&p_reg->gimbal.recvpacket.yaw,0.5f);
 
             last_rx_tick = now;
         }
@@ -112,7 +112,7 @@ void gimbal_inPIDTask(void *argument)
 {
     /* init code for USB_DEVICE */
     MX_USB_DEVICE_Init();
-    static uint16_t cnt = 0;
+    uint16_t cnt = 0;
     /* USER CODE BEGIN StartPIDTask */
     /* Infinite loop */
     for(;;)
@@ -130,6 +130,7 @@ void gimbal_inPIDTask(void *argument)
             if (p_reg->gimbal.yaw_pid.outer.Target > 45) { p_reg->gimbal.yaw_pid.outer.Target = 45; }
             if (p_reg->gimbal.yaw_pid.outer.Target < -45) { p_reg->gimbal.yaw_pid.outer.Target = -45; }
         }
+        cnt = HAL_GetTick();
         p_reg->gimbal.pitch_pid.outer.Actual = p_reg->gimbal.curr_angle.pitch;
         p_reg->gimbal.yaw_pid.outer.Actual = p_reg->gimbal.curr_angle.yaw;
 
@@ -149,7 +150,7 @@ void gimbal_inPIDTask(void *argument)
 
         p_reg->TxData.data4 = (int16_t)p_reg->gimbal.pitch_pid.inner.Out;
         p_reg->TxData.data2 = (int16_t)p_reg->gimbal.yaw_pid.inner.Out;
-
+        cnt = HAL_GetTick() - cnt;
         CAN_Send(CAN_6020_1, &p_reg->TxData, 4);
         memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
 
@@ -178,27 +179,19 @@ void Startbmi088Task(void* argument)
     static EKF_IMU ekf_imu = {0};
     EKF_IMU_Init(&ekf_imu, q,p_reg->gyro_bias);
 
-    // ekf_imu.bias[0] = p_reg->gyro_bias[0];
-    // ekf_imu.bias[1] = p_reg->gyro_bias[1];
-    // ekf_imu.bias[2] = p_reg->gyro_bias[2];
-
     /* Infinite loop */
     for (;;)
     {
         BMI088_read(&p_reg->bmi088_real_data.gyro[0], &p_reg->bmi088_real_data.accel[0], NULL);
+        /*********************************************************************
+         *                           MahonyAHRS
+         ********************************************************************/
         // 陀螺仪减去零偏，得到校准数据
         // for (uint8_t i = 0; i < 3; i++)
         // {
         //     p_reg->bmi088_real_data.gyro[i] -= p_reg->gyro_bias[i];
         //     p_reg->bmi088_real_data.accel[i] -= p_reg->accel_bias[i];
         // }
-        // 低通滤波
-        // for (uint8_t i = 0; i < 3; i++)
-        // {
-        //     Pass_Filter(&p_reg->bmi088_real_data.gyro[i], 0.95f);
-        //     Pass_Filter(&p_reg->bmi088_real_data.accel[i], 0.95f);
-        // }
-
         // 更新四元数
         // MahonyAHRSupdateIMU(q, p_reg->bmi088_real_data.gyro[0], p_reg->bmi088_real_data.gyro[1],
         //                     p_reg->bmi088_real_data.gyro[2],
@@ -207,9 +200,13 @@ void Startbmi088Task(void* argument)
         // p_reg->bmi088_real_data.gyro[0] *= 0.0174533f;
         // p_reg->bmi088_real_data.gyro[1] *= 0.0174533f;
         // p_reg->bmi088_real_data.gyro[2] *= 0.0174533f;
-        EKF_IMU_Update(&ekf_imu, &p_reg->bmi088_real_data.gyro[0], &p_reg->bmi088_real_data.accel[0],0.001f);
         /*********************************************************************
-         *                           云台数据
+         *                           EKF
+         ********************************************************************/
+        EKF_IMU_Update(&ekf_imu, &p_reg->bmi088_real_data.gyro[0], &p_reg->bmi088_real_data.accel[0],0.001f);
+
+        /*********************************************************************
+         *                  云台数据 MahonyAHRS + INS
          ********************************************************************/
         // p_reg->gimbal.curr_angle.yaw = atan2f(2 * (q[0] * q[3] + q[1] * q[2]), 1 - 2 * (q[2] * q[2] + q[3] * q[3]));
         // p_reg->gimbal.curr_angle.roll = asinf(2 * (q[0] * q[2] - q[3] * q[1]));
@@ -225,19 +222,28 @@ void Startbmi088Task(void* argument)
         //
         // p_reg->gimbal.curr_angle.yaw =
         //     kalman_filter_1D(p_reg->gimbal.curr_angle.yaw, 0.0005f, 0.001f, 0.0f, 1.0f);
+
         /*********************************************************************
-         *                  扩展卡尔曼滤波
+         *                  云台数据 EKF
          ********************************************************************/
         EKF_IMU_GetEuler(&ekf_imu,&p_reg->gimbal.curr_angle.pitch,&p_reg->gimbal.curr_angle.roll, &p_reg->gimbal.curr_angle.yaw);
         p_reg->gimbal.curr_angle.pitch *= 57.29578f;
         p_reg->gimbal.curr_angle.yaw *= 57.29578f;
+        p_reg->gimbal.curr_angle.roll *= 57.29578f;
         Pass_Filter(&p_reg->gimbal.curr_angle.yaw, 0.95f);
+
         /*********************************************************************
-         *                  底盘bmi088数据
+         *                  底盘bmi088数据 MahonyAHRS + INS
          ********************************************************************/
         // p_reg->chassis.yaw_pid.outer.Actual = atan2f(2*(q[0]*q[3]+q[1]*q[2]), 1-2*(q[2]*q[2]+q[3]*q[3]));
         // INS_QuaternionToEuler(q, NULL,NULL, &p_reg->chassis.yaw_pid.outer.Actual);
         // Pass_Filter(&p_reg->gimbal.curr_angle.yaw, 0.85f);
+
+        /*********************************************************************
+         *                  底盘bmi088数据 EKF
+         ********************************************************************/
+        // EKF_IMU_GetEuler(&ekf_imu,NULL,NULL, &p_reg->gimbal.curr_angle.yaw);
+        // p_reg->gimbal.curr_angle.yaw *= 57.29578f;
 
         /*********************************************************************
          *                  向视觉发送数据
@@ -272,7 +278,7 @@ void StartSentry_modeTask(void* argument)
     const float PITCH_AMPLITUDE = 40.0f;
 
     const float FREQ_YAW_K = 1.5f;      // 0.5f为慢速，1.0f为快速
-    const float FREQ_PITCH_K = 2.0f;    // 1.0f为慢速，2.0f为快速
+    const float FREQ_PITCH_K = 6.0f;    // 2.0f为慢速，6.0f为快速
     const float FREQ = 0.2f;            // 摆动频率（Hz），即每秒摆多少个周期
 
     uint32_t start_time = HAL_GetTick();
@@ -303,12 +309,6 @@ void StartSentry_modeTask(void* argument)
             if (p_reg->gimbal.yaw_pid.outer.Target > YAW_MAX) {p_reg->gimbal.yaw_pid.outer.Target = YAW_MAX;}
             if (p_reg->gimbal.pitch_pid.outer.Target < PITCH_MIN) {p_reg->gimbal.pitch_pid.outer.Target = PITCH_MIN;}
             if (p_reg->gimbal.pitch_pid.outer.Target > PITCH_MAX) {p_reg->gimbal.pitch_pid.outer.Target = PITCH_MAX;}
-
-            // 发送数据
-            p_reg->TxData.data1 = (int16_t)(p_reg->gimbal.yaw_pid.outer.Target);
-            p_reg->TxData.data2 = (int16_t)(p_reg->gimbal.pitch_pid.outer.Target);
-            CAN_Send(CAN_6020_1, &p_reg->TxData, 4);
-            // memset(&p_reg->TxData, 0, sizeof(CAN_Structure));
         }
         else
         {
@@ -331,7 +331,6 @@ void StartSentry_modeTask(void* argument)
             if (p_first_resume == NULL)
             {
                 // 这里用指针是为了访问 else 分支里的静态变量，更简单的做法是把 first_resume 提到外面
-                // 为了简化，我们直接把 first_resume 提到任务开头作为全局静态变量
             }
         }
         osDelay(SCAN_DELAY);

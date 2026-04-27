@@ -51,8 +51,8 @@
 osThreadId_t gimbal_inPIDHandle;
 const osThreadAttr_t gimbal_inPID_attributes = {
   .name = "gimbal_inPID",
-  .stack_size = 512 * 4,
-  .priority = (osPriority_t) osPriorityAboveNormal1,
+  .stack_size = 1024 * 4,
+  .priority = (osPriority_t) osPriorityAboveNormal3,
 };
 /* Definitions for bmi088Task */
 osThreadId_t bmi088TaskHandle;

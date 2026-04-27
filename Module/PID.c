@@ -58,8 +58,13 @@ void PID_Update(pid *p,uint8_t mode)
 	 **************************************************************************/
 	// =======================不完全微分===================
 	// 在纯微分项后面串联一个一阶低通滤波器，来抑制微分项的噪声放大效应
-	float temp_Out = p->kp * (p->PreError - p->LastError);
+	float temp_Out = 0.0f;
+	if (p->kd != 0.0f)
+	{
+		temp_Out = p->kp * (p->PreError - p->LastError);
+	}
 	p->D_OUT = (1 - p->RC_DF) * temp_Out + p->RC_DF * p->LAST_D_OUT;
+	// 数据继承
 	p->LAST_D_OUT = p->D_OUT;
 
 	/***************************************************************************
