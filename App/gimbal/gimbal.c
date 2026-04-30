@@ -73,8 +73,8 @@ void StartUSB_RxTask(void *argument)
             if (p_reg->gimbal.recvpacket.yaw < -45)
                 p_reg->gimbal.recvpacket.yaw = -45;
             // 新增一阶低通滤波
-            // Pass_Filter(&p_reg->gimbal.recvpacket.pitch,0.5f);
-            // Pass_Filter(&p_reg->gimbal.recvpacket.yaw,0.5f);
+            Pass_Filter(&p_reg->gimbal.recvpacket.pitch,0.95f);
+            Pass_Filter(&p_reg->gimbal.recvpacket.yaw,0.95f);
 
             last_rx_tick = now;
         }
