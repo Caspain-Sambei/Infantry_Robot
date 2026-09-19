@@ -18,6 +18,7 @@ enum Enum_CAN_Motor_Status
 #define CAN_C620_1     0x200
 #define CAN_C620_2
 
+
 #define C620_ANGLE_RESOLUTION   0.0439f     // C620电调-电机机械角度-分辨率（单位：度/LSB）
 #define PI                      3.1415926f
 

@@ -6,7 +6,7 @@
 #include "reg.h"
 #include "bsp_Motor.h"
 #include <string.h>
-#include "MyCAN.h"
+#include "../CAN/MyCAN.h"
 
 /********************************************************
  *                      工具函数
